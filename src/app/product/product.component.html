@@ -12,12 +12,8 @@
               <h6 class="mt-0 font-weight-bold">env: {{ p.env }}</h6>
               <hr class="hr-bold mb-0 my-2" />
               <div *ngIf="p.containers">
-                <div *ngFor="let key of p.containers | keys">
-                  <p class="mb-0" >
-                    <i class="fab fa-docker"></i>
-                    : {{ p.containers.length }}
-                  </p>
-                </div>
+                <i class="fab fa-docker"></i>
+                : {{ p.containers.length }}
               </div>
             </div>
           </div>
