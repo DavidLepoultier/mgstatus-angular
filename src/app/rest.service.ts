@@ -3,11 +3,10 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
-const endpoint = 'http://192.168.1.13:8080/v1/';
+const endpoint = 'https://mini-gateway-aws.apibackbone.orange.com/extgateway/v1/';
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-     'Access-Control-Allow-Origin': '*'
+    'Content-Type':  'application/json'
   })
 };
 

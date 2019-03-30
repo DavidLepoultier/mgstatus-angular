@@ -1,9 +1,41 @@
 <div class="container">
   <div class="row mt-4">
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div *ngFor="let p of products; let i=index;">
         <div class="triple-column-card mb-3">
-          <div class="card">
+          <!-- Card -->
+          <div class="card gradient-card">
+            <!-- Content -->
+            <a href="#!">
+              <div class="text-white d-flex bt-r blue-gradient-rgba">
+                <div class="first-content align-self-center p-3">
+                  <h3 class="card-title">{{ p.id }}</h3>
+                </div>
+                <div class="second-content  align-self-center mx-auto text-center">
+                  <i class="fab fa-docker fa-3x"> </i>
+                </div>
+              </div>
+            </a>
+            <!-- Data -->
+            <div class="third-content  mr-auto ml-2 mb-2 mt-2">
+              <p class="mb-0 mt-0 text-muted font-weight-bold">Organization: <i>{{ p.org }}</i></p>
+              <p class="mb-0 mt-0 text-muted font-weight-bold">Environment: <i>{{ p.env }}</i></p>
+            </div>
+            <!-- Content -->
+            <div class="card-body bb-r">
+              <div *ngIf="p.containers">
+                <div class="progress md-progress ml-0">
+                  <div class="progress-bar amber darken-3" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                    <i class="fab fa-docker">
+                      {{ p.containers.length }} / {{ p.containers.length }} 
+                    </i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+          <!-- <div class="card">
             <div class="card-header cyan texte-center white-text font-weight-bold">
                 {{ p.id }}
             </div>
@@ -16,12 +48,9 @@
                 : {{ p.containers.length }}
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <h3 class="text-uppercase my-3">Detail</h3>
     </div>
   </div>
 </div>

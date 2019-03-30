@@ -23,6 +23,16 @@ div[class*=" triple-column"] {
   padding-top: 1rem;
 }
 
+[class*="bt-r"] {
+	border-top-left-radius: .25rem;
+	border-top-right-radius: .25rem;
+}
+
+[class*="bb-r"] {
+	border-bottom-left-radius: .25rem;
+	border-bottom-right-radius: .25rem;
+}
+
 [class*="texte-center"] {
 	text-align: center;
 }
