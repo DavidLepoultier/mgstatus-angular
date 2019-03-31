@@ -19,6 +19,23 @@ div[class*=" triple-column"] {
 		}
 	}
 }
+
+div[class^="quadruple-column"],
+div[class*=" quadruple-column"] {
+	width: 25%;
+	float: left;
+	padding: 0 .5rem;
+	.card {
+		min-height: 175px;
+		cursor: pointer;
+		transition: box-shadow .2s linear;
+		-webkit-transition: box-shadow .2s linear;
+		&:hover {
+			box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+		}
+	}
+}
+
 [class*="pt-2-and-half"] {
   padding-top: 1rem;
 }

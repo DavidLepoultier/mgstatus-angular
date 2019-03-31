@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row mt-4">
-    <div class="col-md-10">
+    <div class="col-md-12">
       <div *ngFor="let p of products; let i=index;">
         <div class="triple-column-card mb-3">
           <!-- Card -->
@@ -25,9 +25,9 @@
             <div class="card-body bb-r">
               <div *ngIf="p.containers">
                 <div class="progress md-progress ml-0">
-                  <div class="progress-bar amber darken-3" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar amber darken-3" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                     <i class="fab fa-docker">
-                      {{ p.containers.length }} / {{ p.containers.length }} 
+                      {{ p.containers.length }} 
                     </i>
                   </div>
                 </div>
