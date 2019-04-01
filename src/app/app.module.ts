@@ -3,26 +3,26 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { KeysPipe } from './product/product.pipe';
+import { KeysPipe } from './projects/projects.pipe';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductComponent } from './product/product.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   {
-    path: 'resources',
-    component: ProductComponent,
-    data: { title: 'Resource List' }
+    path: 'projects',
+    component: ProjectsComponent,
+    data: { title: 'Projects List' }
   },
   {
-    path: 'resources-details/:id',
-    component: ProductDetailComponent,
-    data: { title: 'Product Details' }
+    path: 'project/:id',
+    component: ProjectDetailComponent,
+    data: { title: 'Project Details' }
   },
   { path: '',
-    redirectTo: '/resources',
+    redirectTo: '/projects',
     pathMatch: 'full'
   }
   // { path: '**', component: PageNotFoundComponent }
@@ -32,8 +32,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     KeysPipe,
-    ProductComponent,
-    ProductDetailComponent
+    ProjectsComponent,
+    ProjectDetailComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

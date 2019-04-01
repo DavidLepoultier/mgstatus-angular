@@ -1,0 +1,93 @@
+<div class="row mt-1">
+  <div class="col-md-1">
+    <div class="mt-3">
+        <button type="button" class="btn btn-mdb pr-3 pl-3 pt-1 pb-1" ripple-radius onclick="history.go(-1);"><i class="fas fa-arrow-left fa-2x text-muted"> </i></button>
+    </div>
+  </div>
+  <div class="col-md-11">
+    <div class="container pl-0 ml-0">
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <!-- Card -->
+          <div class="card gradient-card">
+            <!-- Content -->
+            <div class="title-project">
+              <i class="fab fa-docker fa-3x light-blue lighten-1 ml-3"> </i>
+              <!-- Data -->
+              <div class="data">
+                <p>{{ project.id }}</p>
+              </div>
+            </div>
+            <!-- Content -->
+            <div class="row mt-2">
+              <div class="col-md-4">
+                <div class="third-content mr-auto ml-2 mb-2 mt-2">
+                  <p class="mb-0 mt-0 text-muted font-weight-bold">Organization: <i>{{ project.org }}</i></p>
+                  <p class="mb-0 mt-0 text-muted font-weight-bold">Environment: <i>{{ project.env }}</i></p>
+                </div>
+              </div>
+              <!-- Containers -->
+              <div class="col-md-8">
+                <div *ngIf="project.containers">
+                  <h6 class="mb-0 mt-0 text-muted font-weight-bold">Containers:</h6>
+                  <hr class="hr-bold mb-0 my-2" />
+                  <div *ngFor="let c of project.containers; let i=index;">
+                    <div class="docker-containers">
+                      <a class="card gradient-card" (click)="container.toggle()" mdbWavesEffect>
+                        <div class="card gradient-card">
+                          <div class="title-project mt-1">
+                            <i class="ml-2 text-muted font-weight-bold">{{ c.id }}</i>
+                            <div class="data mt-0 mr-2">
+                              <div *ngIf="(date - c.time) < 30000">
+                                <i class="fab fa-docker text-default mb-0 mt-0"></i>
+                              </div>
+                              <div *ngIf="(date - c.time) > 30000">
+                                <i class="fab fa-docker text-danger mb-0 mt-0"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div mdbCollapse [isCollapsed]="true" #container="bs-collapse">
+                              <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident.</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Containers -->
+            </div>
+            <!-- <div  class="card-body card-body-cascade"><div  class="progress"><div  aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" class="progress-bar grey darken-2" role="progressbar" style="width: 75%"></div></div><p  class="card-text">Worse than last week (75%)</p></div> -->
+            <!-- <div class="card-body bb-r">
+              <div *ngIf="p.containers">
+                <div class="progress md-progress ml-0">
+                  <div class="progress-bar amber darken-3" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                    <i class="fab fa-docker">
+                      {{ p.containers.length }} 
+                    </i>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <!-- Card -->
+          <!-- <div class="card">
+            <div class="card-header cyan texte-center white-text font-weight-bold">
+                {{ p.id }}
+            </div>
+            <div class="card-body pt-2-and-half">
+              <h6 class="mt-0 font-weight-bold">org: {{ p.org }}</h6>
+              <h6 class="mt-0 font-weight-bold">env: {{ p.env }}</h6>
+              <hr class="hr-bold mb-0 my-2" />
+              <div *ngIf="p.containers">
+                <i class="fab fa-docker"></i>
+                : {{ p.containers.length }}
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

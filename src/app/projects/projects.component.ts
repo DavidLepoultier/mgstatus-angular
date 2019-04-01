@@ -3,13 +3,13 @@ import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  selector: 'app-projects',
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProjectsComponent implements OnInit {
 
-  products:any = [];
+  projects:any = [];
 
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
@@ -18,18 +18,18 @@ export class ProductComponent implements OnInit {
   }
 
   getResources() {
-    this.products = [];
+    this.projects = [];
     this.rest.getResources().subscribe((data: {}) => {
-      this.products = data;
+      this.projects = data;
     });
   }
 
   add() {
-    this.router.navigate(['/product-add']);
+    this.router.navigate(['/project-add']);
   }
 
-  delete(id) {
-    this.rest.deleteProduct(id)
+  delete(id: any) {
+    this.rest.deleteProject(id)
       .subscribe(res => {
           this.getResources();
         }, (err) => {

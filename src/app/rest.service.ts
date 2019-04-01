@@ -26,30 +26,30 @@ export class RestService {
       map(this.extractData));
   }
 
-  getResource(id): Observable<any> {
+  getResource(id: any): Observable<any> {
     return this.http.get(endpoint + 'resources/' + id).pipe(
       map(this.extractData));
   }
 
-  addProduct (product): Observable<any> {
-    console.log(product);
-    return this.http.post<any>(endpoint + 'products', JSON.stringify(product), httpOptions).pipe(
-      tap((product) => console.log(`added product w/ id=${product.id}`)),
-      catchError(this.handleError<any>('addProduct'))
+  addProject (project: any): Observable<any> {
+    console.log(project);
+    return this.http.post<any>(endpoint + 'resources', JSON.stringify(project), httpOptions).pipe(
+      tap((project) => console.log(`added project w/ id=${project.id}`)),
+      catchError(this.handleError<any>('addProject'))
     );
   }
 
-  updateProduct (id, product): Observable<any> {
+  updateProduct (id: any, product: any): Observable<any> {
     return this.http.put(endpoint + 'products/' + id, JSON.stringify(product), httpOptions).pipe(
       tap(_ => console.log(`updated product id=${id}`)),
       catchError(this.handleError<any>('updateProduct'))
     );
   }
 
-  deleteProduct (id): Observable<any> {
-    return this.http.delete<any>(endpoint + 'products/' + id, httpOptions).pipe(
-      tap(_ => console.log(`deleted product id=${id}`)),
-      catchError(this.handleError<any>('deleteProduct'))
+  deleteProject (id: any): Observable<any> {
+    return this.http.delete<any>(endpoint + 'resources/' + id, httpOptions).pipe(
+      tap(_ => console.log(`deleted project id=${id}`)),
+      catchError(this.handleError<any>('deleteProject'))
     );
   }
 
