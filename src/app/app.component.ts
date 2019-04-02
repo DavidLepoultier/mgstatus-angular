@@ -1,11 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
-import {ModalDirective} from 'angular-bootstrap-md';
+import {Component} from '@angular/core';
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"]
 })
-export class AppComponent {
-  @ViewChild(ModalDirective) modal: ModalDirective;
-}
+export class AppComponent {}

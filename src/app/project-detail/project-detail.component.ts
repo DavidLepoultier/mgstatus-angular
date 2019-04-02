@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { containerRefreshStart } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-project-detail',
