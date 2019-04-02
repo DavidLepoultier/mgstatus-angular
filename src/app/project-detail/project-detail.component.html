@@ -1,7 +1,7 @@
 <div class="row mt-1">
   <div class="col-md-1">
     <div class="mt-3">
-        <button type="button" class="btn btn-mdb pr-3 pl-3 pt-1 pb-1" ripple-radius onclick="history.go(-1);"><i class="fas fa-arrow-left fa-2x text-muted"> </i></button>
+        <button type="button" class="btn btn-mdb pr-3 pl-3 pt-1 pb-1" ripple-radius onclick="document.location.href='/projects';"><i class="fas fa-arrow-left fa-2x text-muted"> </i></button>
     </div>
   </div>
   <div class="col-md-11">
@@ -12,25 +12,40 @@
           <div class="card gradient-card">
             <!-- Content -->
             <div class="title-project">
-              <i class="fab fa-docker fa-3x light-blue lighten-1 ml-3"> </i>
+              <i class="fab fa-docker fa-3x blue-gradient-rgba ml-5"> </i>
               <!-- Data -->
               <div class="data">
-                <p>{{ project.id }}</p>
+                <p class="font-weight-bold">{{ project.id }}</p>
               </div>
             </div>
             <!-- Content -->
             <div class="row mt-2">
-              <div class="col-md-4">
-                <div class="third-content mr-auto ml-2 mb-2 mt-2">
+              <div class="col-md-3">
+                <div class="third-content mr-auto ml-3 mb-2 mt-3">
                   <p class="mb-0 mt-0 text-muted font-weight-bold">Organization: <i>{{ project.org }}</i></p>
                   <p class="mb-0 mt-0 text-muted font-weight-bold">Environment: <i>{{ project.env }}</i></p>
                 </div>
+
+                <div class="mb-2 mt-0 mr-5" style="display: block">
+                    <div class="text-center">
+                        <p class="text-muted font-weight-bold" style="margin-bottom: -3.7rem; padding-top: 1rem; font-size: 2rem;">{{ project.container }}</p>
+                      </div>
+                  <canvas
+                    baseChart
+                    [chartType]="chartType"
+                    [data]="chartData"
+                    [colors]="chartColors"
+                    [options]="chartOptions"
+                    [legend]="false">
+                  </canvas>
+                </div>
+                            
               </div>
               <!-- Containers -->
-              <div class="col-md-8">
+              <div class="col-md-9">
                 <div *ngIf="project.containers">
                   <h6 class="mb-0 mt-0 text-muted font-weight-bold">Containers:</h6>
-                  <hr class="hr-bold mb-0 my-2" />
+                  <hr class="hr-bold mb-3 my-2" />
                   <div *ngFor="let c of project.containers; let i=index;">
                     <div class="docker-containers">
                       <a class="card gradient-card" (click)="container.toggle()" mdbWavesEffect>
@@ -38,11 +53,11 @@
                           <div class="title-project mt-1">
                             <i class="ml-2 text-muted font-weight-bold">{{ c.id }}</i>
                             <div class="data mt-0 mr-2">
-                              <div *ngIf="(date - c.time) < 30000">
-                                <i class="fab fa-docker text-default mb-0 mt-0"></i>
+                              <div *ngIf="(date - c.time) < 60000">
+                                <i class="fab fa-docker text-container-run mb-0 mt-0"></i>
                               </div>
-                              <div *ngIf="(date - c.time) > 30000">
-                                <i class="fab fa-docker text-danger mb-0 mt-0"></i>
+                              <div *ngIf="(date - c.time) > 60000">
+                                <i class="fab fa-docker text-muted mb-0 mt-0"></i>
                               </div>
                             </div>
                           </div>

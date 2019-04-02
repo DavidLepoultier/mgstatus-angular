@@ -21,6 +21,24 @@ export class ProjectsComponent implements OnInit {
     this.projects = [];
     this.rest.getResources().subscribe((data: {}) => {
       this.projects = data;
+      const date = Date.now();
+      for (let index = 0; index < this.projects.length; index++) {
+        const element = this.projects[index];
+        var running = 0;
+        for (let container = 0; container < element.containers.length; container++) {
+          if ((date - element.containers[container].time) < 60000) {
+            running++;
+          } 
+        }
+        if ( running === element.containers.length) {
+          this.projects[index].containersState = 'indeterminate';
+        } else if ( running > 0) {
+          this.projects[index].containersState = 'amber';
+        } else {
+          this.projects[index].containersState = 'grey';
+        }
+        this.projects[index].containersRunning = running;
+      }
     });
   }
 

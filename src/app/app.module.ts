@@ -9,6 +9,8 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
+
 
 const appRoutes: Routes = [
   {
@@ -41,7 +43,8 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

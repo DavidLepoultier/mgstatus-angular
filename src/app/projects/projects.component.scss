@@ -3,6 +3,10 @@ $color_2: #00c3db;
 $color_3: #9c27b0;
 $color_4: #89be50;
 
+.progress .indeterminate { 
+	background-color: #46BFBD; 
+}
+
 /* small bundle*/
 div[class^="triple-column"],
 div[class*=" triple-column"] {
