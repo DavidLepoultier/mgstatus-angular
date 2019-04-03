@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://mini-gateway-aws.apibackbone.orange.com/extgateway/v1/'
+  apiUrl: '/api/'
 };
 
 /*

@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://mini-gateway-aws.apibackbone.api.intraorange",
+    "pathRewrite": {
+      "^/api": "/extgateway/v1"
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}
