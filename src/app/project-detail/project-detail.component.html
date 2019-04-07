@@ -1,7 +1,11 @@
 <div class="row mt-1">
   <div class="col-md-1">
     <div class="mt-3">
-        <button type="button" class="btn btn-mdb pr-3 pl-3 pt-1 pb-1" ripple-radius onclick="document.location.href='/projects';"><i class="fas fa-arrow-left fa-2x text-muted"> </i></button>
+      <a href="#" [routerLink]="['/projects']" routerLinkActive="router-link-active" class="waves-light" mdbWavesEffect>
+        <button type="button" class="btn btn-mdb pr-3 pl-3 pt-1 pb-1">  
+          <i class="fas fa-arrow-left fa-2x text-muted"></i>
+        </button>
+      </a>
     </div>
   </div>
   <div class="col-md-11">

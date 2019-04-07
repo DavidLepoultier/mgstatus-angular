@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://mini-gateway-aws.apibackbone.api.intraorange",
+    "target": "https://mini-gateway-aws.apibackbone.orange.com",
     "pathRewrite": {
       "^/api": "/extgateway/v1"
     },
