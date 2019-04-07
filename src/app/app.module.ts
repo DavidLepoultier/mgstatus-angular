@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 const appRoutes: Routes = [
@@ -30,7 +31,7 @@ const appRoutes: Routes = [
     data: { title: 'Project Details' }
   },
   { path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/projects',
     pathMatch: 'full'
   }
   // { path: '**', component: PageNotFoundComponent }
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
     ProjectsComponent,
     ProjectDetailComponent,
     NavigationComponent,
-    DashboardComponent
+    DashboardComponent,
+    FooterComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

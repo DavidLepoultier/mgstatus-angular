@@ -1,38 +1,40 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-light blue-grey lighten-5" [containerInside]="false">
+<div class="container-fluid mb-5">
+  <nav class="navbar navbar-expand-lg navbar-dark special-color-dark fixed-top">
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" href="#">mgStatus</a></mdb-navbar-brand>
 
-  <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#">Navbar</a></mdb-navbar-brand>
+    <!-- Collapsible content -->
+    <links>
 
-  <!-- Collapsible content -->
-  <links>
-
-    <!-- Links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href="#" [routerLink]="['/dashboard']" routerLinkActive="router-link-active" class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="tachometer-alt"></mdb-icon> Dashboard<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a href="#" [routerLink]="['/projects']" routerLinkActive="router-link-active" class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="project-diagram"></mdb-icon> Projects</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="cog"></mdb-icon> Settings</a>
-      </li>
-
-      <!-- Dropdown -->
-      <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Log out</a>
-        </div>
-      </li>
-
-    </ul>
-    <!-- Links -->
-  </links>
-  <!-- Collapsible content -->
-
-</mdb-navbar>
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngFor="let item of navigationSideMenu">
+          <a href="#" [routerLink]="[item.link]" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="{{ item.icon }}"></mdb-icon> {{ item.label }}</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+          <a href="https://github.com/DavidLepoultier/mgstatus-angular" target="_blank" class="nav-link">
+            <i class="fab fa-github fa-2x"></i>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link"><i class="fab fa-twitter"></i></a>
+        </li> -->
+        <!-- Dropdown -->
+        <!-- <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Log out</a>
+          </div>
+        </li> -->
+      </ul>
+      <!-- Links -->
+    </links>
+    <!-- Collapsible content -->
+  </nav>
+</div>
 <!--/.Navbar-->
