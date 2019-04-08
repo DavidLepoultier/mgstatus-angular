@@ -10,7 +10,9 @@
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngFor="let item of navigationSideMenu">
-          <a href="#" [routerLink]="[item.link]" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="{{ item.icon }}"></mdb-icon> {{ item.label }}</a>
+          <a href="#" [routerLink]="[item.link]" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
+            <mdb-icon fas icon="{{ item.icon }}"></mdb-icon> {{ item.label }}
+          </a>
         </li>
       </ul>
       <ul class="navbar-nav nav-flex-icons">
