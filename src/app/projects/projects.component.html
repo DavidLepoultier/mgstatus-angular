@@ -1,4 +1,11 @@
-<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light grey lighten-3">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      Projects
+    </li>
+  </ul>
+</nav>
+<div class="container-fluid px-5 mx-5">
   <div class="row mt-4">
     <div class="col-md-12">
       <div *ngFor="let p of projects; let i=index;">
@@ -6,7 +13,7 @@
           <!-- Card -->
           <div class="card gradient-card">
             <!-- Content -->
-            <a href="/project/{{ p.id }}">
+            <a href="#" [routerLink]="['/project/' + p.id ]" routerLinkActive="router-link-active" class="waves-light" mdbWavesEffect>
               <div class="text-white d-flex bt-r blue-gradient-rgba">
                 <div class="first-content align-self-center p-3">
                   <h3 class="card-title font-weight-bold">{{ p.id }}</h3>

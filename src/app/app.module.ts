@@ -9,9 +9,17 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
+import { NavigationComponent } from './navigation/navigation.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 const appRoutes: Routes = [
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    data: { title: 'Dashboard' }
+  },
   {
     path: 'projects',
     component: ProjectsComponent,
@@ -34,7 +42,10 @@ const appRoutes: Routes = [
     AppComponent,
     KeysPipe,
     ProjectsComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    NavigationComponent,
+    DashboardComponent,
+    FooterComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
