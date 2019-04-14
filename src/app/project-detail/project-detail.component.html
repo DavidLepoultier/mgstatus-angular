@@ -16,10 +16,14 @@
       <div class="card gradient-card">
         <!-- Content -->
         <div class="title-project">
-          <i class="fas fa-project-diagram fa-2x blue-gradient-rgba ml-5"> </i>
+          <i class="fas fa-project-diagram fa-2x  blue-gradient-rgba ml-5"> </i>
           <!-- Data -->
-          <div class="data">
+          <div class="data-title">
             <p class="font-weight-bold">{{ project.id }}</p>
+          </div>
+          <div class="data">          
+            <p>{{ project.describe.contact }}</p>
+            <a href='{{ project.describe.endpoint }}' target="_blank">{{ project.describe.endpoint }}</a>
           </div>
         </div>
         <!-- Content -->
@@ -74,12 +78,7 @@
                               <p class="text-muted ml-2 mr-2 mt-0 mb-0">Uptime: <i class="float-right font-weight-bold">{{ c.uptime }}</i></p> 
                             </div>
                             <div *ngIf="(date - c.time) > 60000">
-                              <div *ngIf="(date - c.time) > 86400000">
-                                <p class="red-text ml-2 mr-2 mt-0 mb-0">Downtime: <i class="float-right font-weight-bold">{{ (date - c.time) | date: "dd 'days', HH:mm:ss" : cet }}</i></p>
-                              </div>
-                              <div *ngIf="(date - c.time) < 86400000">
-                                <p class="red-text ml-2 mr-2 mt-0 mb-0">Downtime: <i class="float-right font-weight-bold">{{ (date - c.time) | date: "HH:mm:ss" : cet }}</i></p>
-                              </div>
+                              <p class="red-text ml-2 mr-2 mt-0 mb-0">Downtime: <i class="float-right font-weight-bold">{{ (c.time) | downtime }}</i></p>
                             </div>
                             <p class="text-muted ml-2 mr-2 mt-0 mb-0">Polling interval: <i class="float-right font-weight-bold">{{ c.configPollInterval }} sec</i></p>
                             <p class="text-muted ml-2 mr-2 mt-0 mb-2">Push state interval: <i class="float-right font-weight-bold">{{ c.checkPushInterval }} sec</i></p>
