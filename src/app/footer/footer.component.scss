@@ -1,3 +1,10 @@
-.fixed-bottom {
-  position: sticky;
+footer.page-footer {
+  a {
+    cursor: pointer;
+		transition: 0.35s;
+		-webkit-transition: 0.35s;
+		&:hover {
+			color: grayscale($color: #bdbdbd);
+		}
+  }
 }
