@@ -47,6 +47,16 @@ export class ProjectDetailComponent implements OnInit {
         this.chartData.push(1);
       }
       this.project.container = container;
+      if (this.project.describe.contact) {
+        this.project.contact = this.project.describe.contact;
+      } else {
+        this.project.contact = '';
+      }
+      if (this.project.describe.endpoint){
+        this.project.endpoint = this.project.describe.endpoint;
+      } else {
+        this.project.endpoint = '';
+      }
     });
   }
 }
