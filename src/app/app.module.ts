@@ -3,7 +3,6 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { KeysPipe } from './projects/projects.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
@@ -14,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './footer/footer.component';
 import { PipesPipe } from './pipes/pipes.pipe';
 import { DowntimePipe } from './pipes/downtime.pipe';
+import { ErrorsComponent } from './errors/errors.component';
 
 const appRoutes: Routes = [
   {
@@ -41,14 +41,14 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    KeysPipe,
     ProjectsComponent,
     ProjectDetailComponent,
     NavigationComponent,
     DashboardComponent,
     FooterComponent,
     PipesPipe,
-    DowntimePipe
+    DowntimePipe,
+    ErrorsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

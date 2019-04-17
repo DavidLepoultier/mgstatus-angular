@@ -3,13 +3,13 @@
     <li class="nav-item">
       <a href="#" [routerLink]="['/projects']" routerLinkActive="router-link-active">Projects</a>
     </li>
-    <i>&nbsp;&nbsp;/&nbsp;&nbsp;</i>
-    <li class="nav-item">
+    <i *ngIf="project.id" >&nbsp;&nbsp;/&nbsp;&nbsp;</i>
+    <li *ngIf="project.id" class="nav-item">
         {{ project.id }}
     </li>
   </ul>
 </nav>
-<div class="container-fluid w-responsive pb-5">
+<div *ngIf="project.id" class="container-fluid w-responsive pb-5">
   <div class="row mt-5">
     <div class="col-md-12">
       <!-- Card -->
@@ -142,4 +142,7 @@
       </div> -->
     </div>
   </div>
+</div>
+<div *ngIf="error" class="container-fluid w-responsive pb-5">
+  <app-errors></app-errors>
 </div>

@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProjectsComponent implements OnInit {
 
+  error:any = null;
+  errorMessage:any = '';
   projects:any = [];
 
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
@@ -18,28 +20,41 @@ export class ProjectsComponent implements OnInit {
   }
 
   getResources() {
-    this.projects = [];
-    this.rest.getResources().subscribe((data: {}) => {
-      this.projects = data;
-      const date = Date.now();
-      for (let index = 0; index < this.projects.length; index++) {
-        const element = this.projects[index];
-        var running = 0;
-        for (let container = 0; container < element.containers.length; container++) {
-          if ((date - element.containers[container].time) < 60000) {
-            running++;
-          } 
-        }
-        if ( running === element.containers.length) {
-          this.projects[index].containersState = 'indeterminate';
-        } else if ( running > 0) {
-          this.projects[index].containersState = 'amber';
-        } else {
-          this.projects[index].containersState = 'grey';
-        }
-        this.projects[index].containersRunning = running;
+    this.rest.getResources().subscribe(
+      data  => {
+        this.handlerServerResponse(data);
+      },
+      error => {
+        this.handlerError(error);
       }
-    });
+    );
+  }
+
+  handlerError(error: any) {
+    this.error = error.error;
+  }
+
+  handlerServerResponse(resources: any) {
+    this.projects = [];
+    this.projects = resources.resources;
+    const date = Date.now();
+    for (let index = 0; index < this.projects.length; index++) {
+      const element = this.projects[index];
+      var running = 0;
+      for (let container = 0; container < element.containers.length; container++) {
+        if ((date - element.containers[container].time) < 60000) {
+          running++;
+        } 
+      }
+      if ( running === element.containers.length) {
+        this.projects[index].containersState = 'indeterminate';
+      } else if ( running > 0) {
+        this.projects[index].containersState = 'amber';
+      } else {
+        this.projects[index].containersState = 'grey';
+      }
+      this.projects[index].containersRunning = running;
+    }
   }
 
   add() {

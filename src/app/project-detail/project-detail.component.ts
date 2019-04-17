@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProjectDetailComponent implements OnInit {
 
+  error:any = null;
+  errorMessage:any = '';
+
   project:any = [];
   date = Date.now();
   chartData:any = [];
@@ -31,11 +34,25 @@ export class ProjectDetailComponent implements OnInit {
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.project = [];
-    this.chartData = [];
-    this.chartColors[0].backgroundColor = [];
-    this.rest.getResource(this.route.snapshot.params['id']).subscribe((data: {}) => {
-      this.project = data;
+    this.rest.getResource(this.route.snapshot.params['id']).subscribe(
+      data  => {
+        this.handlerServerResponse(data);
+      },
+      error => {
+        this.handlerError(error);
+      }
+    );
+  }
+  
+  handlerError(error: any) {
+    this.error = error.error;
+  }
+
+  handlerServerResponse(response: any) {
+    if (response.success) {
+      this.chartData = [];
+      this.chartColors[0].backgroundColor = [];
+      this.project = response.resource[0];
       var container = 0;
       for (let index = 0; index < this.project.containers.length; index++) {
         if ((this.date - this.project.containers[index].time) < 60000) {
@@ -57,6 +74,7 @@ export class ProjectDetailComponent implements OnInit {
       } else {
         this.project.endpoint = '';
       }
-    });
+    }
   }
 }
+

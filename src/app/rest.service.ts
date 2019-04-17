@@ -29,7 +29,7 @@ export class RestService {
   }
 
   getResource(id: any): Observable<any> {
-    return this.http.get(endpoint + 'resources/' + id).pipe(
+    return this.http.get(endpoint + `resources/${id}`).pipe(
       map(this.extractData));
   }
 
@@ -49,7 +49,7 @@ export class RestService {
   }
 
   deleteProject (id: any): Observable<any> {
-    return this.http.delete<any>(endpoint + 'resources/' + id, httpOptions).pipe(
+    return this.http.delete<any>(endpoint + `resources/${id}`, httpOptions).pipe(
       tap(_ => console.log(`deleted project id=${id}`)),
       catchError(this.handleError<any>('deleteProject'))
     );
