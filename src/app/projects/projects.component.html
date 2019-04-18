@@ -5,7 +5,7 @@
     </li>
   </ul>
 </nav>
-<div class="container-fluid w-responsive mx-auto p-3 mt-2">
+<div *ngIf="projects.success" class="container-fluid w-responsive mx-auto p-3 mt-2">
   <div class="row mt-4">
     <div class="col-md-12">
       <div *ngFor="let p of projects; let i=index;">
@@ -61,4 +61,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="error" class="container-fluid w-responsive pb-5">
+  <app-errors></app-errors>
 </div>

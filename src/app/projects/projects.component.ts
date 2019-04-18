@@ -36,6 +36,7 @@ export class ProjectsComponent implements OnInit {
 
   handlerServerResponse(resources: any) {
     this.projects = [];
+    this.projects.success = resources.success; 
     this.projects = resources.resources;
     const date = Date.now();
     for (let index = 0; index < this.projects.length; index++) {
