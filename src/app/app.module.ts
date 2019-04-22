@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -14,6 +15,8 @@ import { FooterComponent } from './footer/footer.component';
 import { PipesPipe } from './pipes/pipes.pipe';
 import { DowntimePipe } from './pipes/downtime.pipe';
 import { ErrorsComponent } from './errors/errors.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 const appRoutes: Routes = [
   {
@@ -30,6 +33,16 @@ const appRoutes: Routes = [
     path: 'project/:id',
     component: ProjectDetailComponent,
     data: { title: 'Project Details' }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Login' }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: { title: 'register' }
   },
   { path: '',
     redirectTo: '/projects',
@@ -48,11 +61,14 @@ const appRoutes: Routes = [
     FooterComponent,
     PipesPipe,
     DowntimePipe,
-    ErrorsComponent
+    ErrorsComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MDBBootstrapModule.forRoot(),

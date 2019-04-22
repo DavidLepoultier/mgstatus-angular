@@ -5,7 +5,11 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { environment } from './../environments/environment';
 
 
-const endpoint = environment.apiUrl;
+const endpoint = {
+  "api": environment.apiUrl,
+  "auth": environment.authUrl
+}
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -24,32 +28,32 @@ export class RestService {
   }
 
   getResources(): Observable<any> {
-    return this.http.get(endpoint + 'resources').pipe(
+    return this.http.get(endpoint.api + 'resources').pipe(
       map(this.extractData));
   }
-
+  
   getResource(id: any): Observable<any> {
-    return this.http.get(endpoint + `resources/${id}`).pipe(
+    return this.http.get(endpoint.api + `resources/${id}`).pipe(
       map(this.extractData));
   }
 
   addProject (project: any): Observable<any> {
     console.log(project);
-    return this.http.post<any>(endpoint + 'resources', JSON.stringify(project), httpOptions).pipe(
+    return this.http.post<any>(endpoint.api + 'resources', JSON.stringify(project), httpOptions).pipe(
       tap((project) => console.log(`added project w/ id=${project.id}`)),
       catchError(this.handleError<any>('addProject'))
     );
   }
 
   updateProduct (id: any, product: any): Observable<any> {
-    return this.http.put(endpoint + 'products/' + id, JSON.stringify(product), httpOptions).pipe(
+    return this.http.put(endpoint.api + 'products/' + id, JSON.stringify(product), httpOptions).pipe(
       tap(_ => console.log(`updated product id=${id}`)),
       catchError(this.handleError<any>('updateProduct'))
     );
   }
 
   deleteProject (id: any): Observable<any> {
-    return this.http.delete<any>(endpoint + `resources/${id}`, httpOptions).pipe(
+    return this.http.delete<any>(endpoint.api + `resources/${id}`, httpOptions).pipe(
       tap(_ => console.log(`deleted project id=${id}`)),
       catchError(this.handleError<any>('deleteProject'))
     );

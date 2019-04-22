@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-light grey lighten-3">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      Login
+    </li>
+  </ul>
+</nav>
+<div *ngIf="error; then errorBlock"></div>
+<ng-template #errorBlock>
+  <div class="container-fluid w-responsive mx-auto p-3 mt-2">
+      <div class="row mt-4">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="red white-text text-center pt-2 login-error">
+              <p class="h5">Sign in</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+  </div>
+</ng-template>
+<div *ngIf="!isAuthenticated" class="container-fluid w-responsive mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-3 min-heigth"></div>
+    <div class="col-md-6">
+      <div class="card">
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="text-center border border-light p-5">
+          <p class="h4 mb-4">Sign in</p>
+
+          <!-- Email -->
+          <input type="email" ngModel name="email" class="form-control mb-4" placeholder="E-mail" required>
+          <!-- Password -->
+          <input [type]="show ? 'text' : 'password'" ngModel name="password" class="form-control" placeholder="Password" required>
+          <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
+
+          <!-- <div class="d-flex justify-content-around">
+              <div>
+                  !-- Remember me /-/->
+                  <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                      <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+                  </div>
+              </div>
+              <div>
+                  !-- Forgot password /-/->
+                  <a href="">Forgot password?</a>
+              </div>
+          </div> -->
+
+          <!-- Sign in button -->
+          <button class="btn btn-info btn-block my-4" type="submit" [disabled]="loginForm.invalid">Sign in</button>
+
+          <!-- Register -->
+          <p>No account?
+            <a href="#" [routerLink]="['/register']" routerLinkActive="router-link-active">Create one!</a>
+          </p>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+<div *ngIf="isAuthenticated" class="container-fluid w-responsive mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-3 min-heigth"></div>
+    <div class="col-md-6">
+      {{ welcomeMessage}}
+      <pre>
+        {{ jbbData | json }}
+      </pre>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

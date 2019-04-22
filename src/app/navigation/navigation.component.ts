@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -7,16 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
   
+  constructor(public auth:AuthService) { }
+
   navigation = [
     //{ link: 'dashboard', label: 'dashboard', icon: 'tachometer-alt' },
-    { link: 'projects', label: 'Projects', icon: 'project-diagram' }
+    { link: 'projects', label: 'Projects', icon: 'project-diagram' },
   ];
   navigationSideMenu = [
-    ...this.navigation
-    //{ link: 'settings', label: 'csrx.menu.settings' }
+    ...this.navigation,
   ];
 
-  constructor() { }
+  navigationLogin = [
+    { link: 'login', label: 'Login', icon: 'user' }
+  ];
 
   ngOnInit() {
   }

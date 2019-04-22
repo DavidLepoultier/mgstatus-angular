@@ -1,4 +1,8 @@
 
+.min-heigth {
+	min-height: 410px;
+}
+
 [class^="title-project"],
 [class*=" title-project"] {
   .h2 {
@@ -37,6 +41,7 @@
     }
   }
   .data {
+    margin-left: auto;
     float: right;
     margin-top: 1rem;
     text-align: right;
