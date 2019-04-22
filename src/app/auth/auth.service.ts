@@ -41,10 +41,8 @@ export class AuthService {
   }
 
   register(credentials: any): Observable<any> {
-    // return this.http.post(endpoint.auth + 'register', credentials).pipe(
-    //   map(this.extractData));
-    console.log(credentials);
-    return credentials;
+    return this.http.post(endpoint.auth + 'register', credentials).pipe(
+      map(this.extractData));
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
