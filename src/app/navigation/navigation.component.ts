@@ -12,10 +12,13 @@ export class NavigationComponent implements OnInit {
 
   navigation = [
     //{ link: 'dashboard', label: 'dashboard', icon: 'tachometer-alt' },
-    { link: 'projects', label: 'Projects', icon: 'project-diagram' },
+    { link: 'projects', label: 'r-Gate', icon: 'project-diagram' },
   ];
-  navigationSideMenu = [
-    ...this.navigation,
+  
+  navigationSideMenu = [];
+
+  navigationAuth = [
+    { link: 'developer', label: 'myApps', icon: 'mobile-alt' },
   ];
 
   navigationLogin = [
@@ -23,6 +26,21 @@ export class NavigationComponent implements OnInit {
   ];
 
   ngOnInit() {
+    
   }
 
+  checkAuth() {
+    if(this.auth.userIsLoggedIn()) {
+      this.navigationSideMenu = [
+        ...this.navigation,
+        ...this.navigationAuth
+      ];
+      return true;
+    } else {
+      this.navigationSideMenu = [
+        ...this.navigation
+      ];
+      return true;
+    }
+  }
 }

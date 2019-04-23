@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service'
+import { AuthService } from '../auth.service';
+import { NotifierSvc } from '../../services/notifier.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,18 +11,20 @@ import { AuthService } from '../auth.service'
 export class RegisterComponent implements OnInit {
   show: boolean;
   eyeIcon: any;
-  error:any = null;
   jbbData:any = null;
   isAuthenticated:boolean = false;
+  notifier: NotifierSvc;
 
-  constructor(private auth:AuthService) { 
+  constructor(private auth:AuthService, notifierSvc:NotifierSvc, private router:Router) { 
     this.show = false;
     this.eyeIcon = 'fa-eye';
+    this.notifier = notifierSvc;
   }
 
   ngOnInit() {
     if(this.auth.userIsLoggedIn()) {
       this.refreshFlags();
+      this.router.navigate(['/']);
     }
   }
 
@@ -45,15 +49,16 @@ export class RegisterComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.error = error.error;
-    console.log('failure', error)
+    this.notifier.showNotification(
+      'error',
+      error.error
+    );
   }
 
   handlerLoginSuccess(data: any) {
-    this.error = null;
-    console.log('success', data);
-    this.jbbData = data;
+    this.jbbData = JSON.stringify(data);
     this.refreshFlags();
-    sessionStorage.setItem('jbb-data', JSON.stringify(this.jbbData))
+    sessionStorage.setItem('jbb-data', this.jbbData)
+    this.router.navigate(['/']);
   }
 }

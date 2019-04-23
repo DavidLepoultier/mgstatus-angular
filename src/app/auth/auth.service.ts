@@ -5,7 +5,6 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 const endpoint = {
-  "api": environment.apiUrl,
   "auth": environment.authUrl
 }
 
@@ -28,7 +27,7 @@ export class AuthService {
   }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(endpoint.auth + 'login', credentials).pipe(
+    return this.http.post(endpoint.auth + 'login', credentials, httpOptions).pipe(
       map(this.extractData));
   }
 
@@ -41,7 +40,7 @@ export class AuthService {
   }
 
   register(credentials: any): Observable<any> {
-    return this.http.post(endpoint.auth + 'register', credentials).pipe(
+    return this.http.post(endpoint.auth + 'register', credentials, httpOptions).pipe(
       map(this.extractData));
   }
 

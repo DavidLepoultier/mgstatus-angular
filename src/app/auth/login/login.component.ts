@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { NotifierSvc } from '../../services/notifier.service'
+import { Router } from '@angular/router';
+
 import { restoreView } from '@angular/core/src/render3';
 
 @Component({
@@ -11,19 +14,21 @@ export class LoginComponent implements OnInit {
 
   show: boolean;
   eyeIcon: any;
-  error:any = null;
   jbbData:any = null;
   isAuthenticated:boolean = false;
   welcomeMessage:String = '';
+  notifier: NotifierSvc;
 
-  constructor(private auth:AuthService) { 
+  constructor(private auth:AuthService, notifierSvc:NotifierSvc, private router:Router) { 
     this.show = false;
     this.eyeIcon = 'fa-eye';
+    this.notifier = notifierSvc;
   }
 
   ngOnInit() {
     if(this.auth.userIsLoggedIn()) {
       this.refreshFlags();
+      this.router.navigate(['/']);
     }
   }
 
@@ -49,15 +54,16 @@ export class LoginComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.error = error.error;
-    console.log('failure', error)
+    this.notifier.showNotification(
+      'error',
+      error.error.message
+    );
   }
 
   handlerLoginSuccess(data: any) {
-    this.error = null;
-    console.log('success', data);
     this.jbbData = data;
     this.refreshFlags();
     sessionStorage.setItem('jbb-data', JSON.stringify(this.jbbData))
+    this.router.navigate(['/']);
   }
 }

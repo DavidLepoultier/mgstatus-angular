@@ -6,6 +6,7 @@
     </li>
   </ul>
 </nav>
+<notifier-container></notifier-container>
 <div class="container-fluid w-responsive mx-auto p-3 mt-2">
   <div class="row mt-4">
     <div class="col-md-3 min-heigth"></div>
@@ -25,12 +26,12 @@
           </div>
         
           <!-- E-mail -->
-          <input type="email" ngModel name="email" class="form-control mb-4" placeholder="E-mail" required>
+          <input type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" placeholder="E-mail" required>
         
           <!-- Password -->
           <input ngModel [type]="show ? 'text' : 'password'" required pattern="^(?=[^\d_].*?\d)\w(\w|[!@#$%]){7,20}" class="form-control" name="password" placeholder="Password">
           <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
-          <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+          <small class="form-text text-muted mb-4">
               At least 8 characters and 1 digit
           </small>
 
@@ -48,6 +49,5 @@
     <div class="col-md-3"></div>
   </div>
 </div>
-
 
 <!-- Default form register -->

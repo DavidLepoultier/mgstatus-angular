@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light grey lighten-3">
+<nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       Projects
@@ -9,19 +9,19 @@
 <ng-template #errorBlock>
   <div class="container-fluid mx-auto p-3 mt-2">
     <div class="row mt-4">
-      <div class="col-md-1 min-heigth"></div>
-      <div class="col-md-10">
+      <div class="col-md-1 col-xl-2 min-heigth"></div>
+      <div class="col-md-10 col-xl-8">
         <app-errors></app-errors>
       </div>
-      <div class="col-md-1"></div>
+      <div class="col-md-1 col-xl-2"></div>
     </div>
   </div>
 </ng-template>
 <ng-template #projectBlock>
   <div class="container-fluid mx-auto p-3 mt-2">
     <div class="row mt-4">
-      <div class="col-md-1 min-heigth"></div>
-      <div class="col-md-10">
+      <div class="col-md-1 col-xl-2 min-heigth"></div>
+      <div class="col-md-10 col-xl-8">
         <div *ngFor="let p of projects; let i=index;">
           <div class="triple-column mb-3">
             <!-- Card -->
@@ -59,7 +59,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-1"></div>
+      <div class="col-md-1 col-xl-2"></div>
     </div>
   </div>
 </ng-template>
