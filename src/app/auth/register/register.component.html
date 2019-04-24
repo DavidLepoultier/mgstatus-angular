@@ -12,28 +12,37 @@
     <div class="col-md-3 min-heigth"></div>
     <div class="col-md-6">
       <div *ngIf="!isAuthenticated" class="card">
-        <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)" class="text-center border border-light p-5">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)" class="md-form text-center my-0 p-5">
           <p class="h4 mb-4">Sign up</p>
           <div class="form-row mb-4">
-            <div class="col">
+            <div class="md-form  my-0 col">
               <!-- First name -->
-              <input type="text" ngModel name="firstName" class="form-control" placeholder="First name" required>
+              <input it="firsName" type="text" ngModel name="firstName" class="form-control" mdbInput required>
+              <label for="firstName" class="ml-1">Firt name</label>
             </div>
-            <div class="col">
+            <div class="md-form  my-0 col">
               <!-- Last name -->
-              <input type="text" ngModel name="lastName" class="form-control" placeholder="Last name" required>
+              <input id="lastName" type="text" ngModel name="lastName" class="form-control"  mdbInput required>
+              <label for="lastName" class="ml-1">Last name</label>
             </div>
           </div>
         
           <!-- E-mail -->
-          <input type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" placeholder="E-mail" required>
-        
+          <div class="md-form my-0 pb-2">
+            <input id="email" type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" mdbInput required>
+            <label for="email">E-mail</label>
+          </div>
+          
           <!-- Password -->
-          <input ngModel [type]="show ? 'text' : 'password'" required pattern="^(?=[^\d_].*?\d)\w(\w|[!@#$%]){7,20}" class="form-control" name="password" placeholder="Password">
-          <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
-          <small class="form-text text-muted mb-4">
-              At least 8 characters and 1 digit
-          </small>
+            <div class="md-form my-0">
+              <input id="pass" [type]="show ? 'text' : 'password'" ngModel name="password" class="form-control" mdbInput required>
+              <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
+              <label for="pass">Password</label>
+              <small class="form-text text-muted mb-4">
+                At least 8 characters and 1 digit
+              </small>
+            </div>
+          
 
           <!-- Sign up button -->
           <button class="btn btn-info my-4 btn-block" type="submit" [disabled]="registerForm.invalid">Sign in</button>

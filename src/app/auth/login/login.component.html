@@ -11,14 +11,23 @@
     <div class="col-md-3 col-xl-4 min-heigth"></div>
     <div class="col-md-6 col-xl-4">
       <div class="card">
-        <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="text-center border border-light p-5">
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="md-form text-center p-4">
           <p class="h4 mb-4">Sign in</p>
 
           <!-- Email -->
-          <input type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" placeholder="E-mail" required>
+          <div class="md-form my-0">
+            <input id="email" type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" mdbInput required>
+            <label for="email">E-mail</label>
+          </div>
+          
           <!-- Password -->
-          <input [type]="show ? 'text' : 'password'" ngModel name="password" class="form-control" placeholder="Password" required>
-          <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
+          <div class="md-form my-0 pb-2">
+            <input id="password" [type]="show ? 'text' : 'password'" ngModel name="password" class="form-control" mdbInput required>
+            <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
+            <label for="password">Password</label>
+          </div>
+          <!--  -->
+
 
           <!-- <div class="d-flex justify-content-around">
               <div>

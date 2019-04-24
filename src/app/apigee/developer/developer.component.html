@@ -10,7 +10,72 @@
   <div class="row mt-4">
     <div class="col-md-1 col-xl-2 min-heigth"></div>
     <div class="col-md-10 col-xl-8">
-      {{ myApps }}
+      <!-- Table with panel -->
+      <div class="card row">
+        <!--Card image-->
+        <div class="row title-project gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+          <div>
+            <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-th-large mt-0"></i>
+            </button>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-columns mt-0"></i>
+            </button> -->
+          </div>
+          my Applications
+          <div>
+            <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-pencil-alt mt-0"></i>
+            </button>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="far fa-trash-alt mt-0"></i>
+            </button>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-info-circle mt-0"></i>
+            </button> -->
+          </div>
+        </div>
+        <!--/Card image-->
+        <div class="row">
+          <div class="col-md-4 px-5">
+            <div class="md-form my-0">
+              <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput>
+              <label for="search">Search</label>
+            </div>
+          </div>
+        </div>
+        <div class="px-4">
+        <table mdbTable hover="true"class="mb-3">
+            <thead>
+            <tr>
+              <th class="th-md font-weight-bold">
+                <a (click)="sortBy('devApp')">Application
+                  <mdb-icon fas icon="sort" class="ml-1"></mdb-icon>
+                </a>
+              </th>
+              <th class="th-md data-table-right font-weight-bold">
+                Status
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let el of myApps; let i = index">
+                <th scope="row">
+                  <a href="#" [routerLink]="['/developer/' + el.devApp]" routerLinkActive="router-link-active" class="table-link font-weight-bold">{{el.devApp}}</a>
+                </th>
+                <ng-container *ngIf="el.approved; then approved; else notApproved"></ng-container>
+                <ng-template #approved>
+                    <td class="th-md data-table-right"><mdb-badge pill="true" success="true" class="p-1 badge-font">{{el.status}}</mdb-badge></td>
+                </ng-template>
+                <ng-template #notApproved>
+                    <td class="th-md data-table-right"><mdb-badge  pill="true" warning="true" class="p-1">{{el.status}}</mdb-badge></td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Table with panel -->
     </div>
     <div class="col-md-1 col-xl-2 min-heigth"></div>
   </div>
