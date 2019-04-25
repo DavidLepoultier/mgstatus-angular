@@ -12,6 +12,13 @@
   z-index: 2;
 }
 
+[class^="btn-outline-"],
+[class*=" btn-outline-"] {
+  border: 0 !important;
+  box-shadow: unset;
+  margin: 0;
+}
+
 [class^="title-project"],
 [class*=" title-project"] {
   padding: 1.7rem;

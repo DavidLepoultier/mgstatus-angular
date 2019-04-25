@@ -21,11 +21,13 @@ export class MyAppsComponent implements OnInit {
   previous: string;
   show: boolean;
   eyeIcon: string;
-
+  showModal: boolean;
+  content: string;
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable: MdbTableService ) {
     this.notifier = notifierSvc;
     this.show = false;
+    this.showModal = false;
     this.eyeIcon = 'fa-eye';
   }
 
@@ -38,6 +40,17 @@ export class MyAppsComponent implements OnInit {
       this.router.navigate(['/']);
     }
     this.getDeveloperApps(this.developer);
+  }
+
+  modalShow(value: any) {
+    console.log('value:', value);
+    this.showModal = true; // Show-Hide Modal Check
+    console.log('showModal:', this.showModal);
+    this.content = value; // Dynamic Data
+  }
+
+  modalHide(){
+    this.showModal = false;
   }
 
   showInput() {

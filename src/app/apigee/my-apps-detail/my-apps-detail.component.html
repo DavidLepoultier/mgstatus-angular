@@ -1,32 +1,32 @@
-<mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-form-field>
-        <input matInput placeholder="First name">
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput placeholder="Age">
-      </mat-form-field>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Self aware panel
-        </mat-panel-title>
-        <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
-    </mat-expansion-panel>
-  </mat-accordion>
+<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+  (click)="frame.show()" mdbWavesEffect>Launch Modal</button>
+
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog cascading-modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <div class="text-center mt-5 mb-4">
+        <h4 class="modal-title font-weight-bold">Are you sure?</h4>
+      </div>
+      <div class="text-muted text-center">
+        <p><i>Do you really want to delete these records? This process cannot be undone.</i></p>
+      </div>
+      <div class="modal-content">
+        <div class="row">
+        <div class="col-md-6">
+          <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3" data-dismiss="modal" (click)="frame.hide()" mdbWavesEffect>
+            Cancel
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3" mdbWavesEffect>
+            Delete
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

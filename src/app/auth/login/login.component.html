@@ -40,8 +40,9 @@
           </div> -->
 
           <!-- Sign in button -->
-          <button class="btn btn-info btn-block my-4" type="submit" [disabled]="loginForm.invalid">Sign in</button>
-
+          <button mdbBtn color="danger" type="submit" [disabled]="loginForm.invalid" class="waves-light" mdbWavesEffect>Log in
+            <i class="fas fa-sign-in-alt ml-1"></i>
+          </button>
           <!-- Register -->
           <p>No account?
             <a href="#" [routerLink]="['/register']" routerLinkActive="router-link-active">Create one!</a>

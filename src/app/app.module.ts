@@ -20,7 +20,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { MyAppsComponent } from './apigee/my-apps/my-apps.component';
 import { MyAppsDetailComponent } from './apigee/my-apps-detail/my-apps-detail.component';
-import { MatTabsModule, MatExpansionModule } from '@angular/material';
+import { MatTabsModule, MatExpansionModule, MatButtonModule } from '@angular/material';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 
 const appRoutes: Routes = [
@@ -137,6 +137,7 @@ const customNotifierOptions: NotifierOptions = {
     MDBBootstrapModule.forRoot(),
     MatTabsModule,
     MatExpansionModule,
+    MatButtonModule,
     ChartsModule
   ],
   providers: [],
