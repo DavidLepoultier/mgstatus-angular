@@ -1,20 +1,32 @@
-<nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <a href="#" [routerLink]="['/myApps']" routerLinkActive="router-link-active">myApps</a>
-    </li>
-    <i *ngIf="project.id" >&nbsp;&nbsp;/&nbsp;&nbsp;</i>
-    <li *ngIf="project.id" class="nav-item">
-        {{ project.id }}
-    </li>
-  </ul>
-</nav>
-<notifier-container></notifier-container>
-<div class="container-fluid mx-auto p-3 mt-2">
-  <div class="row mt-4">
-    <div class="col-md-1 col-xl-2 min-heigth"></div>
-    <div class="col-md-10 col-xl-8">
-    </div>
-    <div class="col-md-1 col-xl-2 min-heigth"></div>
-  </div>
-</div>
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal data
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field>
+        <input matInput placeholder="First name">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Age">
+      </mat-form-field>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Self aware panel
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </mat-accordion>

@@ -1,11 +1,6 @@
-<!-- Default form register -->
-<nav class="navbar navbar-expand-lg navbar-light grey lighten-3">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      Register
-    </li>
-  </ul>
-</nav>
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="active">Register</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
 <notifier-container></notifier-container>
 <div class="container-fluid w-responsive mx-auto p-3 mt-2">
   <div class="row mt-4">
@@ -29,13 +24,13 @@
         
           <!-- E-mail -->
           <div class="md-form my-0 pb-2">
-            <input id="email" type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" mdbInput required>
+            <input id="email" type="email" ngModel name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control mb-4" mdbInputDirective required>
             <label for="email">E-mail</label>
           </div>
           
           <!-- Password -->
             <div class="md-form my-0">
-              <input id="pass" [type]="show ? 'text' : 'password'" ngModel name="password" class="form-control" mdbInput required>
+              <input id="pass" [type]="show ? 'text' : 'password'" ngModel name="password" required pattern="^(?=[^\d_].*?\d)\w(\w|[!@#$%]){7,20}" class="form-control" mdbInputDirective required>
               <span (click)="password()" class="fas {{ eyeIcon }} field-icon"></span>
               <label for="pass">Password</label>
               <small class="form-text text-muted mb-4">

@@ -1,38 +1,19 @@
-<nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      myApps
-    </li>
-  </ul>
-</nav>
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="active">myApps</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
 <notifier-container></notifier-container>
 <div class="container-fluid mx-auto p-3 mt-2">
   <div class="row mt-4">
     <div class="col-md-1 col-xl-2 min-heigth"></div>
     <div class="col-md-10 col-xl-8">
       <!-- Table with panel -->
-      <div class="card row">
+      <div class="card row pb-5">
         <!--Card image-->
         <div class="row title-project gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
           <div>
-            <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-              <i class="fas fa-th-large mt-0"></i>
-            </button>
-            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-              <i class="fas fa-columns mt-0"></i>
-            </button> -->
-          </div>
-          my Applications
-          <div>
-            <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-              <i class="fas fa-pencil-alt mt-0"></i>
-            </button>
-            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-              <i class="far fa-trash-alt mt-0"></i>
-            </button>
-            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-              <i class="fas fa-info-circle mt-0"></i>
-            </button> -->
+            </div>
+              my Applications
+            <div>
           </div>
         </div>
         <!--/Card image-->
@@ -45,37 +26,76 @@
           </div>
         </div>
         <div class="px-4">
-        <table mdbTable hover="true"class="mb-3">
-            <thead>
-            <tr>
-              <th class="th-md font-weight-bold">
-                <a (click)="sortBy('devApp')">Application
-                  <mdb-icon fas icon="sort" class="ml-1"></mdb-icon>
-                </a>
-              </th>
-              <th class="th-md data-table-right font-weight-bold">
-                <span class="mr-4">Status</span>
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let el of myApps; let i = index">
-                <th scope="row">
-                  <a href="#" [routerLink]="['/myApps/' + el.devApp]" routerLinkActive="router-link-active" class="table-link font-weight-bold">{{el.devApp}}</a>
-                </th>
-                <ng-container *ngIf="el.approved; then approved; else notApproved"></ng-container>
-                <ng-template #approved>
-                    <td class="th-md data-table-right"><mdb-badge pill="true" success="true" class="p-1 badge-font">{{el.status | titlecase}}</mdb-badge></td>
-                </ng-template>
-                <ng-template #notApproved>
-                    <td class="th-md data-table-right"><mdb-badge  pill="true" warning="true" class="p-1 badge-font">{{el.status | titlecase}}</mdb-badge></td>
-                </ng-template>
-              </tr>
-            </tbody>
-          </table>
+          <mat-accordion>
+            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of myApps; let i = index">
+              <!-- <a class="col-md-12 mt-4 card" (click)="container.toggle()" mdbWavesEffect> -->
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="text-muted font-weight-bold">{{ el.name }}</mat-panel-title>
+                  <mat-panel-description>
+                    <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>
+                    <ng-template #approved>
+                      <mdb-badge pill="true" success="true" class="badge-font">{{el.status | titlecase}}</mdb-badge>
+                    </ng-template>
+                    <ng-template #notApproved>
+                      <mdb-badge  pill="true" warning="true" class="badge-font">{{el.status | titlecase}}</mdb-badge>
+                    </ng-template>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+              <!-- </a> -->
+              <mat-tab-group animationDuration="0ms" class="mx-5">
+                <mat-tab label="Keys">
+                  <form class="md-form text-center ">                                              
+                    <div class="md-form my-0 pb-2">
+                      <input [type]="show ? 'text' : 'password'" value="{{el.credentials[0].consumerKey}}" class="form-control" mdbInput disabled="disabled">
+                      <span (click)="showInput()" class="fas {{ eyeIcon }} field-icon"></span>
+                      <label for="consumerKey">Consumer Key</label>
+                    </div>
+                    <div class="md-form my-0 pb-2">
+                      <input [type]="show ? 'text' : 'password'" value="{{el.credentials[0].consumerSecret}}" class="form-control" mdbInput disabled="disabled">
+                      <label for="consumerSecret">Consumer Secret</label>
+                    </div>
+                    <div class="md-form my-0 pb-2">
+                      <input type="text" value="{{el.credentials[0].issuedAt | dateFormat}}" class="form-control" mdbInput disabled="disabled">
+                      <label for="keyIssued">Key Issued</label>
+                    </div>
+                    <div class="md-form my-0">
+                      <input type="text" value="{{el.credentials[0].expiresAt | dateFormat}}" class="form-control" mdbInput disabled="disabled">
+                      <label for="expires">Expires</label>
+                    </div>
+                  </form>
+                </mat-tab>
+                <mat-tab label="Products" >
+                  <form class="md-form text-center ">                 
+                    <div *ngFor="let p of el.credentials[0].apiProducts" class="md-form my-0 pb-2">
+                      <input type="text" value="{{p.apiproduct}}" class="form-control" mdbInput disabled="disabled">
+                      <label for="ApiProduct">Api Product</label>
+                      <ng-container *ngIf="p.status === 'approved'; then pApproved; else pNotApproved"></ng-container>
+                      <ng-template #pApproved>
+                        <mdb-badge pill="true" success="true" class="p-1 badge-font badge-product">{{p.status | titlecase}}</mdb-badge>
+                      </ng-template>
+                      <ng-template #pNotApproved>
+                        <mdb-badge  pill="true" warning="true" class="p-1 badge-font badge-product">{{p.status | titlecase}}</mdb-badge>
+                      </ng-template>
+                    </div>
+                  </form>
+                </mat-tab>
+                <mat-tab label="Details">
+                  <form class="md-form text-center ">                 
+                    <div *ngFor="let a of el.attributes" class="md-form my-0 pb-2">
+                      <input type="text" value="{{a.value}}" class="form-control" mdbInput disabled="disabled">
+                      <label for="{{a.value}}">{{a.name}}</label>
+                    </div>
+                    <div class="md-form my-0 pb-2">
+                      <input type="text" value="{{el.callbackUrl}}" class="form-control" mdbInput disabled="disabled">
+                      <label for="callbackUrl">callbackUrl</label>
+                    </div>
+                  </form>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
       </div>
-      <!-- Table with panel -->
     </div>
     <div class="col-md-1 col-xl-2 min-heigth"></div>
   </div>

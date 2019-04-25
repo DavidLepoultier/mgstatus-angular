@@ -13,7 +13,7 @@ import { restoreView } from '@angular/core/src/render3';
 export class LoginComponent implements OnInit {
 
   show: boolean;
-  eyeIcon: any;
+  eyeIcon: string;
   jbbData:any = null;
   isAuthenticated:boolean = false;
   welcomeMessage:String = '';

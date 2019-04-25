@@ -1,3 +1,16 @@
+.min-heigth-tab {
+	min-height: 270px;
+}
+
+.mat-expansion-panel-header-description {
+  display: unset;
+}
+
+.badge-product {
+  float: right;
+  margin-top: -35px;
+  z-index: 2;
+}
 
 [class^="title-project"],
 [class*=" title-project"] {
@@ -12,27 +25,6 @@
   .h2 {
     font-weight: 500;
   }
-//   .fab {
-//     padding: 1.7rem;
-//     //font-size: 2rem;
-//     color: white;
-//     text-align: left;
-//     margin-left: 1rem;
-//     margin-top: -1.5rem;
-//     border-radius: 3px;
-//     box-shadow: 0 2px 9px 0 rgba(0,0,0,.2), 0 2px 13px 0 rgba(0,0,0,.19);
-//   }
-//   .fas {
-//     padding: 1.7rem;
-//     float: left;
-//     //font-size: 2rem;
-//     color: white;
-//     text-align: left;
-//     margin-left: 1rem;
-//     margin-top: -1.5rem;
-//     border-radius: 3px;
-//     box-shadow: 0 2px 9px 0 rgba(0,0,0,.2), 0 2px 13px 0 rgba(0,0,0,.19);
-//   }
   .data-title {
     float: left;
     text-align: left;
@@ -59,6 +51,13 @@
   }
 }
 
+.card {
+  //cursor: pointer;
+  transition: box-shadow .2s linear;
+  -webkit-transition: box-shadow .2s linear;
+  border-radius: 0rem;
+}
+
 .data-table-right {
   margin-left: auto;
   text-align: right;
@@ -66,6 +65,9 @@
 
 .badge-font {
   font-size: 0.9rem;
+  float: right;
+  text-align: right;
+  margin-right: 2rem;
 }
 
 .table-link {

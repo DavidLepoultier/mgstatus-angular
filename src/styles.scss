@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~angular-notifier/styles";
 
+.field-icon {
+  float: right;
+  margin-top: -35px;
+  z-index: 2;
+  padding-right: 1.5rem;
+  font-weight: 400;
+}
+
+.login-error {
+	margin-bottom: -2.5rem;
+}
 
 .min-heigth {
 	min-height: 410px;
@@ -64,3 +75,5 @@ body, html {
     stroke-dashoffset: -124px;
   }
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

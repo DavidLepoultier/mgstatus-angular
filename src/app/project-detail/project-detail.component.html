@@ -1,14 +1,7 @@
-<nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <a href="#" [routerLink]="['/r-Gate']" routerLinkActive="router-link-active">r-Gate</a>
-    </li>
-    <i *ngIf="project.id" >&nbsp;&nbsp;/&nbsp;&nbsp;</i>
-    <li *ngIf="project.id" class="nav-item">
-        {{ project.id }}
-    </li>
-  </ul>
-</nav>
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/r-Gate']" routerLinkActive="router-link-active">r-Gateway</a></mdb-breadcrumb-item>
+  <mdb-breadcrumb-item  *ngIf="project.id" class="active">{{ project.id }}</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
 <div *ngIf="error; then errorBlock else projectBlock"></div>
 <ng-template #errorBlock>
   <div class="container-fluid mx-auto p-3 mt-2">
@@ -114,7 +107,7 @@
                                     <p class="mx-2 mt-2 mb-0">{{ p.proxiesBasePath }}<i class="my-green-text float-right font-weight-bold"><a mdbTooltip="{{ p.targetAccess }}" placement="left">{{ p.proxiesName }}</a></i></p>
                                   </div>
                                   <div *ngIf="p.targetAccess != 'OK'">
-                                      <p class="mx-2 mt-2 mb-0">{{ p.proxiesBasePath }}<i class="red-text float-right font-weight-bold"><a mdbTooltip="{{ p.targetAccess }}" placement="left">{{ p.proxiesName }}</a></i></p>
+                                    <p class="mx-2 mt-2 mb-0">{{ p.proxiesBasePath }}<i class="red-text float-right font-weight-bold"><a mdbTooltip="{{ p.targetAccess }}" placement="left">{{ p.proxiesName }}</a></i></p>
                                   </div>
                                 </div>
                                 <p class="mx-2 mt-2 mb-0"></p>

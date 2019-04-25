@@ -1,10 +1,6 @@
-<nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      r-Gate
-    </li>
-  </ul>
-</nav>
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="active">r-Gateway</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
 <div *ngIf="error; then errorBlock else projectBlock"></div>
 <ng-template #errorBlock>
   <div class="container-fluid mx-auto p-3 mt-2">
