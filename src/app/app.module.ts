@@ -18,7 +18,8 @@ import { DowntimePipe } from './pipes/downtime.pipe';
 import { ErrorsComponent } from './errors/errors.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { DeveloperComponent } from './apigee/developer/developer.component';
+import { MyAppsComponent } from './apigee/my-apps/my-apps.component';
+import { MyAppsDetailComponent } from './apigee/my-apps-detail/my-apps-detail.component';
 
 const appRoutes: Routes = [
   {
@@ -27,12 +28,12 @@ const appRoutes: Routes = [
     data: { title: 'Dashboard' }
   },
   {
-    path: 'projects',
+    path: 'r-Gate',
     component: ProjectsComponent,
     data: { title: 'Projects List' }
   },
   {
-    path: 'project/:id',
+    path: 'r-Gate/:id',
     component: ProjectDetailComponent,
     data: { title: 'Project Details' }
   },
@@ -44,15 +45,20 @@ const appRoutes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    data: { title: 'register' }
+    data: { title: 'Register' }
   },
   {
-    path: 'developer',
-    component: DeveloperComponent,
-    data: { title: 'developer' }
+    path: 'myApps',
+    component: MyAppsComponent,
+    data: { title: 'Developer' }
+  },
+  {
+    path: 'myApps/:id',
+    component: MyAppsDetailComponent,
+    data: { title: 'DeveloperApp' }
   },
   { path: '',
-    redirectTo: '/projects',
+    redirectTo: '/r-Gate',
     pathMatch: 'full'
   }
   // { path: '**', component: PageNotFoundComponent }
@@ -115,7 +121,8 @@ const customNotifierOptions: NotifierOptions = {
     ErrorsComponent,
     LoginComponent,
     RegisterComponent,
-    DeveloperComponent
+    MyAppsComponent,
+    MyAppsDetailComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

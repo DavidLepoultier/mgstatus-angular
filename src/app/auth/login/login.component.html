@@ -8,8 +8,8 @@
 <notifier-container></notifier-container>
 <div *ngIf="!isAuthenticated" class="container-fluid w-responsive mx-auto p-3 mt-2">
   <div class="row mt-4">
-    <div class="col-md-3 col-xl-4 min-heigth"></div>
-    <div class="col-md-6 col-xl-4">
+    <div class="col-md-3 min-heigth"></div>
+    <div class="col-md-6">
       <div class="card">
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="md-form text-center p-4">
           <p class="h4 mb-4">Sign in</p>
@@ -53,6 +53,6 @@
         </form>
       </div>
     </div>
-    <div class="col-md-3 col-xl-4"></div>
+    <div class="col-md-3"></div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApigeeService } from '../apigee.service';
@@ -7,21 +7,21 @@ import { MdbTableService } from 'angular-bootstrap-md';
 
 
 @Component({
-  selector: 'app-developer',
-  templateUrl: './developer.component.html',
-  styleUrls: ['./developer.component.scss']
+  selector: 'app-my-apps',
+  templateUrl: './my-apps.component.html',
+  styleUrls: ['./my-apps.component.scss']
 })
-export class DeveloperComponent implements OnInit {
+export class MyAppsComponent implements OnInit {
   notifier: NotifierSvc;
   developer: object = {
     developer: 'david.lepoultier@orange.com',
   }
   myApps: any = [];
-  private sorted = true;
+  sorted = true;
   searchText: string = '';
   previous: string;
 
-  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService ) {
+  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable: MdbTableService ) {
     this.notifier = notifierSvc;
   }
 
@@ -37,7 +37,6 @@ export class DeveloperComponent implements OnInit {
   }
 
   sortBy(by: string | any): void {
-
     this.myApps.sort((a: any, b: any) => {
       if (a[by] > b[by]) {
         return this.sorted ? -1 : 1;
@@ -45,23 +44,18 @@ export class DeveloperComponent implements OnInit {
       if (a[by] < b[by]) {
         return this.sorted ? 1 : -1;
       }
-
       return 0;
     });
-
     this.sorted = !this.sorted;
   }
 
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    
-
     if (!this.searchText) {
       this.mdbTable
       this.mdbTable.setDataSource(this.previous);
       this.myApps = this.mdbTable.getDataSource();
     }
-
     if (this.searchText) {
       this.myApps = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
@@ -82,7 +76,7 @@ export class DeveloperComponent implements OnInit {
   handlerError(error: any) {
     this.notifier.showNotification(
       'error',
-      error.error.message
+      'Error occured while trying to get developer Apps'
     );
   }
 
@@ -107,7 +101,6 @@ export class DeveloperComponent implements OnInit {
 
       return 0;
     });
-
     this.mdbTable.setDataSource(this.myApps);
     this.previous = this.mdbTable.getDataSource();
   }

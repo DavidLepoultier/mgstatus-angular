@@ -2,9 +2,9 @@
   "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "defaultProject": "mgState",
+  "defaultProject": "f-reGate",
   "projects": {
-    "mgState": {
+    "f-reGate": {
       "root": "",
       "projectType": "application",
       "prefix": "app",
@@ -80,19 +80,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mgState:build",
+            "browserTarget": "f-reGate:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mgState:build:production"
+              "browserTarget": "f-reGate:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mgState:build"
+            "browserTarget": "f-reGate:build"
           }
         },
         "test": {
@@ -133,7 +133,7 @@
         }
       }
     },
-    "mgState-e2e": {
+    "f-reGate-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -141,7 +141,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mgState:serve"
+            "devServerTarget": "f-reGate:serve"
           }
         },
         "lint": {

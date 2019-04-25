@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierSvc } from '../services/notifier.service';
 
 @Component({
   selector: 'app-projects',
@@ -9,11 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProjectsComponent implements OnInit {
 
+  notifier: NotifierSvc;
   error:any = null;
   errorMessage:any = '';
   projects:any = [];
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, notifierSvc:NotifierSvc) { 
+    this.notifier = notifierSvc;
+  }
 
   ngOnInit() {
     this.getResources();
@@ -31,7 +35,10 @@ export class ProjectsComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.error = error.error;
+    this.notifier.showNotification(
+      'error',
+      'Error occured while trying to get r-Gate\'s list'
+    );
   }
 
   handlerServerResponse(resources: any) {

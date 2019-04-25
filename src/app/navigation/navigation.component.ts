@@ -12,13 +12,13 @@ export class NavigationComponent implements OnInit {
 
   navigation = [
     //{ link: 'dashboard', label: 'dashboard', icon: 'tachometer-alt' },
-    { link: 'projects', label: 'r-Gate', icon: 'project-diagram' },
+    { link: 'r-Gate', label: 'r-Gate', icon: 'project-diagram' },
   ];
   
   navigationSideMenu = [];
 
   navigationAuth = [
-    { link: 'developer', label: 'myApps', icon: 'mobile-alt' },
+    { link: 'myApps', label: 'myApps', icon: 'mobile-alt' },
   ];
 
   navigationLogin = [

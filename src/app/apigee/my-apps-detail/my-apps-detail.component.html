@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a href="#" [routerLink]="['/myApps']" routerLinkActive="router-link-active">myApps</a>
+    </li>
+    <i *ngIf="project.id" >&nbsp;&nbsp;/&nbsp;&nbsp;</i>
+    <li *ngIf="project.id" class="nav-item">
+        {{ project.id }}
+    </li>
+  </ul>
+</nav>
+<notifier-container></notifier-container>
+<div class="container-fluid mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-1 col-xl-2 min-heigth"></div>
+    <div class="col-md-10 col-xl-8">
+    </div>
+    <div class="col-md-1 col-xl-2 min-heigth"></div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-xl navbar-light grey lighten-3">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      Developer
+      myApps
     </li>
   </ul>
 </nav>
@@ -54,21 +54,21 @@
                 </a>
               </th>
               <th class="th-md data-table-right font-weight-bold">
-                Status
+                <span class="mr-4">Status</span>
               </th>
             </tr>
             </thead>
             <tbody>
               <tr *ngFor="let el of myApps; let i = index">
                 <th scope="row">
-                  <a href="#" [routerLink]="['/developer/' + el.devApp]" routerLinkActive="router-link-active" class="table-link font-weight-bold">{{el.devApp}}</a>
+                  <a href="#" [routerLink]="['/myApps/' + el.devApp]" routerLinkActive="router-link-active" class="table-link font-weight-bold">{{el.devApp}}</a>
                 </th>
                 <ng-container *ngIf="el.approved; then approved; else notApproved"></ng-container>
                 <ng-template #approved>
-                    <td class="th-md data-table-right"><mdb-badge pill="true" success="true" class="p-1 badge-font">{{el.status}}</mdb-badge></td>
+                    <td class="th-md data-table-right"><mdb-badge pill="true" success="true" class="p-1 badge-font">{{el.status | titlecase}}</mdb-badge></td>
                 </ng-template>
                 <ng-template #notApproved>
-                    <td class="th-md data-table-right"><mdb-badge  pill="true" warning="true" class="p-1">{{el.status}}</mdb-badge></td>
+                    <td class="th-md data-table-right"><mdb-badge  pill="true" warning="true" class="p-1 badge-font">{{el.status | titlecase}}</mdb-badge></td>
                 </ng-template>
               </tr>
             </tbody>
