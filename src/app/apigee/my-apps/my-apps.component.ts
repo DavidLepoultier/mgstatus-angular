@@ -13,8 +13,9 @@ import { MdbTableService } from 'angular-bootstrap-md';
 export class MyAppsComponent implements OnInit {
   notifier: NotifierSvc;
   developer: object = {
-    developer: 'david.lepoultier@gmail.com',
+    developer: 'david.lepoultier@orange.com'
   }
+  postApp: object = {}
   myApps: any = [];
   sorted = true;
   searchText: string = '';
@@ -22,7 +23,7 @@ export class MyAppsComponent implements OnInit {
   show: boolean;
   eyeIcon: string;
   showModal: boolean;
-  content: string;
+  application: string;
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable: MdbTableService ) {
     this.notifier = notifierSvc;
@@ -42,15 +43,28 @@ export class MyAppsComponent implements OnInit {
     this.getDeveloperApps(this.developer);
   }
 
-  modalShow(value: any) {
-    console.log('value:', value);
+  modalShow(value: string) {
     this.showModal = true; // Show-Hide Modal Check
-    console.log('showModal:', this.showModal);
-    this.content = value; // Dynamic Data
+    this.application = value; // Dynamic Data
   }
 
   modalHide(){
     this.showModal = false;
+  }
+
+  deleteApp(app: string) {
+    this.postApp = {
+      "developer": this.developer['developer'],
+      "application": app,
+    }
+    this.apigee.actionApp(this.postApp, 'delete').subscribe(
+      data => {
+        this.handlerDeleteAppResponse(data);
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
   }
 
   showInput() {
@@ -89,7 +103,7 @@ export class MyAppsComponent implements OnInit {
   handlerError(error: any) {
     this.notifier.showNotification(
       'error',
-      'Error occured while trying to get developer Apps'
+      error.error.message
     );
   }
 
@@ -106,9 +120,18 @@ export class MyAppsComponent implements OnInit {
       }
       return 0;
     });
-    console.log(this.myApps)
     this.mdbTable.setDataSource(this.myApps);
     this.previous = this.mdbTable.getDataSource();
   }
   
+  handlerDeleteAppResponse(data: any) {
+    this.notifier.showNotification(
+      'success',
+      `${data.action.name} has been deleted`
+    );
+    this.myApps = [];
+    this.getDeveloperApps(this.developer);
+    this.modalHide();
+  }
+
 }

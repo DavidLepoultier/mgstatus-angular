@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { AppComponent } from './app.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,7 +20,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { MyAppsComponent } from './apigee/my-apps/my-apps.component';
 import { MyAppsDetailComponent } from './apigee/my-apps-detail/my-apps-detail.component';
-import { MatTabsModule, MatExpansionModule, MatButtonModule } from '@angular/material';
+import { DemoMaterialModule } from './material-module';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 
 const appRoutes: Routes = [
@@ -132,12 +134,12 @@ const customNotifierOptions: NotifierOptions = {
     NotifierModule.withConfig(customNotifierOptions),
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
-    MatTabsModule,
-    MatExpansionModule,
-    MatButtonModule,
+    DemoMaterialModule,
+    MatNativeDateModule,
     ChartsModule
   ],
   providers: [],

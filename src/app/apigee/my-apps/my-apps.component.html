@@ -121,7 +121,7 @@
         <h4 class="modal-title font-weight-bold">Are you sure?</h4>
       </div>
       <div class="text-muted text-center mb-2">
-        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ content }}</span>?</i></p>
+        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ application }}</span>?</i></p>
       </div>
       <div class="modal-content">
         <div class="row">
@@ -131,7 +131,7 @@
           </button>
         </div>
         <div class="col-md-6">
-          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3" mdbWavesEffect>
+          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3" mdbWavesEffect (click)="deleteApp(application)">
             Delete
           </button>
         </div>
@@ -146,25 +146,36 @@
   aria-labelledby="myModalLabel">
   <div class="modal-dialog cascading-modal" role="document">
     <!--Content-->
-    <div class="modal-content">
-      <div class="text-center mt-5 mb-4">
-        <h4 class="modal-title font-weight-bold">Create Apps</h4>
-      </div>
+    <form #createApp="ngForm" (ngSubmit)="createApp(createApp.value)" class="md-form text-center">
       <div class="modal-content">
-        <div class="row">
-        <div class="col-md-6">
-          <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3" data-dismiss="modal" (click)="fram.hide()" mdbWavesEffect>
-            Cancel
-          </button>
+        <div class="text-center mt-4 mb-3">
+          <h4 class="modal-title font-weight-bold">Add App</h4>
         </div>
-        <div class="col-md-6">
-          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3" mdbWavesEffect>
-            Delete
-          </button>
+        <div class="row mb-3">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <div class="md-form my-0">
+              <input id="app" type="text" ngModel name="app" class="form-control" mdbInput required>
+              <label for="aoo">Application name</label>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="modal-content">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3" data-dismiss="modal" (click)="fram.hide()" mdbWavesEffect>
+                Cancel
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" mdbBtn color="primary" class="d-flex mr-auto waves-light my-3" [disabled]="createApp.invalid" mdbWavesEffect>
+                Create
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-    </div>
-    <!--/.Content-->
+    </form>
   </div>
 </div>

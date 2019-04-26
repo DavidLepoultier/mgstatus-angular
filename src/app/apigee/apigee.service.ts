@@ -30,4 +30,9 @@ export class ApigeeService {
     return this.http.post(endpoint.api + `apigee/developer/apps`, developer, httpOptions).pipe(
       map(this.extractData));
   }
+
+  actionApp(app: object, action: string): Observable<any> {
+    return this.http.post(endpoint.api + `apigee/developer/apps/${action}`, app, httpOptions).pipe(
+      map(this.extractData));
+  }
 }

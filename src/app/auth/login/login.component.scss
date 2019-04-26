@@ -1,4 +1,22 @@
-.login-error {
-	margin-bottom: -2.5rem;
+.container {
+  margin-top: 50px;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.double-line-hint {
+  .mat-input-hint-wrapper {
+    flex-wrap: wrap;
+
+    .hint-line {
+      flex: 0 0 100%;
+    }
+  }
 }
 
