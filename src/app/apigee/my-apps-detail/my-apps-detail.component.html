@@ -1,0 +1,123 @@
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="active">Register</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
+<notifier-container></notifier-container>
+<div class="container-fluid w-responsive mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-3 min-heigth"></div>
+    <div class="col-md-6">
+      <div *ngIf="!isAuthenticated" class="card">
+        <!-- <p class="text-center h3 pt-5 mb-4">Add Organization</p> -->
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+          <mat-step [stepControl]="registerOrgForm">
+            <ng-template matStepLabel>Add Organization</ng-template>
+            <form class="text-center" [formGroup]="registerOrgForm">          
+              <div class="row">
+                <div class="col-11">
+                  <mat-form-field class="full-width">
+                    <input matInput type="text" placeholder="Apigee organization name" formControlName="orgName" value="mini-gateway" required>
+                    <mat-error *ngFor="let validation of org_validation_messages.orgName">
+                      <mat-error *ngIf="registerOrgForm.get('orgName').hasError(validation.type) && (registerOrgForm.get('orgName').dirty || registerOrgForm.get('orgName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>          
+                  <mat-form-field class="full-width">
+                    <input matInput type="text" placeholder="Apigee admin url" formControlName="adminUrl" value="https://techadmin.api.intraorange/apigee-mgt" required>
+                    <mat-error *ngFor="let validation of org_validation_messages.adminUrl">
+                      <mat-error *ngIf="registerOrgForm.get('adminUrl').hasError(validation.type) && (registerOrgForm.get('adminUrl').dirty || registerOrgForm.get('adminUrl').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <input matInput type="email" placeholder="Login Apigee Organization" formControlName="loginOrg" value="admin-mini-gateway@orange.com" required>
+                    <mat-error *ngFor="let validation of org_validation_messages.loginOrg">
+                      <mat-error *ngIf="registerOrgForm.get('loginOrg').hasError(validation.type) && (registerOrgForm.get('loginOrg').dirty || registerOrgForm.get('loginOrg').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="full-width mb-3">
+                    <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="password" value="Secret123" required>
+                    <mat-error *ngFor="let validation of org_validation_messages.password">
+                      <mat-error *ngIf="registerOrgForm.get('password').hasError(validation.type) && (registerOrgForm.get('password').dirty || registerOrgForm.get('password').touched)">
+                        {{ validation.message }}
+                      </mat-error>
+                    </mat-error>
+                    <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </mat-form-field>
+                  <!-- <button class="mb-4 mr-5" color="primary" mat-raised-button [disabled]="!registerOrgForm.valid">
+                    Test
+                  </button>
+                  <button class="mb-4 ml-5" color="primary" mat-raised-button [disabled]="!testValide">
+                    Next
+                  </button> -->
+                </div>
+                <div class="col-1"></div>
+              </div>
+              <div>
+                <button mat-button [disabled]="!registerOrgForm.valid" (click)="testConnexion(registerOrgForm.value)">Test</button>
+                <button mat-button matStepperNext [disabled]="!testValide">Next</button>
+              </div>    
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="registerOrgAdminForm">
+            <ng-template matStepLabel>Add local admin user</ng-template>
+            <form class="text-center" [formGroup]="registerOrgAdminForm">
+              <div class="row">
+                <mat-form-field class="col-6">
+                  <input matInput type="text" placeholder="First name" formControlName="adminFirstName" required>
+                  <mat-error *ngFor="let validation of account_validation_messages.adminFirstName">
+                    <mat-error *ngIf="registerOrgAdminForm.get('adminFirstName').hasError(validation.type) && (registerOrgAdminForm.get('adminFirstName').dirty || registerOrgAdminForm.get('adminFirstName').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>          
+                <mat-form-field class="col-6">
+                  <input matInput type="text" placeholder="Last name" formControlName="adminLastName" required>
+                  <mat-error *ngFor="let validation of account_validation_messages.adminLastName">
+                    <mat-error *ngIf="registerOrgAdminForm.get('adminLastName').hasError(validation.type) && (registerOrgAdminForm.get('adminLastName').dirty || registerOrgAdminForm.get('adminLastName').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <mat-form-field class="full-width">
+                <input matInput type="email" placeholder="Email" formControlName="adminLogin" required>
+                <mat-error *ngFor="let validation of account_validation_messages.adminLogin">
+                  <mat-error *ngIf="registerOrgAdminForm.get('adminLogin').hasError(validation.type) && (registerOrgAdminForm.get('adminLogin').dirty || registerOrgAdminForm.get('adminLogin').touched)">
+                    {{validation.message}}
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="full-width mb-3">
+                <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="adminPassword" required>
+                <mat-error *ngFor="let validation of account_validation_messages.adminPassword">
+                  <mat-error *ngIf="registerOrgAdminForm.get('adminPassword').hasError(validation.type) && (registerOrgAdminForm.get('adminPassword').dirty || registerOrgAdminForm.get('adminPassword').touched)">
+                    {{ validation.message }}
+                  </mat-error>
+                </mat-error>
+                <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button [disabled]="!registerOrgForm.valid" (click)="testConnexion(registerOrgForm.value)">Test</button>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </form>    
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            You are now done.
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

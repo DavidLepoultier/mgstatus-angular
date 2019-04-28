@@ -26,8 +26,18 @@ export class ApigeeService {
     return body || { };
   }
 
+  testAdminConnexion(apigeeConfig: object): Observable<any> {
+    return this.http.post(endpoint.api + `apigee/test`, apigeeConfig, httpOptions).pipe(
+      map(this.extractData));
+  }
+
   getDeveloperApps(developer: object): Observable<any> {
     return this.http.post(endpoint.api + `apigee/developer/apps`, developer, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  getProducts(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/products`, httpOptions).pipe(
       map(this.extractData));
   }
 

@@ -4,10 +4,23 @@
 .field-icon {
   float: right;
   margin-top: -19px;
-  margin-right: -40px;
+  margin-right: -20px;
   z-index: 2;
   padding-right: 1.5rem;
   font-weight: 400;
+}
+
+.mat-form-field-label {
+  //font-size: larger !important;
+  font-weight: 500 !important;
+}
+
+.modal {
+  z-index: 999;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .login-error {

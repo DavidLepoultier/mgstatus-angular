@@ -12,7 +12,6 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
-
               <mat-form-field class="full-width">
                 <input matInput type="email" placeholder="Email" formControlName="email" required>
                 <mat-error *ngFor="let validation of account_validation_messages.email">
@@ -21,20 +20,15 @@
                   </mat-error>
                 </mat-error>
               </mat-form-field>
-
               <mat-form-field class="full-width mb-3">
                 <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="password" required>
                 <mat-error *ngFor="let validation of account_validation_messages.password">
                   <mat-error *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-                    <mat-error>
-                      {{ validation.message }}
-                    </mat-error>
+                    {{ validation.message }}
                   </mat-error>
                 </mat-error>
-                <!-- <mat-icon matSuffix (click)="show = !show">{{show ? 'fa-eye-slash' : 'fa-eye'}}</mat-icon> -->
-                <span (click)="show = !show" class="fas {{show ? 'fa-eye-slash' : 'fa-eye' }} field-icon"></span>
+                <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
               </mat-form-field>
-
               <button class="mb-4" color="primary" mat-raised-button type="submit" [disabled]="!loginForm.valid">
                 Login
                 <i class="fas fa-sign-in-alt ml-1"></i>
