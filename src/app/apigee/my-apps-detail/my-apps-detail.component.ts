@@ -4,17 +4,20 @@ import { ApigeeService } from '../apigee.service';
 import { NotifierSvc } from '../../services/notifier.service'
 import { Router } from '@angular/router';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-my-apps-detail',
   templateUrl: './my-apps-detail.component.html',
-  styleUrls: ['./my-apps-detail.component.scss']
+  styleUrls: ['./my-apps-detail.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false}
+  }]
 })
 
 export class MyAppsDetailComponent implements OnInit {
   registerOrgForm: FormGroup;
   registerOrgAdminForm: FormGroup;
-  isLinear: boolean = true;
 
   show: boolean = false;
   testValide: boolean = false;
