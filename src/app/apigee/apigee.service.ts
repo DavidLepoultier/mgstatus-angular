@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 
 const endpoint = {
   "api": environment.apiUrl,
+  "auth": environment.authUrl
 }
 
 const httpOptions = {
@@ -28,6 +29,21 @@ export class ApigeeService {
 
   testAdminConnexion(apigeeConfig: object): Observable<any> {
     return this.http.post(endpoint.api + `apigee/test`, apigeeConfig, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  testAdminUser(adminUser: any): Observable<any> {
+    return this.http.get(endpoint.api + `user/available/${adminUser.adminLogin}`, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  createOrg(apigeeConfig: any): Observable<any> {
+    return this.http.post(endpoint.api + 'apigee/org/create', apigeeConfig, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  createAdminOrg(adminUser: any): Observable<any> {
+    return this.http.post(endpoint.auth + 'register', adminUser, httpOptions).pipe(
       map(this.extractData));
   }
 

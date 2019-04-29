@@ -21,6 +21,7 @@ export class MyAppsDetailComponent implements OnInit {
 
   show: boolean = false;
   testValide: boolean = false;
+  testValideUser: boolean = false;
   isAuthenticated:boolean = false;
   notifier: NotifierSvc;
 
@@ -96,21 +97,46 @@ export class MyAppsDetailComponent implements OnInit {
       adminPassword: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
-      ])) 
+      ])),
+      adminRole: new FormControl('orgAdmin'),
+      orgName: new FormControl()
     });
   }
 
   testConnexion(formData:any) {
-    console.log('formData', formData);
     this.apigee.testAdminConnexion(formData).subscribe(
-      data  => this.handlerTestSuccess(data),
+      data  => {
+        this.handlerSuccess(data),
+        this.testValide = true
+      },
       error => this.handlerError(error)
-    )
+    );
   }
 
-  register(formData:any) {
-    this.auth.register(formData).subscribe(
-      data  => this.handlerLoginSuccess(data),
+  testUser(orgForm:any, adminForm:any) {
+    console.log(orgForm);
+    orgForm.orgName = adminForm.orgName;
+    console.log(orgForm);
+    this.apigee.testAdminUser(orgForm).subscribe(
+      data  => {
+        this.handlerSuccess(data),
+        this.testValideUser = true
+      },
+      error => this.handlerError(error)
+    );
+  }
+
+  addOrganization(orgForm:any, adminForm:any) {
+    // console.log('orgForm:', orgForm);
+    // console.log('adminForm:', adminForm);
+    this.apigee.createOrg(orgForm).subscribe(
+      data  => {
+        this.handlerSuccess(data),
+        this.apigee.createAdminOrg(adminForm).subscribe(
+          data  => this.handlerSuccess(data),
+          error => this.handlerError(error)
+        );
+      },
       error => this.handlerError(error)
     );
   }
@@ -122,15 +148,11 @@ export class MyAppsDetailComponent implements OnInit {
     );
   }
 
-  handlerTestSuccess(data: any) {
+  handlerSuccess(data: any) {
     this.notifier.showNotification(
       'success',
       data.message
     );
-    this.testValide = true;
   }
 
-  handlerLoginSuccess(data: any) {
-
-  }
 }

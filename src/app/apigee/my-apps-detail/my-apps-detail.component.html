@@ -95,9 +95,13 @@
                 </mat-error>
                 <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
               </mat-form-field>
+              <mat-form-field [hidden]="true">
+                <input matInput type="text" formControlName="adminRole">
+              </mat-form-field>
               <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext [disabled]="!registerOrgAdminForm.valid">Next</button>
+                <button mat-button [disabled]="!registerOrgAdminForm.valid" (click)="testUser(registerOrgAdminForm.value, registerOrgForm.value)">Test</button>
+                <button mat-button matStepperNext [disabled]="!testValideUser">Next</button>
               </div>
             </form>    
           </mat-step>
@@ -107,7 +111,7 @@
             <div>
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button (click)="stepper.reset()">Reset</button>
-              <button mat-button >Apply</button>
+              <button mat-button (click)="addOrganization(registerOrgForm.value, registerOrgAdminForm.value)">Apply</button>
             </div>
           </mat-step>
         </mat-horizontal-stepper>
