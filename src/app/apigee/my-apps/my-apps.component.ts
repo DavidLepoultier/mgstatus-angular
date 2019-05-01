@@ -14,9 +14,6 @@ import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class MyAppsComponent implements OnInit {
   notifier: NotifierSvc;
-  developer: object = {
-    developer: 'david.lepoultier@orange.com'
-  }
   postApp: object = {}
   myApps: any = [];
   products: object = [];
@@ -49,7 +46,7 @@ export class MyAppsComponent implements OnInit {
     if(!this.auth.userIsLoggedIn()) {
       this.router.navigate(['/']);
     }
-    this.getDeveloperApps(this.developer);
+    this.getDeveloperApps();
     this.createForms();
   }
 
@@ -93,8 +90,7 @@ export class MyAppsComponent implements OnInit {
 
   actionApp(app: any){
     this.postApp = {
-      "developer": this.developer['developer'],
-      "application": app,
+      "application": app
     }
     this.apigee.actionApp(this.postApp, app.action).subscribe(
       data => {
@@ -126,8 +122,8 @@ export class MyAppsComponent implements OnInit {
     }
   }
 
-  getDeveloperApps(dev: object) {
-    this.apigee.getDeveloperApps(dev).subscribe(
+  getDeveloperApps() {
+    this.apigee.getDeveloperApps().subscribe(
       data  => {
         this.handlerServerResponse(data);
       },
@@ -142,6 +138,14 @@ export class MyAppsComponent implements OnInit {
       'error',
       error.error.message
     );
+    switch(error.status) {
+      case 401:
+        sessionStorage.removeItem('jbb-data');
+        setTimeout(() => {
+            this.router.navigate(['/']);
+        },4000);
+        break;
+    }
   }
 
   handlerServerResponse(data: any) {
@@ -167,7 +171,7 @@ export class MyAppsComponent implements OnInit {
       `${data.action.name} has been deleted`
     );
     this.myApps = [];
-    this.getDeveloperApps(this.developer);
+    this.getDeveloperApps();
     this.modalHide();
   }
 
@@ -181,7 +185,7 @@ export class MyAppsComponent implements OnInit {
       `${data.message.name} has been created`
     );
     this.myApps = [];
-    this.getDeveloperApps(this.developer);
+    this.getDeveloperApps();
     this.createAppHide();
   }
 }
