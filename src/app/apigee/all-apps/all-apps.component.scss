@@ -6,8 +6,14 @@
   display: unset;
 }
 
-.developer-align-right {
-  text-align: right !important;
+.developer-table {
+  width: 100%;
+  .app-width {
+    width: 25%;
+  }
+  .developer-width {
+    width: 75%;
+  }
 }
 
 .badge-product {

@@ -28,10 +28,14 @@
             <mat-accordion>
               <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allApps; let i = index">
                 <mat-expansion-panel-header>
-                  <mat-panel-title class="text-muted font-weight-bold">{{ el.name }}</mat-panel-title>
-                  <mat-panel-description>
-                    <span class="ml-auto developer-align-right">{{ el.developerEmail }}</span>
-                  </mat-panel-description>
+                  <mat-panel-title class="developer-table">
+                    <table class="developer-table">
+                        <td class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
+                        <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
+                    <!-- <span class="ml-auto developer-align-right">}</span> -->
+                    </table>
+
+                  </mat-panel-title>
                   <mat-panel-description>
                     <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>
                     <ng-template #approved>

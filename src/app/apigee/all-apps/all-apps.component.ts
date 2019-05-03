@@ -119,8 +119,11 @@ export class AllAppsComponent implements OnInit {
       dev  => {
         for (let index = 0; index < data.apps.app.length; index++) {
           let developer = dev.developers.developer.filter(j => j.developerId === data.apps.app[index].developerId);
-          data.apps.app[index].developerEmail = developer[0].email;
-          this.allApps.push(data.apps.app[index]);
+          if (developer.length > 0) {
+            console.log('developer:', developer)
+            data.apps.app[index].developerEmail = developer[0].email;
+            this.allApps.push(data.apps.app[index]);
+          }
         }
       }
     );
