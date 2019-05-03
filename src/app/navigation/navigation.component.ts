@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit {
   ];
 
   navigationAdminTenant = [
-    { link: 'devApps', label: 'devApps', icon: 'mobile-alt' },
+    { link: 'allApps', label: 'Apps', icon: 'mobile-alt' },
   ];
 
   navigationProfile = [
@@ -46,6 +46,7 @@ export class NavigationComponent implements OnInit {
   checkAuth() {
     if(this.auth.userIsLoggedIn()) {
       this.jwtDecode();
+      //console.log(this.jwtDecoded['role']);
       if(this.jwtDecoded['role'])
         switch(this.jwtDecoded['role']) {
           case 'developer':
@@ -58,7 +59,13 @@ export class NavigationComponent implements OnInit {
             ];
           break;
           case 'orgAdmin':
-
+            this.navigationSideMenu = [
+              ...this.navigation,
+              ...this.navigationAdminTenant
+            ];
+            this.navigationOtherSideMenu = [
+              ...this.navigationProfile
+            ];
           break;
           case 'admin': 
 

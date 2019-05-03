@@ -32,15 +32,15 @@ export class AllAppsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // if(!this.auth.userIsLoggedIn()) {
-    //   this.router.navigate(['/']);
-    // }
-    // this.jwtDecode();
-    // if(this.jwtDecoded['role'] === "orgAdmin") {
+    if(!this.auth.userIsLoggedIn()) {
+      this.router.navigate(['/']);
+    }
+    this.jwtDecode();
+    if(this.jwtDecoded['role'] === "orgAdmin") {
       this.getAllApps();
-    // } else {
-    //   this.router.navigate(['/']);
-    // }
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   jwtDecode() {
@@ -60,6 +60,7 @@ export class AllAppsComponent implements OnInit {
     this.postApp = {
       "application": app
     }
+    console.log(this.postApp);
     this.apigee.actionApp(this.postApp, app.action).subscribe(
       data => {
         switch(app.action) {
