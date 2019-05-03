@@ -24,6 +24,8 @@ import { DemoMaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material';
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { ProfileComponent } from './users/profile/profile.component';
+import { AllAppsComponent } from './apigee/all-apps/all-apps.component';
 
 const appRoutes: Routes = [
   {
@@ -52,9 +54,19 @@ const appRoutes: Routes = [
     data: { title: 'Register' }
   },
   {
+    path: 'profile',
+    component: ProfileComponent,
+    data: { title: 'Register' }
+  },
+  {
     path: 'myApps',
     component: MyAppsComponent,
     data: { title: 'Developer' }
+  },
+  {
+    path: 'allApps',
+    component: AllAppsComponent,
+    data: { title: 'All Apps' }
   },
   {
     path: 'myApps/:id',
@@ -127,7 +139,9 @@ const customNotifierOptions: NotifierOptions = {
     RegisterComponent,
     MyAppsComponent,
     MyAppsDetailComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    ProfileComponent,
+    AllAppsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

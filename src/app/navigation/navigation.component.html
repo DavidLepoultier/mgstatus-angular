@@ -19,21 +19,39 @@
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav nav-flex-icons">
-        <div *ngIf="!auth.userIsLoggedIn()">
-          <li class="nav-item" *ngFor="let item of navigationLogin">
+      <div *ngIf="!auth.userIsLoggedIn()">
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item" *ngFor="let item of navigationOtherSideMenu">
             <a href="#" [routerLink]="[item.link]" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
               <mdb-icon fas icon="{{ item.icon }}"></mdb-icon> {{ item.label }}
             </a>
           </li>
-        </div>
-        <div *ngIf="auth.userIsLoggedIn()">
-          <li class="nav-item">
-            <a href="#" (click)="auth.logout()" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
-              <mdb-icon fas icon="user"></mdb-icon> Logout
-            </a>
+        </ul>
+       </div>
+
+      <div *ngIf="auth.userIsLoggedIn()">
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item dropdown" dropdown>
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+              <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a> -->
+              <a *ngFor="let item of navigationOtherSideMenu" href="#" [routerLink]="[item.link]" class="dropdown-item waves-light" mdbWavesEffect>
+                {{ item.label }}
+              </a>
+              <a href="#" (click)="auth.logout()" class="dropdown-item waves-light" mdbWavesEffect>
+                  Logout
+              </a>
+            </div>
           </li>
-        </div>
+          <!-- <li class="nav-item">
+            <a href="#" (click)="auth.logout()" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
+              Logout
+            </a>
+          </li> -->
+        </ul>
+        
+      </div>
         
 
         <!-- <li class="nav-item">
@@ -54,7 +72,6 @@
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Log out</a>
           </div>
         </li> -->
-      </ul>
       <!-- Links -->
     </links>
     <!-- Collapsible content -->

@@ -6,37 +6,25 @@ import { NotifierSvc } from '../../services/notifier.service';
 import { MdbTableService } from 'angular-bootstrap-md';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
-
 @Component({
-  selector: 'app-my-apps',
-  templateUrl: './my-apps.component.html',
-  styleUrls: ['./my-apps.component.scss']
+  selector: 'app-all-apps',
+  templateUrl: './all-apps.component.html',
+  styleUrls: ['./all-apps.component.scss']
 })
-export class MyAppsComponent implements OnInit {
+export class AllAppsComponent implements OnInit {
   notifier: NotifierSvc;
   postApp: object = {}
-  myApps: any = [];
-  products: object = [];
+  allApps: any = [];
   sorted = true;
   searchText: string = '';
   previous: string;
   showModal: boolean;
-  showCreateApp: boolean;
   application: string;
   jwtDecoded: object = {};
-
-  createAppForm: FormGroup;
-
-  application_validation_messages = {
-    'app': [
-      { type: 'required', message: 'Email is required' },
-    ]
-  }
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService, private fb:FormBuilder ) {
     this.notifier = notifierSvc;
     this.showModal = false;
-    this.showCreateApp = false;
   }
 
   @HostListener('input') oninput() {
@@ -44,32 +32,19 @@ export class MyAppsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(!this.auth.userIsLoggedIn()) {
-      this.router.navigate(['/']);
-    }
-    this.jwtDecode();
-    console.log(this.jwtDecoded['role']);
-    if(this.jwtDecoded['role'] === "developer") {
-      this.getDeveloperApps();
-    }
-    this.createForms();
+    // if(!this.auth.userIsLoggedIn()) {
+    //   this.router.navigate(['/']);
+    // }
+    // this.jwtDecode();
+    // if(this.jwtDecoded['role'] === "orgAdmin") {
+      this.getAllApps();
+    // } else {
+    //   this.router.navigate(['/']);
+    // }
   }
 
   jwtDecode() {
     this.jwtDecoded = this.auth.jwtTokenDecode();
-  }
-
-  createForms() {
-    // user links form validations
-    this.createAppForm = this.fb.group({
-      app: new FormControl('', Validators.compose([
-        Validators.required      
-      ])),
-      products: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      action: new FormControl('create')
-    })
   }
 
   modalShow(value: string) {
@@ -81,22 +56,6 @@ export class MyAppsComponent implements OnInit {
     this.showModal = false;
   }
 
-  createAppShow(){
-    this.showCreateApp = true;
-    this.apigee.getProducts().subscribe(
-      data => {
-        this.handlerGetProducts(data);
-      },
-      error => {
-        this.handlerError(error);
-      }
-    )
-  }
-
-  createAppHide(){
-    this.showCreateApp = false;
-  }
-
   actionApp(app: any){
     this.postApp = {
       "application": app
@@ -106,9 +65,6 @@ export class MyAppsComponent implements OnInit {
         switch(app.action) {
           case 'delete':
             this.handlerDeleteAppResponse(data);
-            break;
-          case 'create': 
-            this.handlerCreateAppResponse(data);
             break;
         }  
       },
@@ -123,16 +79,16 @@ export class MyAppsComponent implements OnInit {
     if (!this.searchText) {
       this.mdbTable
       this.mdbTable.setDataSource(this.previous);
-      this.myApps = this.mdbTable.getDataSource();
+      this.allApps = this.mdbTable.getDataSource();
     }
     if (this.searchText) {
-      this.myApps = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.allApps = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
   }
 
-  getDeveloperApps() {
-    this.apigee.getDeveloperApps().subscribe(
+  getAllApps() {
+    this.apigee.getAllApps().subscribe(
       data  => {
         this.handlerServerResponse(data);
       },
@@ -158,10 +114,16 @@ export class MyAppsComponent implements OnInit {
   }
 
   handlerServerResponse(data: any) {
-    for (let index = 0; index < data.developerApps.app.length; index++) {
-      this.myApps.push(data.developerApps.app[index]);
-    }
-    this.myApps = this.myApps.sort((a: any, b: any) => {
+    this.apigee.getDevelopers().subscribe(
+      dev  => {
+        for (let index = 0; index < data.apps.app.length; index++) {
+          let developer = dev.developers.developer.filter(j => j.developerId === data.apps.app[index].developerId);
+          data.apps.app[index].developerEmail = developer[0].email;
+          this.allApps.push(data.apps.app[index]);
+        }
+      }
+    );
+    this.allApps = this.allApps.sort((a: any, b: any) => {
       if (a['name'] < b['name']) {
         return this.sorted ? -1 : 1;
       }
@@ -170,7 +132,7 @@ export class MyAppsComponent implements OnInit {
       }
       return 0;
     });
-    this.mdbTable.setDataSource(this.myApps);
+    this.mdbTable.setDataSource(this.allApps);
     this.previous = this.mdbTable.getDataSource();
   }
   
@@ -179,22 +141,9 @@ export class MyAppsComponent implements OnInit {
       'success',
       `${data.action.name} has been deleted`
     );
-    this.myApps = [];
-    this.getDeveloperApps();
+    this.allApps = [];
+    this.getAllApps();
     this.modalHide();
   }
 
-  handlerGetProducts(data: any) {
-    this.products = data.products;
-  }
-
-  handlerCreateAppResponse(data: any){
-    this.notifier.showNotification(
-      'success',
-      `${data.message.name} has been created`
-    );
-    this.myApps = [];
-    this.getDeveloperApps();
-    this.createAppHide();
-  }
 }

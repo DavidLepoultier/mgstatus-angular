@@ -54,8 +54,23 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  getDevelopers(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/developers`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getDevelopersId(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/developers/${id}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   getDeveloperApps(): Observable<any> {
     return this.http.get(endpoint.api + `apigee/developer/apps`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getAllApps(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/apps`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 

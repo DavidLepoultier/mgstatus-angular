@@ -16,29 +16,68 @@ export class NavigationComponent implements OnInit {
   ];
   
   navigationSideMenu = [];
+  navigationOtherSideMenu = [];
+  jwtDecoded: object = {};
 
-  navigationAuth = [
+  navigationDeveloper = [
     { link: 'myApps', label: 'myApps', icon: 'mobile-alt' },
   ];
 
+  navigationAdminTenant = [
+    { link: 'devApps', label: 'devApps', icon: 'mobile-alt' },
+  ];
+
+  navigationProfile = [
+    //{ link: 'profile', label: 'My Account' }
+  ];
+
   navigationLogin = [
-    { link: 'login', label: 'Login', icon: 'user' }
+    { link: 'login', label: 'Log in', icon: 'user' }
   ];
 
   ngOnInit() {
     
   }
 
+  jwtDecode() {
+    this.jwtDecoded = this.auth.jwtTokenDecode();
+  }
+
   checkAuth() {
     if(this.auth.userIsLoggedIn()) {
-      this.navigationSideMenu = [
-        ...this.navigation,
-        ...this.navigationAuth
-      ];
+      this.jwtDecode();
+      if(this.jwtDecoded['role'])
+        switch(this.jwtDecoded['role']) {
+          case 'developer':
+            this.navigationSideMenu = [
+              ...this.navigation,
+              ...this.navigationDeveloper
+            ];
+            this.navigationOtherSideMenu = [
+              ...this.navigationProfile
+            ];
+          break;
+          case 'orgAdmin':
+
+          break;
+          case 'admin': 
+
+          break;
+          default:
+            this.navigationSideMenu = [
+              ...this.navigation
+            ];
+            this.navigationOtherSideMenu = [
+              ...this.navigationProfile
+            ];
+        }
       return true;
     } else {
       this.navigationSideMenu = [
         ...this.navigation
+      ];
+      this.navigationOtherSideMenu = [
+        ...this.navigationLogin
       ];
       return true;
     }

@@ -51,6 +51,11 @@
   }
 }
 
+
+.text-container-run {
+  color: #46BFBD;
+}
+
 div[class^="docker-containers"],
 div[class*=" docker-containers"] {
   width: 100%;
@@ -64,22 +69,6 @@ div[class*=" docker-containers"] {
 		&:hover {
 			box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
 		}
-  }
-  .data {
-    float: right;
-    text-align: right;
-    margin-right: 2rem;
-    .text-container-run {
-      color: #46BFBD;
-    }
-    .fab {
-      padding: 0;
-      font-size: 1.5rem;
-      text-align: left;
-      margin-left: 1rem;
-      margin-top: -1.5rem;
-      box-shadow: none;
-    }
   }
 }
 
