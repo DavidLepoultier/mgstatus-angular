@@ -1,0 +1,214 @@
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="active">Organizations</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
+<notifier-container></notifier-container>
+<div class="container-fluid mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-1 min-heigth"></div>
+    <div class="col-md-10">
+      <div class="card row pb-5">
+        <div class="row title-project warning-color-dark narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+          <div></div>
+          <div class="font-weight-bold">
+            all Organizations
+          </div>
+          <div>
+            <button type="button" outline="true" class="p-2" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="createOrgShow()">
+              <mdb-icon fas icon="plus-circle" size="2x"></mdb-icon>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 px-5">
+            <mat-form-field class="full-width">
+              <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="px-4">
+          <mat-accordion>
+            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of orgs; let i = index">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="text-muted font-weight-bold">{{ el.name }}</mat-panel-title>
+                <mat-panel-description>
+                  <mdb-badge pill="true" success="true" class="badge-font">{{ el.apimgt | titlecase }}</mdb-badge>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="row">
+                <mat-tab-group animationDuration="0ms" class="col-md-10">
+                  <mat-tab [label]="el.apimgt | titlecase">
+                    <div class="mt-3">
+                      <mat-form-field class="full-width mb-1 px-3">
+                        <input matInput type="text" placeholder="Endpoint" value="{{ el.url }}" disabled="disabled">
+                      </mat-form-field>
+                      <mat-form-field class="full-width mb-1 px-3">
+                        <input matInput type="text" placeholder="login" value="{{ el.login }}" disabled="disabled">
+                      </mat-form-field>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="User">
+                      <div class="mt-3">
+                        <mat-form-field class="full-width mb-1 px-3">
+                          <input matInput type="text" placeholder="Role" value="{{ el.adminRole }}" disabled="disabled">
+                        </mat-form-field>
+                        <mat-form-field class="full-width mb-1 px-3">
+                          <input matInput type="text" placeholder="User" value="{{ el.adminName }}" disabled="disabled">
+                        </mat-form-field>
+                      </div>
+                    </mat-tab>
+                </mat-tab-group>
+                <div class="col-md-1 mt-3">
+                  <button type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name, el.adminName)">
+                    <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1 min-heigth"></div>
+  </div>
+</div>
+
+<div [style.display]="showModal ? 'block' : 'none'" [class]="showModal ? 'modal fade top in show' : 'modal fade top'" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog cascading-modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <div class="text-center mt-5 mb-4">
+        <h4 class="modal-title font-weight-bold">Are you sure?</h4>
+      </div>
+      <div class="text-muted text-center mb-2">
+        <p><i>Do you really want to delete organization <span class="font-weight-bold">{{ organization }}</span>?</i></p>
+      </div>
+      <div class="modal-content">
+        <div class="row">
+        <div class="col-md-6">
+          <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3 px-4 py-2" data-dismiss="modal" (click)="modalHide()" mdbWavesEffect>
+            Cancel
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3 px-4 py-2" mdbWavesEffect (click)="deleteOrg(organization, adminUser)">
+            Delete
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+<div [style.display]="showCreateOrg ? 'block' : 'none'" [class]="showCreateOrg ? 'modal fade top in show' : 'modal fade top'" 
+  id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-content">
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="registerOrgForm">
+          <ng-template matStepLabel>Add Organization</ng-template>
+          <form class="text-center" [formGroup]="registerOrgForm">          
+            <mat-form-field class="full-width">
+              <input matInput type="text" placeholder="Apigee organization name" formControlName="orgName" required>
+              <mat-error *ngFor="let validation of org_validation_messages.orgName">
+                <mat-error *ngIf="registerOrgForm.get('orgName').hasError(validation.type) && (registerOrgForm.get('orgName').dirty || registerOrgForm.get('orgName').touched)">
+                  {{validation.message}}
+                </mat-error>
+              </mat-error>
+            </mat-form-field>          
+            <mat-form-field class="full-width">
+              <input matInput type="text" placeholder="Apigee admin url" formControlName="adminUrl" required>
+              <mat-error *ngFor="let validation of org_validation_messages.adminUrl">
+                <mat-error *ngIf="registerOrgForm.get('adminUrl').hasError(validation.type) && (registerOrgForm.get('adminUrl').dirty || registerOrgForm.get('adminUrl').touched)">
+                  {{validation.message}}
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput type="email" placeholder="Login Apigee Organization" formControlName="loginOrg" required>
+              <mat-error *ngFor="let validation of org_validation_messages.loginOrg">
+                <mat-error *ngIf="registerOrgForm.get('loginOrg').hasError(validation.type) && (registerOrgForm.get('loginOrg').dirty || registerOrgForm.get('loginOrg').touched)">
+                  {{validation.message}}
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="password" required>
+              <mat-error *ngFor="let validation of org_validation_messages.password">
+                <mat-error *ngIf="registerOrgForm.get('password').hasError(validation.type) && (registerOrgForm.get('password').dirty || registerOrgForm.get('password').touched)">
+                  {{ validation.message }}
+                </mat-error>
+              </mat-error>
+              <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+            <div>
+              <button mat-button [disabled]="!registerOrgForm.valid" (click)="testConnexion(registerOrgForm.value)">Test</button>
+              <button mat-button matStepperNext [disabled]="!testValide">Next</button>
+              <button mat-button matStepperNext (click)="stepper.reset();createOrgHide()" >Cancel</button>
+            </div>    
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="registerOrgAdminForm">
+          <ng-template matStepLabel>Add local admin user</ng-template>
+          <form class="text-center" [formGroup]="registerOrgAdminForm">
+            <div class="row">
+              <mat-form-field class="col-6">
+                <input matInput type="text" placeholder="First name" formControlName="adminFirstName" required>
+                <mat-error *ngFor="let validation of account_validation_messages.adminFirstName">
+                  <mat-error *ngIf="registerOrgAdminForm.get('adminFirstName').hasError(validation.type) && (registerOrgAdminForm.get('adminFirstName').dirty || registerOrgAdminForm.get('adminFirstName').touched)">
+                    {{validation.message}}
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>          
+              <mat-form-field class="col-6">
+                <input matInput type="text" placeholder="Last name" formControlName="adminLastName" required>
+                <mat-error *ngFor="let validation of account_validation_messages.adminLastName">
+                  <mat-error *ngIf="registerOrgAdminForm.get('adminLastName').hasError(validation.type) && (registerOrgAdminForm.get('adminLastName').dirty || registerOrgAdminForm.get('adminLastName').touched)">
+                    {{validation.message}}
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-form-field class="full-width">
+              <input matInput type="email" placeholder="Email" formControlName="adminLogin" required>
+              <mat-error *ngFor="let validation of account_validation_messages.adminLogin">
+                <mat-error *ngIf="registerOrgAdminForm.get('adminLogin').hasError(validation.type) && (registerOrgAdminForm.get('adminLogin').dirty || registerOrgAdminForm.get('adminLogin').touched)">
+                  {{validation.message}}
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="adminPassword" required>
+              <mat-error *ngFor="let validation of account_validation_messages.adminPassword">
+                <mat-error *ngIf="registerOrgAdminForm.get('adminPassword').hasError(validation.type) && (registerOrgAdminForm.get('adminPassword').dirty || registerOrgAdminForm.get('adminPassword').touched)">
+                  {{ validation.message }}
+                </mat-error>
+              </mat-error>
+              <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+            <mat-form-field [hidden]="true">
+              <input matInput type="text" formControlName="adminRole">
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button [disabled]="!registerOrgAdminForm.valid" (click)="testUser(registerOrgAdminForm.value, registerOrgForm.value)">Test</button>
+              <button mat-button matStepperNext [disabled]="!testValideUser">Next</button>
+              <button mat-button matStepperNext (click)="stepper.reset();createOrgHide()" >Cancel</button>
+            </div>
+          </form>    
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          Add Organization and User?
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="addOrganization(registerOrgForm.value, registerOrgAdminForm.value);stepper.reset()">Apply</button>
+            <button mat-button matStepperNext (click)="createOrgHide();stepper.reset()" >Cancel</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</div>

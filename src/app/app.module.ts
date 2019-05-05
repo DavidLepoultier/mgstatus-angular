@@ -26,6 +26,7 @@ import { MatNativeDateModule } from '@angular/material';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import { ProfileComponent } from './users/profile/profile.component';
 import { AllAppsComponent } from './apigee/all-apps/all-apps.component';
+import { OrgsComponent } from './apigee/orgs/orgs.component';
 
 const appRoutes: Routes = [
   {
@@ -67,6 +68,11 @@ const appRoutes: Routes = [
     path: 'allApps',
     component: AllAppsComponent,
     data: { title: 'All Apps' }
+  },
+  {
+    path: 'orgs',
+    component: OrgsComponent,
+    data: { title: 'Organizations' }
   },
   {
     path: 'myApps/:id',
@@ -141,7 +147,8 @@ const customNotifierOptions: NotifierOptions = {
     MyAppsDetailComponent,
     DateFormatPipe,
     ProfileComponent,
-    AllAppsComponent
+    AllAppsComponent,
+    OrgsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

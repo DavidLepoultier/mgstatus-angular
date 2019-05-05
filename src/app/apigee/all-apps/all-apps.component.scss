@@ -27,45 +27,7 @@
   border: 0 !important;
   box-shadow: unset;
   margin: 0;
-}
-
-[class^="title-project"],
-[class*=" title-project"] {
-  padding: 1.7rem;
-  //font-size: 2rem;
-  color: white;
-  text-align: left;
-  margin-left: 1rem;
-  margin-top: -1.5rem;
-  border-radius: 3px;
-  box-shadow: 0 2px 9px 0 rgba(0,0,0,.2), 0 2px 13px 0 rgba(0,0,0,.19);
-  .h2 {
-    font-weight: 500;
-  }
-  .data-title {
-    float: left;
-    text-align: left;
-    margin-left: 1rem;
-    margin-top: 1rem;
-    p {
-      color: gray;
-      font-size: 1.10rem;
-      font-weight: 500;
-    }
-  }
-  .data {
-    margin-left: auto;
-    float: right;
-    margin-top: 1rem;
-    text-align: right;
-    margin-right: 2rem;
-    p {
-      color: gray;
-      font-size: 1rem;
-      font-weight: 400;
-      margin-bottom: 0;
-    }
-  }
+  padding: 0 !important;
 }
 
 .card {

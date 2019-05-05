@@ -27,6 +27,10 @@ export class NavigationComponent implements OnInit {
     { link: 'allApps', label: 'Apps', icon: 'mobile-alt' },
   ];
 
+  navigationAdmin = [
+    { link: 'orgs', label: 'Organizations' },
+  ];
+
   navigationProfile = [
     //{ link: 'profile', label: 'My Account' }
   ];
@@ -68,7 +72,13 @@ export class NavigationComponent implements OnInit {
             ];
           break;
           case 'admin': 
-
+            this.navigationSideMenu = [
+              ...this.navigation
+            ];
+            this.navigationOtherSideMenu = [
+              ...this.navigationAdmin,
+              ...this.navigationProfile
+            ];
           break;
           default:
             this.navigationSideMenu = [

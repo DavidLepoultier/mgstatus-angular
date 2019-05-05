@@ -1,142 +1,138 @@
 <mdb-breadcrumb>
-    <mdb-breadcrumb-item class="active">Apps</mdb-breadcrumb-item>  
-  </mdb-breadcrumb>
-  <notifier-container></notifier-container>
-  <div class="container-fluid mx-auto p-3 mt-2">
-    <div class="row mt-4">
-      <div class="col-md-1 min-heigth"></div>
-      <div class="col-md-10">
-        <!-- Table with panel -->
-        <div class="card row pb-5">
-          <!--Card image-->
-          <div class="row title-project gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
-            <div></div>
-            <div class="font-weight-bold">
-              all Applications
-            </div>
-            <div></div>
+  <mdb-breadcrumb-item class="active">Apps</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
+<notifier-container></notifier-container>
+<div class="container-fluid mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-1 min-heigth"></div>
+    <div class="col-md-10">
+      <div class="card row pb-5">
+        <div class="row title-project warning-color-dark narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+          <div></div>
+          <div class="font-weight-bold">
+            all Applications
           </div>
-          <!--/Card image-->
-          <div class="row">
-            <div class="col-md-4 px-5">
-              <mat-form-field class="full-width">
-                <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
-              </mat-form-field>
-            </div>
+          <div></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 px-5">
+            <mat-form-field class="full-width">
+              <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
+            </mat-form-field>
           </div>
-          <div class="px-4">
-            <mat-accordion>
-              <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allApps; let i = index">
-                <mat-expansion-panel-header>
-                  <mat-panel-title class="developer-table">
-                    <table class="developer-table">
-                        <td class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
-                        <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
-                    <!-- <span class="ml-auto developer-align-right">}</span> -->
-                    </table>
+        </div>
+        <div class="px-4">
+          <mat-accordion>
+            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allApps; let i = index">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="developer-table">
+                  <table class="developer-table">
+                      <td class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
+                      <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
+                  <!-- <span class="ml-auto developer-align-right">}</span> -->
+                  </table>
 
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>
-                    <ng-template #approved>
-                      <mdb-badge pill="true" success="true" class="badge-font">{{el.status | titlecase}}</mdb-badge>
-                    </ng-template>
-                    <ng-template #notApproved>
-                      <mdb-badge  pill="true" warning="true" class="badge-font">{{el.status | titlecase}}</mdb-badge>
-                    </ng-template>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="row">
-                  <mat-tab-group animationDuration="0ms" class="col-md-10">
-                    <mat-tab label="Keys">
-                      <div class="mt-3">
+                </mat-panel-title>
+                <mat-panel-description>
+                  <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>
+                  <ng-template #approved>
+                    <mdb-badge pill="true" success="true" class="badge-font">{{el.status | titlecase}}</mdb-badge>
+                  </ng-template>
+                  <ng-template #notApproved>
+                    <mdb-badge  pill="true" warning="true" class="badge-font">{{el.status | titlecase}}</mdb-badge>
+                  </ng-template>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="row">
+                <mat-tab-group animationDuration="0ms" class="col-md-10">
+                  <mat-tab label="Keys">
+                    <div class="mt-3">
+                      <mat-form-field class="full-width mb-1 px-3">
+                        <input matInput [type]="showKey ? 'text' : 'password'" placeholder="Consumer Key" value="{{el.credentials[0].consumerKey}}" disabled="disabled">
+                        <mat-icon matSuffix (click)="showKey = !showKey">{{showKey ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </mat-form-field>
+                      <mat-form-field class="full-width mb-1 px-3">
+                        <input matInput [type]="showSecret ? 'text' : 'password'" placeholder="Consumer Secret" value="{{el.credentials[0].consumerSecret}}" disabled="disabled">
+                        <mat-icon matSuffix (click)="showSecret = !showSecret">{{showSecret ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </mat-form-field>
+                      <mat-form-field class="full-width mb-1 px-3">
+                        <input matInput type="text" placeholder="Key Issued" value="{{el.credentials[0].issuedAt | dateFormat}}" disabled="disabled">
+                      </mat-form-field>
+                      <mat-form-field class="full-width mb-1 px-3">
+                        <input matInput type="text" placeholder="Expires" value="{{el.credentials[0].expiresAt | dateFormat}}" disabled="disabled">
+                      </mat-form-field>
+                    </div>  
+                  </mat-tab>
+                  <mat-tab label="Products">
+                    <div class="mt-3">
+                      <div *ngFor="let p of el.credentials[0].apiProducts; let c = index">
                         <mat-form-field class="full-width mb-1 px-3">
-                          <input matInput [type]="showKey ? 'text' : 'password'" placeholder="Consumer Key" value="{{el.credentials[0].consumerKey}}" disabled="disabled">
-                          <mat-icon matSuffix (click)="showKey = !showKey">{{showKey ? 'visibility_off' : 'visibility'}}</mat-icon>
+                          <input matInput type="text" placeholder="Api Product" value="{{p.apiproduct}}" disabled="disabled">
                         </mat-form-field>
-                        <mat-form-field class="full-width mb-1 px-3">
-                          <input matInput [type]="showSecret ? 'text' : 'password'" placeholder="Consumer Secret" value="{{el.credentials[0].consumerSecret}}" disabled="disabled">
-                          <mat-icon matSuffix (click)="showSecret = !showSecret">{{showSecret ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </mat-form-field>
-                        <mat-form-field class="full-width mb-1 px-3">
-                          <input matInput type="text" placeholder="Key Issued" value="{{el.credentials[0].issuedAt | dateFormat}}" disabled="disabled">
-                        </mat-form-field>
-                        <mat-form-field class="full-width mb-1 px-3">
-                          <input matInput type="text" placeholder="Expires" value="{{el.credentials[0].expiresAt | dateFormat}}" disabled="disabled">
-                        </mat-form-field>
-                      </div>  
-                    </mat-tab>
-                    <mat-tab label="Products">
-                      <div class="mt-3">
-                        <div *ngFor="let p of el.credentials[0].apiProducts; let c = index">
-                          <mat-form-field class="full-width mb-1 px-3">
-                            <input matInput type="text" placeholder="Api Product" value="{{p.apiproduct}}" disabled="disabled">
-                          </mat-form-field>
-                          <ng-container *ngIf="p.status === 'approved'; then pApproved; else pNotApproved"></ng-container>
-                          <ng-template #pApproved>
-                            <mdb-badge pill="true" success="true" class="p-1 badge-font badge-product">{{p.status | titlecase}}</mdb-badge>
-                          </ng-template>
-                          <ng-template #pNotApproved>
-                            <mdb-badge  pill="true" warning="true" class="p-1 badge-font badge-product">{{p.status | titlecase}}</mdb-badge>
-                          </ng-template>
-                        </div>
+                        <ng-container *ngIf="p.status === 'approved'; then pApproved; else pNotApproved"></ng-container>
+                        <ng-template #pApproved>
+                          <mdb-badge pill="true" success="true" class="p-1 badge-font badge-product">{{p.status | titlecase}}</mdb-badge>
+                        </ng-template>
+                        <ng-template #pNotApproved>
+                          <mdb-badge  pill="true" warning="true" class="p-1 badge-font badge-product">{{p.status | titlecase}}</mdb-badge>
+                        </ng-template>
                       </div>
-                    </mat-tab>
-                    <mat-tab label="Details">
-                      <div class="mt-3">
-                        <div *ngFor="let a of el.attributes; let t = index">
-                          <mat-form-field *ngIf="a.value" class="full-width mb-1 px-3">
-                            <input matInput type="text" placeholder="{{a.name}}" value="{{a.value}}" disabled="disabled">
-                          </mat-form-field>
-                        </div>
-                        <mat-form-field *ngIf="el.callbackUrl" class="full-width mb-1 px-3">
-                          <input matInput type="text" placeholder="callbackUrl" value="{{el.callbackUrl}}" disabled="disabled">
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Details">
+                    <div class="mt-3">
+                      <div *ngFor="let a of el.attributes; let t = index">
+                        <mat-form-field *ngIf="a.value" class="full-width mb-1 px-3">
+                          <input matInput type="text" placeholder="{{a.name}}" value="{{a.value}}" disabled="disabled">
                         </mat-form-field>
                       </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                  <div class="col-md-1 mt-3">
-                    <button type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name)">
-                      <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
-                    </button>
-                  </div>
+                      <mat-form-field *ngIf="el.callbackUrl" class="full-width mb-1 px-3">
+                        <input matInput type="text" placeholder="callbackUrl" value="{{el.callbackUrl}}" disabled="disabled">
+                      </mat-form-field>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+                <div class="col-md-1 mt-3">
+                  <button type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name)">
+                    <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
+                  </button>
                 </div>
-              </mat-expansion-panel>
-            </mat-accordion>
-          </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
       </div>
-      <div class="col-md-1"></div>
     </div>
+    <div class="col-md-1"></div>
   </div>
+</div>
   
-  
-  <div [style.display]="showModal ? 'block' : 'none'" [class]="showModal ? 'modal fade top in show' : 'modal fade top'" id="frameModalTop" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel">
-    <div class="modal-dialog cascading-modal" role="document">
-      <!--Content-->
+<div [style.display]="showModal ? 'block' : 'none'" [class]="showModal ? 'modal fade top in show' : 'modal fade top'" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog cascading-modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <div class="text-center mt-5 mb-4">
+        <h4 class="modal-title font-weight-bold">Are you sure?</h4>
+      </div>
+      <div class="text-muted text-center mb-2">
+        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ application }}</span>?</i></p>
+      </div>
       <div class="modal-content">
-        <div class="text-center mt-5 mb-4">
-          <h4 class="modal-title font-weight-bold">Are you sure?</h4>
+        <div class="row">
+        <div class="col-md-6">
+          <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3 px-4 py-2" data-dismiss="modal" (click)="modalHide()" mdbWavesEffect>
+            Cancel
+          </button>
         </div>
-        <div class="text-muted text-center mb-2">
-          <p><i>Do you really want to delete application <span class="font-weight-bold">{{ application }}</span>?</i></p>
-        </div>
-        <div class="modal-content">
-          <div class="row">
-          <div class="col-md-6">
-            <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3 px-4 py-2" data-dismiss="modal" (click)="modalHide()" mdbWavesEffect>
-              Cancel
-            </button>
-          </div>
-          <div class="col-md-6">
-            <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3 px-4 py-2" mdbWavesEffect (click)="actionApp({app: application, action: 'delete'})">
-              Delete
-            </button>
-          </div>
-        </div>
+        <div class="col-md-6">
+          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3 px-4 py-2" mdbWavesEffect (click)="actionApp({app: application, action: 'delete'})">
+            Delete
+          </button>
         </div>
       </div>
-      <!--/.Content-->
+      </div>
     </div>
+    <!--/.Content-->
   </div>
+</div>

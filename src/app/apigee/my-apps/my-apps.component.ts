@@ -95,6 +95,8 @@ export class MyAppsComponent implements OnInit {
 
   createAppHide(){
     this.showCreateApp = false;
+    this.createAppForm.reset();
+    this.createForms();
   }
 
   actionApp(app: any){

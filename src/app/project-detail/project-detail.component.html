@@ -23,20 +23,17 @@
         <div class="card row">
           <!-- Content -->
           <div class="border border-light pb-4">
-            <div class="row title-project">
-              <i class="fas fa-project-diagram fa-2x blue-gradient-rgba ml-5"> </i>
-              <!-- Data -->
-              <div class="data-title">
-                <p class="font-weight-bold"> {{ project.id }}</p>
+            <div class="row title-project warning-color-dark narrower py-2 mx-4 mb-0 d-flex justify-content-between align-items-center">
+              <div></div>
+              <div class="font-weight-bold">
+                {{ project.id }}
               </div>
-              <div class="data">          
-                <p><a href='{{ project.endpoint }}' target="_blank">{{ project.endpoint }}</a></p>
-                <p>{{ project.contact }}</p>
+              <div>
               </div>
             </div>
 
             <!-- Content -->
-            <div class="row mt-2">
+            <div class="row">
               <div class="col-md-3">
                 <div class="third-content mr-auto ml-3 mb-2 mt-3">
                   <p class="mb-0 mt-0 text-muted font-weight-bold">Organization: <i>{{ project.org }}</i></p>
@@ -57,6 +54,10 @@
               </div>
               <!-- Containers -->
               <div class="col-md-9">
+                <div class="data">          
+                  <p><a href='{{ project.endpoint }}' target="_blank">{{ project.endpoint }}</a></p>
+                  <p>{{ project.contact }}</p>
+                </div>
                 <div *ngIf="project.containers">
                   <h6 class="mb-0 mt-0 text-muted font-weight-bold">Containers:</h6>
                   <hr class="hr-bold mb-3 mr-2 mt-2" />

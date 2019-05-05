@@ -49,8 +49,18 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  deleteOrg(org: any): Observable<any> {
+    return this.http.delete(endpoint.api + `apigee/org/${org}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   createAdminOrg(adminUser: any): Observable<any> {
     return this.http.post(endpoint.auth + 'register', adminUser, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  deleteAdminOrg(adminUser: any): Observable<any> {
+    return this.http.delete(endpoint.auth + `user/${adminUser}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
@@ -74,6 +84,11 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  getAllOrgs(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/orgs`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   getProducts(): Observable<any> {
     return this.http.get(endpoint.api + `apigee/products`, this.getHeaders()).pipe(
       map(this.extractData));
@@ -83,4 +98,5 @@ export class ApigeeService {
     return this.http.post(endpoint.api + `apigee/developer/apps/${action}`, app, this.getHeaders()).pipe(
       map(this.extractData));
   }
+  
 }
