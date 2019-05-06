@@ -1,12 +1,12 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApigeeService } from '../apigee.service';
 import { NotifierSvc } from '../../services/notifier.service';
 import { MdbTableService } from 'angular-bootstrap-md';
+import { MatStepper } from '@angular/material';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-orgs',
@@ -130,10 +130,15 @@ export class OrgsComponent implements OnInit {
     this.showModal = false;
   }
 
-  createOrgHide(){
-    this.showCreateOrg = false;
+  resetStepper(stepper: MatStepper){
+    stepper.reset();
+  }
+
+  createOrgHide(stepper: MatStepper){
+    this.resetStepper(stepper);
     this.testValide = false;
     this.testValideUser = false;
+    this.showCreateOrg = false;
   }
 
   createOrgShow(){
@@ -198,14 +203,16 @@ export class OrgsComponent implements OnInit {
     );
   }
 
-  addOrganization(orgForm:any, adminForm:any) {
-    this.apigee.createOrg(orgForm).subscribe(
+  addOrganization(orgForm:any, adminForm:any, stepper: MatStepper) {
+    this.apigee.createAdminOrg(adminForm).subscribe(
       data  => {
         this.handlerSuccess(data),
-        this.apigee.createAdminOrg(adminForm).subscribe(
+        this.apigee.createOrg(orgForm).subscribe(
           data  => {
             this.handlerSuccess(data),
-            this.createOrgHide()
+            this.createOrgHide(stepper);
+            this.orgs = [];
+            this.getAllOrgs();
           },
           error => this.handlerError(error)
         );
@@ -215,12 +222,15 @@ export class OrgsComponent implements OnInit {
   }
 
   deleteOrg(org: any, admunUser: any) {
-    this.apigee.deleteOrg(org).subscribe(
+    this.apigee.deleteAdminOrg(admunUser).subscribe(
       data  => {
         this.handlerSuccess(data),
-        this.apigee.deleteAdminOrg(admunUser).subscribe(
+        this.apigee.deleteOrg(org).subscribe(
           data  => {
-            this.handlerDeleteOrgResponse(data)
+            this.handlerSuccess(data),
+            this.orgs = [];
+            this.modalHide();
+            this.getAllOrgs();
           },
           error => this.handlerError(error)
         );
@@ -234,16 +244,6 @@ export class OrgsComponent implements OnInit {
       'success',
       data.message
     );
-  }
-
-  handlerDeleteOrgResponse(data: any) {
-    this.notifier.showNotification(
-      'success',
-      data.message
-    );
-    this.orgs = [];
-    this.getAllOrgs();
-    this.modalHide();
   }
 
   handlerError(error: any) {

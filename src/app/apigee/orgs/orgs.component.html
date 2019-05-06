@@ -146,7 +146,7 @@
             <div>
               <button mat-button [disabled]="!registerOrgForm.valid" (click)="testConnexion(registerOrgForm.value)">Test</button>
               <button mat-button matStepperNext [disabled]="!testValide">Next</button>
-              <button mat-button matStepperNext (click)="stepper.reset();createOrgHide()" >Cancel</button>
+              <button mat-button matStepperNext (click)="createOrgHide(stepper)" >Cancel</button>
             </div>    
           </form>
         </mat-step>
@@ -195,7 +195,7 @@
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button [disabled]="!registerOrgAdminForm.valid" (click)="testUser(registerOrgAdminForm.value, registerOrgForm.value)">Test</button>
               <button mat-button matStepperNext [disabled]="!testValideUser">Next</button>
-              <button mat-button matStepperNext (click)="stepper.reset();createOrgHide()" >Cancel</button>
+              <button mat-button matStepperNext (click)="createOrgHide(stepper)" >Cancel</button>
             </div>
           </form>    
         </mat-step>
@@ -204,8 +204,8 @@
           Add Organization and User?
           <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="addOrganization(registerOrgForm.value, registerOrgAdminForm.value);stepper.reset()">Apply</button>
-            <button mat-button matStepperNext (click)="createOrgHide();stepper.reset()" >Cancel</button>
+            <button mat-button (click)="addOrganization(registerOrgForm.value, registerOrgAdminForm.value, stepper)">Apply</button>
+            <button mat-button matStepperNext (click)="createOrgHide(stepper)" >Cancel</button>
           </div>
         </mat-step>
       </mat-horizontal-stepper>

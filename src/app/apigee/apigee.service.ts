@@ -60,7 +60,7 @@ export class ApigeeService {
   }
 
   deleteAdminOrg(adminUser: any): Observable<any> {
-    return this.http.delete(endpoint.auth + `user/${adminUser}`, this.getHeaders()).pipe(
+    return this.http.delete(endpoint.api + `user/${adminUser}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 

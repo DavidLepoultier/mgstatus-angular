@@ -138,7 +138,6 @@ export class MyAppsComponent implements OnInit {
   getDeveloperApps() {
     this.apigee.getDeveloperApps().subscribe(
       data  => {
-        console.log('data:', data)
         this.handlerServerResponse(data);
       },
       error => {
@@ -163,8 +162,8 @@ export class MyAppsComponent implements OnInit {
   }
 
   handlerServerResponse(data: any) {
-    for (let index = 0; index < data.developerApps.app.length; index++) {
-      this.myApps.push(data.developerApps.app[index]);
+    for (let index = 0; index < data.developerApps.length; index++) {
+      this.myApps.push(data.developerApps[index]);
     }
     this.myApps = this.myApps.sort((a: any, b: any) => {
       if (a['name'] < b['name']) {
@@ -182,7 +181,7 @@ export class MyAppsComponent implements OnInit {
   handlerDeleteAppResponse(data: any) {
     this.notifier.showNotification(
       'success',
-      `${data.action.name} has been deleted`
+      `${data.action.name} deleted.`
     );
     this.myApps = [];
     this.getDeveloperApps();
@@ -196,7 +195,7 @@ export class MyAppsComponent implements OnInit {
   handlerCreateAppResponse(data: any){
     this.notifier.showNotification(
       'success',
-      `${data.message.name} has been created`
+      `${data.message.name} created.`
     );
     this.myApps = [];
     this.getDeveloperApps();

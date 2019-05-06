@@ -119,11 +119,11 @@ export class AllAppsComponent implements OnInit {
   handlerServerResponse(data: any) {
     this.apigee.getDevelopers().subscribe(
       dev  => {
-        for (let index = 0; index < data.apps.app.length; index++) {
-          let developer = dev.developers.developer.filter(j => j.developerId === data.apps.app[index].developerId);
+        for (let index = 0; index < data.apps.length; index++) {
+          let developer = dev.developers.developer.filter(j => j.developerId === data.apps[index].developerId);
           if (developer.length > 0) {
-            data.apps.app[index].developerEmail = developer[0].email;
-            this.allApps.push(data.apps.app[index]);
+            data.apps[index].developerEmail = developer[0].email;
+            this.allApps.push(data.apps[index]);
           }
         }
       }
