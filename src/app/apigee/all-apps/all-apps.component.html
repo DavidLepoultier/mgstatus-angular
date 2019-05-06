@@ -27,7 +27,8 @@
               <mat-expansion-panel-header>
                 <mat-panel-title class="developer-table">
                   <table class="developer-table">
-                      <td class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
+                      <td *ngIf="el.attributes.length > 0" class="text-muted font-weight-bold app-width"> {{ el.attributes[0].value }} </td>
+                      <td *ngIf="el.attributes.length === 0"class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
                       <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
                   <!-- <span class="ml-auto developer-align-right">}</span> -->
                   </table>
@@ -93,7 +94,10 @@
                   </mat-tab>
                 </mat-tab-group>
                 <div class="col-md-1 mt-3">
-                  <button type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name)">
+                  <button *ngIf="el.attributes.length > 0" type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name, el.developerEmail, el.attributes[0].value)">
+                    <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
+                  </button>
+                  <button *ngIf="el.attributes.length === 0" type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name, el.developerEmail, el.name)">
                     <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
                   </button>
                 </div>
@@ -116,7 +120,7 @@
         <h4 class="modal-title font-weight-bold">Are you sure?</h4>
       </div>
       <div class="text-muted text-center mb-2">
-        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ application }}</span>?</i></p>
+        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ displayName }}</span>?</i></p>
       </div>
       <div class="modal-content">
         <div class="row">
@@ -126,7 +130,7 @@
           </button>
         </div>
         <div class="col-md-6">
-          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3 px-4 py-2" mdbWavesEffect (click)="actionApp({app: application, action: 'delete'})">
+          <button type="button" mdbBtn color="danger" class="d-flex mr-auto waves-light my-3 px-4 py-2" mdbWavesEffect (click)="actionApp({app: application, dev: developer, action: 'delete'})">
             Delete
           </button>
         </div>

@@ -33,7 +33,7 @@
           <mat-accordion>
             <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of myApps; let i = index">
               <mat-expansion-panel-header>
-                <mat-panel-title class="text-muted font-weight-bold">{{ el.name }}</mat-panel-title>
+                <mat-panel-title class="text-muted font-weight-bold">{{ el.attributes[0].value || el.name }}</mat-panel-title>
                 <mat-panel-description>
                   <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>
                   <ng-template #approved>
@@ -94,7 +94,7 @@
                   </mat-tab>
                 </mat-tab-group>
                 <div class="col-md-1 mt-3">
-                  <button type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name)">
+                  <button type="button" outline="true" class="px-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="modalShow(el.name, el.attributes[0].value)">
                     <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
                   </button>
                 </div>
@@ -118,7 +118,7 @@
         <h4 class="modal-title font-weight-bold">Are you sure?</h4>
       </div>
       <div class="text-muted text-center mb-2">
-        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ application }}</span>?</i></p>
+        <p><i>Do you really want to delete application <span class="font-weight-bold">{{ displayName }}</span>?</i></p>
       </div>
       <div class="modal-content">
         <div class="row">
@@ -163,6 +163,9 @@
                   {{validation.message}}
                 </mat-error>
               </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput type="text" placeholder="Display name" formControlName="displayName">
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Products</mat-label>

@@ -19,6 +19,8 @@ export class AllAppsComponent implements OnInit {
   previous: string;
   showModal: boolean;
   application: string;
+  developer: string;
+  displayName: string;
   jwtDecoded: object = {};
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService ) {
@@ -46,9 +48,11 @@ export class AllAppsComponent implements OnInit {
     this.jwtDecoded = this.auth.jwtTokenDecode();
   }
 
-  modalShow(value: string) {
+  modalShow(app: string, dev: string, display: string) {
     this.showModal = true; 
-    this.application = value;
+    this.application = app;
+    this.developer = dev;
+    this.displayName = display;
   }
 
   modalHide(){
@@ -59,7 +63,6 @@ export class AllAppsComponent implements OnInit {
     this.postApp = {
       "application": app
     }
-    console.log(this.postApp);
     this.apigee.actionApp(this.postApp, app.action).subscribe(
       data => {
         switch(app.action) {
@@ -119,7 +122,6 @@ export class AllAppsComponent implements OnInit {
         for (let index = 0; index < data.apps.app.length; index++) {
           let developer = dev.developers.developer.filter(j => j.developerId === data.apps.app[index].developerId);
           if (developer.length > 0) {
-            console.log('developer:', developer)
             data.apps.app[index].developerEmail = developer[0].email;
             this.allApps.push(data.apps.app[index]);
           }

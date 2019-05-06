@@ -23,6 +23,7 @@ export class MyAppsComponent implements OnInit {
   showModal: boolean;
   showCreateApp: boolean;
   application: string;
+  displayName: string;
   jwtDecoded: object = {};
 
   createAppForm: FormGroup;
@@ -48,7 +49,6 @@ export class MyAppsComponent implements OnInit {
       this.router.navigate(['/']);
     }
     this.jwtDecode();
-    console.log(this.jwtDecoded['role']);
     if(this.jwtDecoded['role'] === "developer") {
       this.getDeveloperApps();
     }
@@ -65,6 +65,7 @@ export class MyAppsComponent implements OnInit {
       app: new FormControl('', Validators.compose([
         Validators.required      
       ])),
+      displayName: new FormControl(''),
       products: new FormControl('', Validators.compose([
         Validators.required
       ])),
@@ -72,9 +73,10 @@ export class MyAppsComponent implements OnInit {
     })
   }
 
-  modalShow(value: string) {
+  modalShow(app: string, display: string) {
     this.showModal = true; 
-    this.application = value;
+    this.application = app;
+    this.displayName = display;
   }
 
   modalHide(){
@@ -136,6 +138,7 @@ export class MyAppsComponent implements OnInit {
   getDeveloperApps() {
     this.apigee.getDeveloperApps().subscribe(
       data  => {
+        console.log('data:', data)
         this.handlerServerResponse(data);
       },
       error => {
