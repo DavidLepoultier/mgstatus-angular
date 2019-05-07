@@ -94,6 +94,26 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  getProxies(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/proxies`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getProxie(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/proxies/${id}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getDeploymentStatus(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/proxies/deployment/status/${id}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getProxieRevision(id: any, rev: any): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/proxies/${id}/${rev}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   actionApp(app: object, action: string): Observable<any> {
     return this.http.post(endpoint.api + `apigee/developer/apps/${action}`, app, this.getHeaders()).pipe(
       map(this.extractData));

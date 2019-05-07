@@ -116,18 +116,17 @@ export class AllAppsComponent implements OnInit {
     }
   }
 
-  handlerServerResponse(data: any) {
-    this.apigee.getDevelopers().subscribe(
-      dev  => {
-        for (let index = 0; index < data.apps.length; index++) {
-          let developer = dev.developers.developer.filter(j => j.developerId === data.apps[index].developerId);
-          if (developer.length > 0) {
-            data.apps[index].developerEmail = developer[0].email;
-            this.allApps.push(data.apps[index]);
-          }
-        }
+  handlerServerResponse(data: any) { 
+    for (let index = 0; index < data.apps.app.length; index++) {
+      if (data.apps.app[index].name.startsWith('edgemicro_')) {
+        this.apigee.getDevelopersId(data.apps.app[index].developerId).subscribe(
+          dev => {
+            data.apps.app[index].developerEmail = dev.developers.developer[0].email;
+            this.allApps.push(data.apps.app[index]);
+          }  
+        );
       }
-    );
+    }
     this.allApps = this.allApps.sort((a: any, b: any) => {
       if (a['name'] < b['name']) {
         return this.sorted ? -1 : 1;

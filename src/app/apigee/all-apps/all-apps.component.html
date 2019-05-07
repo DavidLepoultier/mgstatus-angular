@@ -27,12 +27,10 @@
               <mat-expansion-panel-header>
                 <mat-panel-title class="developer-table">
                   <table class="developer-table">
-                      <td *ngIf="el.attributes.length > 0" class="text-muted font-weight-bold app-width"> {{ el.attributes[0].value }} </td>
-                      <td *ngIf="el.attributes.length === 0"class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
-                      <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
-                  <!-- <span class="ml-auto developer-align-right">}</span> -->
+                    <td *ngIf="el.attributes.length > 0" class="text-muted font-weight-bold app-width"> {{ el.attributes[0].value }} </td>
+                    <td *ngIf="el.attributes.length === 0"class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
+                    <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
                   </table>
-
                 </mat-panel-title>
                 <mat-panel-description>
                   <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>

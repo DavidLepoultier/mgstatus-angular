@@ -27,6 +27,7 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
 import { ProfileComponent } from './users/profile/profile.component';
 import { AllAppsComponent } from './apigee/all-apps/all-apps.component';
 import { OrgsComponent } from './apigee/orgs/orgs.component';
+import { ProxiesComponent } from './apigee/proxies/proxies.component';
 
 const appRoutes: Routes = [
   {
@@ -68,6 +69,11 @@ const appRoutes: Routes = [
     path: 'allApps',
     component: AllAppsComponent,
     data: { title: 'All Apps' }
+  },
+  {
+    path: 'proxies',
+    component: ProxiesComponent,
+    data: { title: 'Proxies' }
   },
   {
     path: 'orgs',
@@ -148,7 +154,8 @@ const customNotifierOptions: NotifierOptions = {
     DateFormatPipe,
     ProfileComponent,
     AllAppsComponent,
-    OrgsComponent
+    OrgsComponent,
+    ProxiesComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
