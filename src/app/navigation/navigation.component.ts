@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -8,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class NavigationComponent implements OnInit {
   
-  constructor(public auth:AuthService) { }
+  constructor(public auth:AuthService, private router:Router) { }
 
   navigation = [
     //{ link: 'dashboard', label: 'dashboard', icon: 'tachometer-alt' },
@@ -46,6 +47,11 @@ export class NavigationComponent implements OnInit {
 
   jwtDecode() {
     this.jwtDecoded = this.auth.jwtTokenDecode();
+  }
+
+  setOrgPref(org: any) {
+    localStorage.setItem('orgName', `{"name":"${org}"}`)
+    this.router.navigate(['/reload']);
   }
 
   checkAuth() {

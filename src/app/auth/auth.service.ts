@@ -28,6 +28,11 @@ export class AuthService {
     return body || { };
   }
 
+  getAllOrgs(): Observable<any> {
+    return this.http.get(endpoint.auth + `orgs`).pipe(
+      map(this.extractData));
+  }
+
   login(credentials: any): Observable<any> {
     return this.http.post(endpoint.auth + 'login', credentials, httpOptions).pipe(
       map(this.extractData));
@@ -37,6 +42,14 @@ export class AuthService {
     return sessionStorage.getItem('jbb-data');
   }
 
+  userOrgPreference() {
+    if(localStorage.getItem('orgName')) {
+      return localStorage.getItem('orgName');
+    } else {
+      return '{"name":"unset"}';
+    }
+  }
+
   logout() {
     sessionStorage.removeItem('jbb-data');
     this.router.navigate(['/']);
@@ -44,6 +57,11 @@ export class AuthService {
 
   register(credentials: any): Observable<any> {
     return this.http.post(endpoint.auth + 'register', credentials, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  registerApigee(credentials: any): Observable<any> {
+    return this.http.post(endpoint.auth + 'registerApigee', credentials, httpOptions).pipe(
       map(this.extractData));
   }
 

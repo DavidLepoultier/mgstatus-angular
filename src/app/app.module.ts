@@ -19,7 +19,6 @@ import { ErrorsComponent } from './errors/errors.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { MyAppsComponent } from './apigee/my-apps/my-apps.component';
-import { MyAppsDetailComponent } from './apigee/my-apps-detail/my-apps-detail.component';
 import { DemoMaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material';
@@ -28,6 +27,7 @@ import { ProfileComponent } from './users/profile/profile.component';
 import { AllAppsComponent } from './apigee/all-apps/all-apps.component';
 import { OrgsComponent } from './apigee/orgs/orgs.component';
 import { ProxiesComponent } from './apigee/proxies/proxies.component';
+import { ReloadComponent } from './reload/reload.component';
 
 const appRoutes: Routes = [
   {
@@ -80,10 +80,9 @@ const appRoutes: Routes = [
     component: OrgsComponent,
     data: { title: 'Organizations' }
   },
-  {
-    path: 'myApps/:id',
-    component: MyAppsDetailComponent,
-    data: { title: 'DeveloperApp' }
+  { path: 'reload',
+    component: ReloadComponent,
+    data: { title: 'Reload' }
   },
   { path: '',
     redirectTo: '/r-Gate',
@@ -150,12 +149,12 @@ const customNotifierOptions: NotifierOptions = {
     LoginComponent,
     RegisterComponent,
     MyAppsComponent,
-    MyAppsDetailComponent,
     DateFormatPipe,
     ProfileComponent,
     AllAppsComponent,
     OrgsComponent,
-    ProxiesComponent
+    ProxiesComponent,
+    ReloadComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

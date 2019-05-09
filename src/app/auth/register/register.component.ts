@@ -11,11 +11,12 @@ import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-
-  show: boolean = false;
+  orgs:any = [];
+  show:boolean = false;
   jbbData:any = null;
+  jwtDecoded: object = {};
   isAuthenticated:boolean = false;
-  notifier: NotifierSvc;
+  notifier:NotifierSvc;
 
   account_validation_messages = {
     'firstName': [
@@ -43,6 +44,7 @@ export class RegisterComponent implements OnInit {
       this.refreshFlags();
       this.router.navigate(['/']);
     } else {
+      this.getOrgs();
       this.createForms();
     }
   }
@@ -60,11 +62,22 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$')
       ])),
+      orgName: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
       ])) 
     })
+  }
+
+  getOrgs(){
+    this.auth.getAllOrgs().subscribe(
+      data  => {
+        this.orgs = data.orgs;
+      }
+    )
   }
 
   register(formData:any) {
@@ -85,10 +98,24 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  jwtDecode() {
+    this.jwtDecoded = this.auth.jwtTokenDecode();
+  }
+
   handlerLoginSuccess(data: any) {
     this.jbbData = JSON.stringify(data);
     this.refreshFlags();
     sessionStorage.setItem('jbb-data', this.jbbData)
+    this.jwtDecode();
+    for (let index = 0; index < this.jwtDecoded['tenants'].length; index++) {
+      let creds = {
+        tenant: this.jwtDecoded['tenants'][index],
+        email:  this.jwtDecoded['user'],
+        name: this.jwtDecoded['name'].split(' ', 2)
+      }
+      this.auth.registerApigee(creds).subscribe( 
+      );
+    }
     this.router.navigate(['/']);
   }
 }

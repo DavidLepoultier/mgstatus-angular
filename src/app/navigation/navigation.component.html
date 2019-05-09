@@ -33,14 +33,28 @@
         <ul class="navbar-nav nav-flex-icons">
           <li class="nav-item dropdown" dropdown>
             <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              Organizations<span class="caret"></span></a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+              <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a> -->
+              <a *ngFor="let item of jwtDecoded['tenants']" (click)="setOrgPref(item)" class="dropdown-item waves-light" mdbWavesEffect>
+                {{ item }}
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="auth.userIsLoggedIn()">
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item dropdown" dropdown>
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
               <mdb-icon fas icon="user"></mdb-icon> {{ jwtDecoded['user'] }}<span class="caret"></span></a>
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
               <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a> -->
               <a *ngFor="let item of navigationOtherSideMenu" href="#" [routerLink]="[item.link]" class="dropdown-item waves-light" mdbWavesEffect>
                 {{ item.label }}
               </a>
-              <a href="#" (click)="auth.logout()" class="dropdown-item waves-light" mdbWavesEffect>
-                  Logout
+              <a (click)="auth.logout()" class="dropdown-item waves-light" mdbWavesEffect>
+                Logout
               </a>
             </div>
           </li>

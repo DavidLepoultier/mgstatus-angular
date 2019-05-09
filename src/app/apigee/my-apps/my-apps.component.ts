@@ -25,7 +25,7 @@ export class MyAppsComponent implements OnInit {
   application: string;
   displayName: string;
   jwtDecoded: object = {};
-
+  orgPref: object = JSON.parse(this.auth.userOrgPreference());
   createAppForm: FormGroup;
 
   application_validation_messages = {
@@ -39,6 +39,8 @@ export class MyAppsComponent implements OnInit {
     this.showModal = false;
     this.showCreateApp = false;
   }
+
+  
 
   @HostListener('input') oninput() {
     this.searchItems();

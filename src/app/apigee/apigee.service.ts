@@ -19,9 +19,15 @@ export class ApigeeService {
 
   private getHeaders() {
     let token: object = JSON.parse(this.auth.userIsLoggedIn());
+    let orgPref: object = JSON.parse(this.auth.userOrgPreference());
+    let orgSet = '';
+    if(orgPref['name'] != 'unset')
+      orgSet = orgPref['name'];
+    
     let httpOptions = {
       headers: new HttpHeaders({
         'x-access-token': token['token'],
+        'x-org-pref': orgSet,
         'Content-Type':  'application/json'
       })
     };

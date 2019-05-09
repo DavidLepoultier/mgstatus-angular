@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyAppsDetailComponent } from './my-apps-detail.component';
+import { ReloadComponent } from './reload.component';
 
-describe('MyAppsDetailComponent', () => {
-  let component: MyAppsDetailComponent;
-  let fixture: ComponentFixture<MyAppsDetailComponent>;
+describe('ReloadComponent', () => {
+  let component: ReloadComponent;
+  let fixture: ComponentFixture<ReloadComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyAppsDetailComponent ]
+      declarations: [ ReloadComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MyAppsDetailComponent);
+    fixture = TestBed.createComponent(ReloadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
