@@ -80,7 +80,7 @@ const appRoutes: Routes = [
     component: OrgsComponent,
     data: { title: 'Organizations' }
   },
-  { path: 'reload',
+  { path: 'reload/:id',
     component: ReloadComponent,
     data: { title: 'Reload' }
   },

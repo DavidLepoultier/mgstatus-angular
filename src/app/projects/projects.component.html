@@ -1,5 +1,6 @@
 <mdb-breadcrumb>
   <mdb-breadcrumb-item class="active">r-Gateway</mdb-breadcrumb-item>    
+  <div class="ml-auto">{{ orgPref.name }}</div>
 </mdb-breadcrumb>
 <div *ngIf="error; then errorBlock else projectBlock"></div>
 <ng-template #errorBlock>

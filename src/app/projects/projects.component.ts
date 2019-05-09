@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierSvc } from '../services/notifier.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-projects',
@@ -10,12 +11,14 @@ import { NotifierSvc } from '../services/notifier.service';
 })
 export class ProjectsComponent implements OnInit {
 
+  orgPref: object = JSON.parse(this.auth.userOrgPreference());
+  
   notifier: NotifierSvc;
   error:any = null;
   errorMessage:any = '';
   projects:any = [];
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, notifierSvc:NotifierSvc) { 
+  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, notifierSvc:NotifierSvc, private auth:AuthService) { 
     this.notifier = notifierSvc;
   }
 

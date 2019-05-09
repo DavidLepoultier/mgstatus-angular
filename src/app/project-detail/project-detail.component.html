@@ -1,6 +1,7 @@
 <mdb-breadcrumb>
   <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/r-Gate']" routerLinkActive="router-link-active">r-Gateway</a></mdb-breadcrumb-item>
   <mdb-breadcrumb-item  *ngIf="project.id" class="active">{{ project.id }}</mdb-breadcrumb-item>  
+  <div class="ml-auto">{{ orgPref.name }}</div>
 </mdb-breadcrumb>
 <div *ngIf="error; then errorBlock else projectBlock"></div>
 <ng-template #errorBlock>

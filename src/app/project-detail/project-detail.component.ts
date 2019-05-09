@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -8,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./project-detail.component.scss']
 })
 export class ProjectDetailComponent implements OnInit {
+
+  orgPref: object = JSON.parse(this.auth.userOrgPreference());
 
   error:any = null;
   errorMessage:any = '';
@@ -31,7 +34,7 @@ export class ProjectDetailComponent implements OnInit {
     }
   };
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private auth:AuthService) { }
 
   ngOnInit() {
     this.rest.getResource(this.route.snapshot.params['id']).subscribe(

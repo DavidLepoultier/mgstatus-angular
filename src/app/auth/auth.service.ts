@@ -43,16 +43,30 @@ export class AuthService {
   }
 
   userOrgPreference() {
-    if(localStorage.getItem('orgName')) {
-      return localStorage.getItem('orgName');
+    if(sessionStorage.getItem('jbb-data')) {
+      let token = this.jwtTokenDecode();
+      if(localStorage.getItem(`${token['id']}_orgName`)) {
+        return localStorage.getItem(`${token['id']}_orgName`);
+      } else {
+        let token = this.jwtTokenDecode();
+        let defaultOrg = {
+          name: token.tenants[0]
+        }
+        return JSON.stringify(defaultOrg);
+      } 
     } else {
-      return '{"name":"unset"}';
+      let defaultOrg = {
+        name: ''
+      }
+      return JSON.stringify(defaultOrg);  
     }
   }
 
   logout() {
     sessionStorage.removeItem('jbb-data');
-    this.router.navigate(['/']);
+    sessionStorage.removeItem('orgName');
+    this.router.navigate([`/reload/r-Gate`]);
+    //this.router.navigate(['/']);
   }
 
   register(credentials: any): Observable<any> {

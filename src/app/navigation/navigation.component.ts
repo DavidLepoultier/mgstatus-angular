@@ -50,8 +50,9 @@ export class NavigationComponent implements OnInit {
   }
 
   setOrgPref(org: any) {
-    localStorage.setItem('orgName', `{"name":"${org}"}`)
-    this.router.navigate(['/reload']);
+    this.jwtDecode();
+    localStorage.setItem(`${this.jwtDecoded['id']}_orgName`, `{"name":"${org}"}`)
+    this.router.navigate([`/reload${this.router.url}`]);
   }
 
   checkAuth() {

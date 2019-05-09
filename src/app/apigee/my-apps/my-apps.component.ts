@@ -40,8 +40,6 @@ export class MyAppsComponent implements OnInit {
     this.showCreateApp = false;
   }
 
-  
-
   @HostListener('input') oninput() {
     this.searchItems();
   }

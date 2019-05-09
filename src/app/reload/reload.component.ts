@@ -11,7 +11,8 @@ export class ReloadComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit() {
-    this.router.navigate(['/']);
+    let source = (this.router.url.split('/', 3));
+    this.router.navigate([`/${source[2]}`]);
   }
 
 }
