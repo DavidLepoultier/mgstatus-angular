@@ -32,7 +32,7 @@
               </div>
               <mat-form-field class="full-width">
                 <mat-label>Organization</mat-label>
-                <mat-select formControlName="orgName" multiple required>
+                <mat-select formControlName="orgName" multiple>
                   <mat-option *ngFor="let tenant of orgs" [value]="tenant">{{tenant}}</mat-option>
                 </mat-select>
               </mat-form-field>
