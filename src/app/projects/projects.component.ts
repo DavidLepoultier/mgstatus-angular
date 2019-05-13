@@ -11,11 +11,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  orgPref: object = {
-    name: ''
-  };
+  orgPref:any;
   
-  notifier: NotifierSvc;
+  notifier:NotifierSvc;
   error:any = null;
   errorMessage:any = '';
   projects:any = [];

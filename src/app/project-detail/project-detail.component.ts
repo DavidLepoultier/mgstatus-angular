@@ -10,9 +10,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ProjectDetailComponent implements OnInit {
 
-  orgPref: object = {
-    name: ''
-  };
+  orgPref:any;
   error:any = null;
   errorMessage:any = '';
 

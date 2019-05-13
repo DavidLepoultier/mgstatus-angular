@@ -25,9 +25,7 @@ export class MyAppsComponent implements OnInit {
   application: string;
   displayName: string;
   jwtDecoded: object = {};
-  orgPref: object = {
-    name: ''
-  };
+  orgPref:any;
   createAppForm: FormGroup;
 
   application_validation_messages = {
