@@ -25,7 +25,9 @@ export class MyAppsComponent implements OnInit {
   application: string;
   displayName: string;
   jwtDecoded: object = {};
-  orgPref: object = JSON.parse(this.auth.userOrgPreference());
+  orgPref: object = {
+    name: ''
+  };
   createAppForm: FormGroup;
 
   application_validation_messages = {
@@ -50,6 +52,7 @@ export class MyAppsComponent implements OnInit {
     }
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "developer") {
+      this.orgPref = JSON.parse(this.auth.userOrgPreference());
       this.getDeveloperApps();
     }
     this.createForms();

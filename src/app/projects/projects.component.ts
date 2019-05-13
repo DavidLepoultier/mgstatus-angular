@@ -11,7 +11,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  orgPref: object = JSON.parse(this.auth.userOrgPreference());
+  orgPref: object = {
+    name: ''
+  };
   
   notifier: NotifierSvc;
   error:any = null;
@@ -23,6 +25,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.getResources();
   }
 

@@ -10,8 +10,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ProjectDetailComponent implements OnInit {
 
-  orgPref: object = JSON.parse(this.auth.userOrgPreference());
-
+  orgPref: object = {
+    name: ''
+  };
   error:any = null;
   errorMessage:any = '';
 
@@ -37,6 +38,7 @@ export class ProjectDetailComponent implements OnInit {
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private auth:AuthService) { }
 
   ngOnInit() {
+    this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.rest.getResource(this.route.snapshot.params['id']).subscribe(
       data  => {
         this.handlerServerResponse(data);
