@@ -1,9 +1,8 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApigeeService } from '../apigee.service';
 import { NotifierSvc } from '../../services/notifier.service';
-import { MdbTableService } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-all-apps',
@@ -15,21 +14,15 @@ export class AllAppsComponent implements OnInit {
   postApp: object = {}
   allApps: any = [];
   sorted = true;
-  searchText: string = '';
-  previous: string;
   showModal: boolean;
   application: string;
   developer: string;
   displayName: string;
   jwtDecoded: object = {};
 
-  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService ) {
+  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc ) {
     this.notifier = notifierSvc;
     this.showModal = false;
-  }
-
-  @HostListener('input') oninput() {
-    this.searchItems();
   }
 
   ngOnInit() {
@@ -77,19 +70,6 @@ export class AllAppsComponent implements OnInit {
     )
   }
 
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-    if (!this.searchText) {
-      this.mdbTable
-      this.mdbTable.setDataSource(this.previous);
-      this.allApps = this.mdbTable.getDataSource();
-    }
-    if (this.searchText) {
-      this.allApps = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
-
   getAllApps() {
     this.apigee.getAllApps().subscribe(
       data  => {
@@ -121,6 +101,7 @@ export class AllAppsComponent implements OnInit {
       if (data.apps.app[index].name.startsWith('edgemicro_')) {
         this.apigee.getDevelopersId(data.apps.app[index].developerId).subscribe(
           dev => {
+            data.apps.app[index].displayName = data.apps.app[index].attributes[0].value || data.apps.app[index].name;
             data.apps.app[index].developerEmail = dev.developers.developer[0].email;
             this.allApps.push(data.apps.app[index]);
           }  
@@ -136,8 +117,6 @@ export class AllAppsComponent implements OnInit {
       }
       return 0;
     });
-    this.mdbTable.setDataSource(this.allApps);
-    this.previous = this.mdbTable.getDataSource();
   }
   
   handlerDeleteAppResponse(data: any) {

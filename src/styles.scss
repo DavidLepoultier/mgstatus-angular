@@ -10,6 +10,11 @@
   font-weight: 400;
 }
 
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+	background-color: #ff8800 !important;
+}
+
 .mat-form-field-label {
   //font-size: larger !important;
   font-weight: 500 !important;

@@ -23,12 +23,11 @@
         </div>
         <div class="px-4">
           <mat-accordion>
-            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allApps; let i = index">
+            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allApps | filter: searchText; let i = index">
               <mat-expansion-panel-header>
                 <mat-panel-title class="developer-table">
                   <table class="developer-table">
-                    <td *ngIf="el.attributes.length > 0" class="text-muted font-weight-bold app-width"> {{ el.attributes[0].value }} </td>
-                    <td *ngIf="el.attributes.length === 0"class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
+                    <td class="text-muted font-weight-bold app-width"> {{ el.displayName }} </td>
                     <td class="text-muted font-weight-bold developer-width"> {{ el.developerEmail }} </td>
                   </table>
                 </mat-panel-title>

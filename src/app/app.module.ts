@@ -28,6 +28,8 @@ import { AllAppsComponent } from './apigee/all-apps/all-apps.component';
 import { OrgsComponent } from './apigee/orgs/orgs.component';
 import { ProxiesComponent } from './apigee/proxies/proxies.component';
 import { ReloadComponent } from './reload/reload.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { UniquePipe } from './pipes/unique.pipe';
 
 const appRoutes: Routes = [
   {
@@ -154,7 +156,9 @@ const customNotifierOptions: NotifierOptions = {
     AllAppsComponent,
     OrgsComponent,
     ProxiesComponent,
-    ReloadComponent
+    ReloadComponent,
+    FilterPipe,
+    UniquePipe
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

@@ -21,10 +21,6 @@
         </div>
         <div class="row">
           <div class="col-md-4 px-5">
-            <!-- <div class="md-form my-0">
-              <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput>
-              <label for="search">Search</label>
-            </div> -->
             <mat-form-field class="full-width">
               <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
             </mat-form-field>
@@ -32,9 +28,9 @@
         </div>
         <div class="px-4">
           <mat-accordion>
-            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of myApps; let i = index">
+            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of myApps | filter: searchText; let i = index">
               <mat-expansion-panel-header>
-                <mat-panel-title class="text-muted font-weight-bold">{{ el.attributes[0].value || el.name }}</mat-panel-title>
+                <mat-panel-title class="text-muted font-weight-bold">{{ el.displayName }}</mat-panel-title>
                 <mat-panel-description>
                   <ng-container *ngIf="el.status === 'approved'; then approved; else notApproved"></ng-container>
                   <ng-template #approved>

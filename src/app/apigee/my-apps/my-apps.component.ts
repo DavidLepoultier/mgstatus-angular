@@ -1,9 +1,8 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApigeeService } from '../apigee.service';
 import { NotifierSvc } from '../../services/notifier.service';
-import { MdbTableService } from 'angular-bootstrap-md';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 
@@ -18,8 +17,6 @@ export class MyAppsComponent implements OnInit {
   myApps: any = [];
   products: object = [];
   sorted = true;
-  searchText: string = '';
-  previous: string;
   showModal: boolean;
   showCreateApp: boolean;
   application: string;
@@ -34,14 +31,10 @@ export class MyAppsComponent implements OnInit {
     ]
   }
 
-  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService, private fb:FormBuilder ) {
+  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder ) {
     this.notifier = notifierSvc;
     this.showModal = false;
     this.showCreateApp = false;
-  }
-
-  @HostListener('input') oninput() {
-    this.searchItems();
   }
 
   ngOnInit() {
@@ -123,19 +116,6 @@ export class MyAppsComponent implements OnInit {
     )
   }
 
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-    if (!this.searchText) {
-      this.mdbTable
-      this.mdbTable.setDataSource(this.previous);
-      this.myApps = this.mdbTable.getDataSource();
-    }
-    if (this.searchText) {
-      this.myApps = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
-
   getDeveloperApps() {
     this.apigee.getDeveloperApps().subscribe(
       data  => {
@@ -164,6 +144,7 @@ export class MyAppsComponent implements OnInit {
 
   handlerServerResponse(data: any) {
     for (let index = 0; index < data.developerApps.length; index++) {
+      data.developerApps[index].displayName = data.developerApps[index].attributes[0].value || data.developerApps[index].name;
       this.myApps.push(data.developerApps[index]);
     }
     this.myApps = this.myApps.sort((a: any, b: any) => {
@@ -175,8 +156,6 @@ export class MyAppsComponent implements OnInit {
       }
       return 0;
     });
-    this.mdbTable.setDataSource(this.myApps);
-    this.previous = this.mdbTable.getDataSource();
   }
   
   handlerDeleteAppResponse(data: any) {

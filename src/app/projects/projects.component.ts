@@ -12,7 +12,10 @@ import { AuthService } from '../auth/auth.service';
 export class ProjectsComponent implements OnInit {
 
   orgPref:any;
-  
+  sorted = true;
+  filterBox:any = '';
+  arrayFilterBox: any = [];
+
   notifier:NotifierSvc;
   error:any = null;
   errorMessage:any = '';
@@ -25,6 +28,10 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
     this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.getResources();
+  }
+
+  checkCheckBoxvalue(event: any){
+    this.filterBox = event;
   }
 
   getResources() {
@@ -67,6 +74,15 @@ export class ProjectsComponent implements OnInit {
       }
       this.projects[index].containersRunning = running;
     }
+    this.projects = this.projects.sort((a: any, b: any) => {
+      if (a['id'] < b['id']) {
+        return this.sorted ? -1 : 1;
+      }
+      if (a['id'] > b['id']) {
+        return this.sorted ? 1 : -1;
+      }
+      return 0;
+    });
   }
 
   add() {
