@@ -14,6 +14,7 @@ export class ProxiesComponent implements OnInit {
 
   notifier: NotifierSvc;
   allProducts: any = [];
+  searchText: string;
   sorted = true;
   jwtDecoded: object = {};
 

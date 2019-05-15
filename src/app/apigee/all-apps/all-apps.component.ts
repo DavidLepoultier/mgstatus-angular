@@ -14,6 +14,7 @@ export class AllAppsComponent implements OnInit {
   postApp: object = {}
   allApps: any = [];
   sorted = true;
+  searchText: string;
   showModal: boolean;
   application: string;
   developer: string;

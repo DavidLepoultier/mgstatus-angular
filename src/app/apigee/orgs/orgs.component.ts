@@ -19,6 +19,7 @@ export class OrgsComponent implements OnInit {
   notifier: NotifierSvc;
   orgs: any = [];
   sorted = true;
+  searchText: string;
   showModal: boolean;
   showCreateOrg: boolean;
   organization: string;

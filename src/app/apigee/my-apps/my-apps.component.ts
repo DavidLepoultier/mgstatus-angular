@@ -16,6 +16,7 @@ export class MyAppsComponent implements OnInit {
   postApp: object = {}
   myApps: any = [];
   products: object = [];
+  searchText: string;
   sorted = true;
   showModal: boolean;
   showCreateApp: boolean;
