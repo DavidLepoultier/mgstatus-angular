@@ -1,5 +1,5 @@
 <mdb-breadcrumb>
-  <mdb-breadcrumb-item class="active">Proxies</mdb-breadcrumb-item>  
+  <mdb-breadcrumb-item class="active">Offers</mdb-breadcrumb-item>  
 </mdb-breadcrumb>
 <notifier-container></notifier-container>
 <div class="container-fluid mx-auto p-3 mt-2">
@@ -10,7 +10,7 @@
       <div class="row title-project warning-color-dark narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
         <div></div>
         <div class="font-weight-bold">
-          Proxies
+          Offers
         </div>
         <div>
           <!-- <button type="button" outline="true" class="p-2" mdbBtn color="light" data-toggle="modal" data-target="#basicExample">
@@ -31,16 +31,16 @@
       </div>
       <div class="px-4">
         <mat-accordion>
-          <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allProxies; let i = index">
-            <mat-expansion-panel-header (click)="getProxieDescription(el.name)">
+          <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allProducts | filter: searchText; let i = index">
+            <mat-expansion-panel-header (click)="getProductDescription(el)">
               <mat-panel-title class="developer-table">
                 <table class="developer-table">
-                  <td class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
-                  <td class="text-muted font-weight-bold developer-width">
+                  <td class="text-muted font-weight-bold app-width"> {{ el }} </td>
+                  <!-- <td class="text-muted font-weight-bold developer-width">
                     <i *ngFor="let env of el.environments; let e = index">
                       {{ env }}
                     </i>
-                  </td>
+                  </td> -->
                 </table>
               </mat-panel-title>
             </mat-expansion-panel-header>

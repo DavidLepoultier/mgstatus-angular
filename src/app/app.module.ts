@@ -30,6 +30,7 @@ import { ProxiesComponent } from './apigee/proxies/proxies.component';
 import { ReloadComponent } from './reload/reload.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { UniquePipe } from './pipes/unique.pipe';
+import { UniqueProjectPipe } from './pipes/unique-project.pipe';
 
 const appRoutes: Routes = [
   {
@@ -158,7 +159,8 @@ const customNotifierOptions: NotifierOptions = {
     ProxiesComponent,
     ReloadComponent,
     FilterPipe,
-    UniquePipe
+    UniquePipe,
+    UniqueProjectPipe
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

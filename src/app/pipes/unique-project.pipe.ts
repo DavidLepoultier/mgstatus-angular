@@ -1,14 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'unique'
+  name: 'uniqueProject'
 })
-export class UniquePipe implements PipeTransform {
+export class UniqueProjectPipe implements PipeTransform {
 
-  transform(items: any[], args?: any): any {
-    let allItems = items.map(data => data[args]);
+  transform(items: any[]): any {
+    let allItems = items.map(data => data);
     let resource = allItems.filter((x, i, a) => x && a.indexOf(x) === i);
     return resource;
   }
+
 
 }

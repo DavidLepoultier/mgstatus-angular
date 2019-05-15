@@ -1,9 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApigeeService } from '../apigee.service';
 import { NotifierSvc } from '../../services/notifier.service';
-import { MdbTableService } from 'angular-bootstrap-md';
 import { MatStepper } from '@angular/material';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
@@ -20,8 +19,6 @@ export class OrgsComponent implements OnInit {
   notifier: NotifierSvc;
   orgs: any = [];
   sorted = true;
-  searchText: string = '';
-  previous: string;
   showModal: boolean;
   showCreateOrg: boolean;
   organization: string;
@@ -69,14 +66,10 @@ export class OrgsComponent implements OnInit {
     ]
   }
 
-  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService, private fb: FormBuilder ) {
+  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb: FormBuilder ) {
     this.notifier = notifierSvc;
     this.showModal = false;
     this.showCreateOrg = false;  
-  }
-
-  @HostListener('input') oninput() {
-    this.searchItems();
   }
 
   ngOnInit() {
@@ -94,19 +87,6 @@ export class OrgsComponent implements OnInit {
 
   jwtDecode() {
     this.jwtDecoded = this.auth.jwtTokenDecode();
-  }
-
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-    if (!this.searchText) {
-      this.mdbTable
-      this.mdbTable.setDataSource(this.previous);
-      this.orgs = this.mdbTable.getDataSource();
-    }
-    if (this.searchText) {
-      this.orgs = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
   }
 
   getAllOrgs() {
@@ -266,7 +246,5 @@ export class OrgsComponent implements OnInit {
       }
       return 0;
     });
-    this.mdbTable.setDataSource(this.orgs);
-    this.previous = this.mdbTable.getDataSource();
   }
 }

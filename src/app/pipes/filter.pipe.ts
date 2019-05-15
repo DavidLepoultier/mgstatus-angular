@@ -19,8 +19,6 @@ export class FilterPipe implements PipeTransform {
     if (!searchText && !checkBox) {
       return items;
     }
-    // const resource = body.filter(j => j.id === id);
-    // if (resource.length === 1) {
     if(checkBox && checkBox.checked) {
       let resource = this.checkBoxArray.filter((j: any) => j === checkBox.source.value);
       if (resource.length === 0)

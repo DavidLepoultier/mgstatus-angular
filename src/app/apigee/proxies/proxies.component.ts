@@ -1,9 +1,8 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApigeeService } from '../apigee.service';
 import { NotifierSvc } from '../../services/notifier.service';
-import { MdbTableService } from 'angular-bootstrap-md';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
@@ -14,14 +13,11 @@ import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 export class ProxiesComponent implements OnInit {
 
   notifier: NotifierSvc;
-  allProxies: any = [];
+  allProducts: any = [];
   sorted = true;
-  searchText: string = '';
-  previous: string;
   jwtDecoded: object = {};
 
-
-  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private mdbTable:MdbTableService, private fb:FormBuilder) { 
+  constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder) { 
     this.notifier = notifierSvc;
   }
 
@@ -31,7 +27,7 @@ export class ProxiesComponent implements OnInit {
     }
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "orgAdmin") {
-      this.getProxies();
+      this.getProducts();
     } else {
       this.router.navigate(['/']);
     }
@@ -41,21 +37,8 @@ export class ProxiesComponent implements OnInit {
     this.jwtDecoded = this.auth.jwtTokenDecode();
   }
 
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-    if (!this.searchText) {
-      this.mdbTable
-      this.mdbTable.setDataSource(this.previous);
-      this.allProxies = this.mdbTable.getDataSource();
-    }
-    if (this.searchText) {
-      this.allProxies = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
-
-  getProxies() {
-    this.apigee.getProxies().subscribe(
+  getProducts() {
+    this.apigee.getProducts().subscribe(
       data  => {
         this.handlerServerResponse(data);
       },
@@ -65,11 +48,11 @@ export class ProxiesComponent implements OnInit {
     );
   }
 
-  getProxieDescription(proxie: any) {
-    this.apigee.getDeploymentStatus(proxie).subscribe(
+  getProductDescription(products: any) {
+    this.apigee.getDeploymentStatus(products).subscribe(
       data  => {
         let status = data;
-        this.apigee.getProxieRevision(proxie, '1').subscribe(
+        this.apigee.getProxieRevision(products, '1').subscribe(
           data  => {
             let desc = data;
             console.log('desc:', desc, 'status:', status);
@@ -101,8 +84,8 @@ export class ProxiesComponent implements OnInit {
   }
 
   handlerServerResponse(data: any) { 
-    this.allProxies = data.proxies;
-    this.allProxies = this.allProxies.sort((a: any, b: any) => {
+    this.allProducts = data.products;
+    this.allProducts = this.allProducts.sort((a: any, b: any) => {
       if (a['name'] < b['name']) {
         return this.sorted ? -1 : 1;
       }
@@ -111,7 +94,6 @@ export class ProxiesComponent implements OnInit {
       }
       return 0;
     });
-    this.mdbTable.setDataSource(this.allProxies);
-    this.previous = this.mdbTable.getDataSource();
+    console.log('allProducts:', this.allProducts)
   }
 }

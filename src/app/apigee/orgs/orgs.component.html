@@ -27,7 +27,7 @@
         </div>
         <div class="px-4">
           <mat-accordion>
-            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of orgs; let i = index">
+            <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of orgs | filter: searchText; let i = index">
               <mat-expansion-panel-header>
                 <mat-panel-title class="text-muted font-weight-bold">{{ el.name }}</mat-panel-title>
                 <mat-panel-description>
