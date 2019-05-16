@@ -23,13 +23,13 @@
         </mat-form-field>
         <h6 class="text-muted font-weight-bold">Organizations</h6>
         <section>
-          <div class="full-width" *ngFor="let org of projects | unique: 'org' ">
+          <div class="full-width" *ngFor="let org of projects | filter: null : filterBox | unique: 'org' ">
             <mat-checkbox (change)="checkCheckBoxvalue($event)" [name]="org" [value]="org">{{org}}</mat-checkbox>
           </div>
         </section>
         <h6 class="text-muted font-weight-bold">Environments</h6>
         <section>
-          <div class="full-width" *ngFor="let env of projects | unique: 'env' ">
+          <div class="full-width" *ngFor="let env of projects | filter: null : filterBox  | unique: 'env' ">
             <mat-checkbox (change)="checkCheckBoxvalue($event)" [name]="env" [value]="env">{{env}}</mat-checkbox>
           </div>
         </section>

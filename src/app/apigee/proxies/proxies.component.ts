@@ -77,9 +77,6 @@ export class ProxiesComponent implements OnInit {
     switch(error.status) {
       case 401:
         sessionStorage.removeItem('jbb-data');
-        setTimeout(() => {
-            this.router.navigate(['/']);
-        },4000);
         break;
     }
   }

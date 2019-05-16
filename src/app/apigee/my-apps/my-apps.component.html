@@ -170,7 +170,7 @@
             <mat-form-field class="full-width">
               <mat-label>Products</mat-label>
               <mat-select formControlName="products" multiple required>
-                <mat-option *ngFor="let product of products" [value]="product">{{product}}</mat-option>
+                <mat-option *ngFor="let product of products" [value]="product">{{product.displayName}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

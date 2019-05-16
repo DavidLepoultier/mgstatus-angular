@@ -40,11 +40,11 @@ export class FilterPipe implements PipeTransform {
       for (let index = 0; index < this.checkBoxArray.length; index++) {
         const element = this.checkBoxArray[index];
         this.result = [
-          ...this.result,
           ...this.mdbTable.filterLocalDataBy(element)
         ]
+        this.mdbTable.setDataSource(this.result);
       }
-      this.mdbTable.setDataSource(this.result);
+      
     }
 
     if(searchText) {
