@@ -12,6 +12,14 @@
   }
 }
 
+[class^="btn-outline-"],
+[class*=" btn-outline-"] {
+  border: 0 !important;
+  box-shadow: unset;
+  margin: 0;
+  padding: 0 !important;
+}
+
 .text-container-run {
   color: #46BFBD;
 }

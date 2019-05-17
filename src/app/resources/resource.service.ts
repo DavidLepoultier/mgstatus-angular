@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { environment } from './../environments/environment';
+import { environment } from '../../environments/environment';
 
 
 const endpoint = {
@@ -19,7 +19,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class RestService {
+export class ResourceService {
   constructor(private http: HttpClient) { }
 
   private extractData(res: Response) {
@@ -39,8 +39,8 @@ export class RestService {
 
   addProject (project: any): Observable<any> {
     console.log(project);
-    return this.http.post<any>(endpoint.api + 'resources', JSON.stringify(project), httpOptions).pipe(
-      tap((project) => console.log(`added project w/ id=${project.id}`)),
+    return this.http.post(endpoint.api + 'resources', JSON.stringify(project), httpOptions).pipe(
+      tap((project) => console.log(`added project w/ id=${project['id']}`)),
       catchError(this.handleError<any>('addProject'))
     );
   }
@@ -53,10 +53,13 @@ export class RestService {
   }
 
   deleteProject (id: any): Observable<any> {
-    return this.http.delete<any>(endpoint.api + `resources/${id}`, httpOptions).pipe(
-      tap(_ => console.log(`deleted project id=${id}`)),
-      catchError(this.handleError<any>('deleteProject'))
-    );
+    return this.http.delete(endpoint.api + `resources/${id}`, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  deleteContainer (project: any, container: any): Observable<any> {
+    return this.http.delete(endpoint.api + `resources/${project}/${container}`, httpOptions).pipe(
+      map(this.extractData));
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

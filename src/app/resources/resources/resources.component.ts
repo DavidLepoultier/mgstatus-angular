@@ -1,33 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../rest.service';
+import { ResourceService } from '../resource.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotifierSvc } from '../services/notifier.service';
-import { AuthService } from '../auth/auth.service';
+import { NotifierSvc } from '../../services/notifier.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  selector: 'app-resources',
+  templateUrl: './resources.component.html',
+  styleUrls: ['./resources.component.scss']
 })
-export class ProjectsComponent implements OnInit {
+export class ResourcesComponent implements OnInit {
 
-  orgPref:any;
+  orgPref:any = '';
   sorted = true;
   filterBox:any = '';
   arrayFilterBox: any = [];
+
+  jwtDecoded: object = {};
 
   notifier:NotifierSvc;
   error:any = null;
   errorMessage:any = '';
   projects:any = [];
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, notifierSvc:NotifierSvc, private auth:AuthService) { 
+  constructor(public rest:ResourceService, private route: ActivatedRoute, private router: Router, notifierSvc:NotifierSvc, private auth:AuthService) { 
     this.notifier = notifierSvc;
   }
 
   ngOnInit() {
-    this.orgPref = JSON.parse(this.auth.userOrgPreference());
+    if(this.auth.userIsLoggedIn())
+      this.jwtDecode();
+    if(this.jwtDecoded['role'] != "admin")
+      this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.getResources();
+  }
+
+  jwtDecode() {
+    this.jwtDecoded = this.auth.jwtTokenDecode();
   }
 
   checkCheckBoxvalue(event: any){

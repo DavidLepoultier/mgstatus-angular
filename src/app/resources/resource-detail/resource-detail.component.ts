@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../rest.service';
+import { ResourceService } from '../resource.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
-  selector: 'app-project-detail',
-  templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.scss']
+  selector: 'app-resource-detail',
+  templateUrl: './resource-detail.component.html',
+  styleUrls: ['./resource-detail.component.scss']
 })
-export class ProjectDetailComponent implements OnInit {
+export class ResourceDetailComponent implements OnInit {
 
-  orgPref:any;
+  orgPref:any = '';
   error:any = null;
   errorMessage:any = '';
+
+  jwtDecoded: object = {};
+  colProxies: string = 'col-md-7';
 
   project:any = [];
   date = Date.now();
@@ -33,10 +36,15 @@ export class ProjectDetailComponent implements OnInit {
     }
   };
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private auth:AuthService) { }
+  constructor(public rest:ResourceService, private route: ActivatedRoute, private router: Router, private auth:AuthService) { }
 
   ngOnInit() {
-    this.orgPref = JSON.parse(this.auth.userOrgPreference());
+    if(this.auth.userIsLoggedIn())
+      this.jwtDecode();
+    if(this.jwtDecoded['role'] === "admin")
+      this.colProxies = 'col-md-6';
+    if(this.jwtDecoded['role'] != "admin")
+      this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.rest.getResource(this.route.snapshot.params['id']).subscribe(
       data  => {
         this.handlerServerResponse(data);
@@ -47,8 +55,41 @@ export class ProjectDetailComponent implements OnInit {
     );
   }
   
+  jwtDecode() {
+    this.jwtDecoded = this.auth.jwtTokenDecode();
+  }
+
   handlerError(error: any) {
     this.error = error.error;
+  }
+
+  deleteProject(project: any) {
+    this.rest.deleteProject(project).subscribe(
+      data  => {
+        this.router.navigate([`/reload/r-Gate`]);
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
+  }
+
+  deleteContainer(project: any, container: any) {
+    this.rest.deleteContainer(project, container).subscribe(
+      data  => {
+        this.rest.getResource(this.route.snapshot.params['id']).subscribe(
+          data  => {
+            this.handlerServerResponse(data);
+          },
+          error => {
+            this.handlerError(error);
+          }
+        )
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
   }
 
   handlerServerResponse(response: any) {

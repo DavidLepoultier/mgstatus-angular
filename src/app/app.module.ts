@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
-import { ProjectsComponent } from './projects/projects.component';
-import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ResourcesComponent } from './resources/resources/resources.component';
+import { ResourceDetailComponent } from './resources/resource-detail/resource-detail.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -40,12 +40,12 @@ const appRoutes: Routes = [
   },
   {
     path: 'r-Gate',
-    component: ProjectsComponent,
+    component: ResourcesComponent,
     data: { title: 'Projects List' }
   },
   {
     path: 'r-Gate/:id',
-    component: ProjectDetailComponent,
+    component: ResourceDetailComponent,
     data: { title: 'Project Details' }
   },
   {
@@ -141,8 +141,8 @@ const customNotifierOptions: NotifierOptions = {
 @NgModule({
   declarations: [
     AppComponent,
-    ProjectsComponent,
-    ProjectDetailComponent,
+    ResourcesComponent,
+    ResourceDetailComponent,
     NavigationComponent,
     DashboardComponent,
     FooterComponent,
