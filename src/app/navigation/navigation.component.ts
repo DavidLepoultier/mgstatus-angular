@@ -25,7 +25,7 @@ export class NavigationComponent implements OnInit {
   ];
 
   navigationAdminTenant = [
-    //{ link: 'proxies', label: 'Proxies', icon: 'bezier-curve' },
+    { link: 'proxies', label: 'Proxies', icon: 'bezier-curve' },
     { link: 'allApps', label: 'Apps', icon: 'mobile-alt' }
   ];
 

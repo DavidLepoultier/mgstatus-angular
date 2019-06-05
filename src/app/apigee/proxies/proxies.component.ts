@@ -13,13 +13,74 @@ import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 export class ProxiesComponent implements OnInit {
 
   notifier: NotifierSvc;
-  allProducts: any = [];
+  allProxies: any = [];
   searchText: string;
   sorted = true;
   jwtDecoded: object = {};
+  addProxiesForm: FormGroup;
+  showAddOffers: boolean = false;
+  postProxie: object = {};
+
+  application_validation_messages = {
+    'proxie': [
+      { type: 'required', message: 'Proxie name is required' },
+    ],
+    'basePath': [
+      { type: 'required', message: 'Base path is required' },
+    ],
+    'target': [
+      { type: 'required', message: 'Target is required' },
+    ]
+  }
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder) { 
     this.notifier = notifierSvc;
+  }
+
+  createForms() {
+    // user links form validations
+    this.addProxiesForm = this.fb.group({
+      proxie: new FormControl('', Validators.compose([
+        Validators.required      
+      ])),
+      description: new FormControl(''),
+      action: new FormControl('create'),
+      basePath: new FormControl('', Validators.compose([
+        Validators.required      
+      ])),
+      target: new FormControl('', Validators.compose([
+        Validators.required
+      ]))
+    })
+  }
+
+  addOffersShow(){
+    this.showAddOffers = true;
+  }
+
+  addOffersHide(){
+    this.showAddOffers = false;
+  }
+
+  actionOffers(proxie: any){
+    this.postProxie = {
+      "proxie": proxie
+    }
+    this.apigee.actionProxie(this.postProxie, proxie.action).subscribe(
+      data => {
+        switch(proxie.action) {
+          case 'delete':
+            this.handlerDeleteProxieResponse(data);
+            break;
+          case 'create': 
+            this.handlerCreateProxieResponse(data);
+            break;
+        }  
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
   }
 
   ngOnInit() {
@@ -28,18 +89,19 @@ export class ProxiesComponent implements OnInit {
     }
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "orgAdmin") {
-      this.getProducts();
+      this.getProxies();
     } else {
       this.router.navigate(['/']);
     }
+    this.createForms();
   }
 
   jwtDecode() {
     this.jwtDecoded = this.auth.jwtTokenDecode();
   }
 
-  getProducts() {
-    this.apigee.getProducts().subscribe(
+  getProxies() {
+    this.apigee.getProxies().subscribe(
       data  => {
         this.handlerServerResponse(data);
       },
@@ -82,8 +144,8 @@ export class ProxiesComponent implements OnInit {
   }
 
   handlerServerResponse(data: any) { 
-    this.allProducts = data.products;
-    this.allProducts = this.allProducts.sort((a: any, b: any) => {
+    this.allProxies = data.proxies;
+    this.allProxies = this.allProxies.sort((a: any, b: any) => {
       if (a['name'] < b['name']) {
         return this.sorted ? -1 : 1;
       }
@@ -92,6 +154,30 @@ export class ProxiesComponent implements OnInit {
       }
       return 0;
     });
-    console.log('allProducts:', this.allProducts)
+    //console.log('allProxies:', this.allProxies)
+  }
+
+  modalHide(){
+    this.showAddOffers = false;
+  }
+
+  handlerDeleteProxieResponse(data: any) {
+    this.notifier.showNotification(
+      'success',
+      `${data.action.name} deleted.`
+    );
+    this.allProxies = [];
+    this.getProxies();
+    this.modalHide();
+  }
+
+  handlerCreateProxieResponse(data: any){
+    this.notifier.showNotification(
+      'success',
+      `${data.message.name} created.`
+    );
+    this.allProxies = [];
+    this.getProxies();
+    this.addOffersHide();
   }
 }

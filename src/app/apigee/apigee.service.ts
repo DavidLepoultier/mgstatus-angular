@@ -125,4 +125,9 @@ export class ApigeeService {
       map(this.extractData));
   }
   
+  actionProxie(proxie: object, action: string): Observable<any> {
+    return this.http.post(endpoint.api + `apigee/proxie/${action}`, proxie, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
 }
