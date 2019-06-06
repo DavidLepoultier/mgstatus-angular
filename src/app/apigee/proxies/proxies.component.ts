@@ -14,6 +14,14 @@ export class ProxiesComponent implements OnInit {
 
   notifier: NotifierSvc;
   allProxies: any = [];
+  allEnvironments: any = [];
+  descProxie: object = {
+    proxie: {
+      name: '',
+      displayName: '',
+      description: ''
+    }
+  };
   searchText: string;
   sorted = true;
   jwtDecoded: object = {};
@@ -69,9 +77,6 @@ export class ProxiesComponent implements OnInit {
     this.apigee.actionProxie(this.postProxie, proxie.action).subscribe(
       data => {
         switch(proxie.action) {
-          case 'delete':
-            this.handlerDeleteProxieResponse(data);
-            break;
           case 'create': 
             this.handlerCreateProxieResponse(data);
             break;
@@ -90,10 +95,10 @@ export class ProxiesComponent implements OnInit {
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "orgAdmin") {
       this.getProxies();
+      this.createForms();
     } else {
       this.router.navigate(['/']);
     }
-    this.createForms();
   }
 
   jwtDecode() {
@@ -161,16 +166,6 @@ export class ProxiesComponent implements OnInit {
     this.showAddOffers = false;
   }
 
-  handlerDeleteProxieResponse(data: any) {
-    this.notifier.showNotification(
-      'success',
-      `${data.action.name} deleted.`
-    );
-    this.allProxies = [];
-    this.getProxies();
-    this.modalHide();
-  }
-
   handlerCreateProxieResponse(data: any){
     this.notifier.showNotification(
       'success',
@@ -179,5 +174,14 @@ export class ProxiesComponent implements OnInit {
     this.allProxies = [];
     this.getProxies();
     this.addOffersHide();
+  }
+
+  handlerDeployProxieResponse(data: any){
+    this.notifier.showNotification(
+      'success',
+      `Proxie ${data.message.state}`
+    );
+    //this.allProxies = [];
+    this.getProxies();
   }
 }

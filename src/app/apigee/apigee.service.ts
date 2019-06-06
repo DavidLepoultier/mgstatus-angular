@@ -105,6 +105,11 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  getEnvironments(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/environments`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   getProxie(id: any): Observable<any> {
     return this.http.get(endpoint.api + `apigee/proxies/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
@@ -128,6 +133,21 @@ export class ApigeeService {
   actionProxie(proxie: object, action: string): Observable<any> {
     return this.http.post(endpoint.api + `apigee/proxie/${action}`, proxie, this.getHeaders()).pipe(
       map(this.extractData));
+  }
+
+  deployProxie(proxie: string, revision: string, env: string, status: boolean): Observable<any> {
+    let deployProxie = {
+      name: proxie,
+      revision: revision,
+      env: env
+    }
+    if(status) {
+      return this.http.post(endpoint.api + `apigee/proxie/deploy`, deployProxie, this.getHeaders()).pipe(
+        map(this.extractData));
+    } else {
+      return this.http.post(endpoint.api + `apigee/proxie/undeploy`, deployProxie, this.getHeaders()).pipe(
+        map(this.extractData));
+    }
   }
 
 }

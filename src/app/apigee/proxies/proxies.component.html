@@ -1,5 +1,5 @@
 <mdb-breadcrumb>
-  <mdb-breadcrumb-item class="active">Proxies</mdb-breadcrumb-item>  
+  <mdb-breadcrumb-item class="active">Proxies</mdb-breadcrumb-item>
 </mdb-breadcrumb>
 <notifier-container></notifier-container>
 <div class="container-fluid mx-auto p-3 mt-2">
@@ -28,8 +28,8 @@
       <div class="px-4">
         <mat-accordion>
           <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allProxies | filter: searchText; let i = index">
-            <!-- <mat-expansion-panel-header (click)="getProductDescription(el)"> -->
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [routerLink]="['/proxie/' + el.name]" routerLinkActive="router-link-active">
+            <!-- <mat-expansion-panel-header> -->
               <mat-panel-title class="developer-table">
                 <table class="developer-table">
                   <td class="text-muted font-weight-bold app-width"> {{ el.name }} </td>
@@ -41,51 +41,6 @@
                 </table>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="row">
-              <mat-tab-group animationDuration="0ms" class="col-md-10">
-                <mat-tab label="Details">
-                  <div class="mt-3">
-                    <mat-form-field class="mb-1 px-3">
-                      <input matInput type="text" placeholder="Name" value="{{el.name}}" disabled="disabled">
-                    </mat-form-field>
-                    <mat-form-field class="mb-1 px-3">
-                      <input matInput type="text" placeholder="Display name" value="{{el.displayName}}" disabled="disabled">
-                    </mat-form-field>
-                    <div>
-                      <mat-form-field class="mat-form-field-textarea mb-1 px-3">
-                        <textarea class="textarea" matInput placeholder="Description" disabled="disabled">
-                            {{el.description}}
-                        </textarea>
-                      </mat-form-field>
-                    </div>
-                    <div>
-                      <ng-container>
-                        <mat-form-field class="mb-1 px-3">
-                          <input matInput type="text" placeholder="Quota" value="{{el.quota}}" disabled="disabled">
-                        </mat-form-field>
-                        <mat-form-field class="mb-1 px-3">
-                          <input matInput type="text" placeholder="Interval" value="{{el.quotaInterval}}" disabled="disabled">
-                        </mat-form-field>
-                        <mat-form-field class="mb-1 px-3">
-                          <input matInput type="text" placeholder="Unit" value="{{el.quotaTimeUnit}}" disabled="disabled">
-                        </mat-form-field>
-                      </ng-container>
-                    </div>
-                  </div>
-                </mat-tab>
-                <mat-tab label="Proxies">
-                  <div class="mt-3">
-                    <div *ngFor="let proxie of el.proxies; let p = index">
-                      <mat-form-field class="mb-1 px-3">
-                        <input matInput type="text" placeholder="Name" value="{{proxie}}" disabled="disabled">
-                      </mat-form-field>
-                    </div>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
-            </div>
-            <div class="row">
-            </div>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
