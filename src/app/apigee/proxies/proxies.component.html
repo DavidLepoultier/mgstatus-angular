@@ -62,7 +62,7 @@
           <div class="col-2"></div>
           <div class="col-8">
             <mat-form-field class="full-width">
-              <input matInput type="text" placeholder="Proxie name" formControlName="proxie" required>
+              <input matInput type="text" placeholder="Proxie name (without edgemicro_)" formControlName="proxie" required>
               <mat-error *ngFor="let validation of application_validation_messages.proxie">
                 <mat-error *ngIf="addProxiesForm.get('proxie').hasError(validation.type) && (addProxiesForm.get('proxie').dirty || addProxiesForm.get('proxie').touched)">
                   {{validation.message}}

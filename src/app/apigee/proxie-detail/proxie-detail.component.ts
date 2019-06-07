@@ -20,23 +20,64 @@ export class ProxieDetailComponent implements OnInit {
   jwtDecoded: object = {};
   notifier: NotifierSvc;
   postProxie: object = {};
+  disabled: boolean = true;
+  updateProxieForm: FormGroup;
+  currentProxie: string;
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder, private route:ActivatedRoute) { 
     this.notifier = notifierSvc;
   }
 
   ngOnInit() {
-      if(!this.auth.userIsLoggedIn()) {
-        this.router.navigate(['/']);
+    if(!this.auth.userIsLoggedIn()) {
+      this.router.navigate(['/']);
+    }
+    this.jwtDecode();
+    if(this.jwtDecoded['role'] === "orgAdmin") {
+      this.getEnvironments();
+      this.getProxieDescription();
+      this.currentProxie = this.route.snapshot.params['id']
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  createForms() {
+    this.updateProxieForm = this.fb.group({
+      action: new FormControl('update'),
+      basePath: new FormControl({value: this.descProxie['proxie'].basepaths[0], disabled: this.disabled}),
+      target: new FormControl({value: this.descProxie['targets'], disabled: this.disabled}),
+      proxie: new FormControl(this.descProxie['proxie'].name)
+    })
+  }
+
+  updateProxie(proxie: any){
+    this.postProxie = {
+      "proxie": proxie
+    }
+    this.apigee.updateProxie(this.postProxie).subscribe(
+      data => {
+        switch(proxie.action) {
+          case 'update': 
+            this.handlerUpdateProxieResponse(data);
+            break;
+        }  
+      },
+      error => {
+        this.handlerError(error);
       }
-      this.jwtDecode();
-      if(this.jwtDecoded['role'] === "orgAdmin") {
-        this.getEnvironments();
-        this.getProxieDescription(this.route.snapshot.params['id']);
-        //this.createForms();
-      } else {
-        this.router.navigate(['/']);
+    )
+  }
+
+  deleteProxie(){
+    this.apigee.deleteProxie(this.route.snapshot.params['id']).subscribe(
+      data => {
+        this.handlerDeleteProxieResponse(data);
+      },
+      error => {
+        this.handlerError(error);
       }
+    )
   }
 
   jwtDecode() {
@@ -49,6 +90,7 @@ export class ProxieDetailComponent implements OnInit {
         this.handlerEnvironmentResponse(data);
       },
       error => {
+        console.log(error);
         this.handlerError(error);
       }
     );
@@ -64,7 +106,8 @@ export class ProxieDetailComponent implements OnInit {
     });
   }
 
-  getProxieDescription(proxie: any) {
+  getProxieDescription() {
+    let proxie = this.route.snapshot.params['id'];
     this.apigee.getProxie(proxie).subscribe(
       data  => {
         let api = data.proxie[0].api;
@@ -72,7 +115,7 @@ export class ProxieDetailComponent implements OnInit {
         let rev = api.revision[0];
         this.apigee.getProxieRevision(api.name, rev).subscribe(
           data  => {
-            this.descProxie = data;
+            this.descProxie['proxie'] = data.proxie;
             let envList = [];
             for (let index = 0; index < this.allEnvironments.length; index++) {
               let element = this.allEnvironments[index];
@@ -84,6 +127,15 @@ export class ProxieDetailComponent implements OnInit {
               }
             }
             this.descProxie['environments'] = envList;
+            this.apigee.getProxieTarget(api.name, rev).subscribe(
+              data  => {
+                this.descProxie['targets'] = data.targets.connection.uRL;
+                this.createForms();
+              },
+              error => {
+                this.handlerError(error);
+              }
+            );
             console.log(this.descProxie)
           },
           error => {
@@ -96,24 +148,6 @@ export class ProxieDetailComponent implements OnInit {
         this.handlerError(error);
       }
     );
-  }
-
-  actionOffers(proxie: any){
-    this.postProxie = {
-      "proxie": proxie
-    }
-    this.apigee.actionProxie(this.postProxie, proxie.action).subscribe(
-      data => {
-        switch(proxie.action) {
-          case 'delete':
-            this.handlerDeleteProxieResponse(data);
-            break;
-        }  
-      },
-      error => {
-        this.handlerError(error);
-      }
-    )
   }
 
   handlerEnvironmentResponse(data: any) { 
@@ -148,11 +182,14 @@ export class ProxieDetailComponent implements OnInit {
   handlerDeleteProxieResponse(data: any) {
     this.notifier.showNotification(
       'success',
-      `${data.action.name} deleted.`
+      `${data.message} deleted.`
     );
     // this.allProxies = [];
     // this.getProxieDescription();
-    this.modalHide();
+    //this.modalHide();
+    setTimeout(() => {
+        this.router.navigate(['/proxies'],);
+    }, 2000);
   }
 
   handlerDeployProxieResponse(data: any){
@@ -160,7 +197,16 @@ export class ProxieDetailComponent implements OnInit {
       'success',
       `Proxie ${data.message.state}`
     );
-    this.getProxieDescription(this.route.snapshot.params['id']);
+    this.getProxieDescription();
+  }
+
+  handlerUpdateProxieResponse(data: any){
+    this.notifier.showNotification(
+      'success',
+      `Proxie udpate ${data.message}`
+    );
+    this.disabled = true;
+    this.getProxieDescription();
   }
 
 }

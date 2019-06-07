@@ -1,6 +1,6 @@
 <mdb-breadcrumb>
   <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/proxies']" routerLinkActive="router-link-active">Proxies</a></mdb-breadcrumb-item>
-  <mdb-breadcrumb-item *ngIf="descProxie.proxie" class="active">{{ descProxie.proxie.name }}</mdb-breadcrumb-item>
+  <mdb-breadcrumb-item *ngIf="descProxie.proxie" class="active">{{ currentProxie }}</mdb-breadcrumb-item>
   <!-- <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>   -->
 </mdb-breadcrumb>
 <notifier-container></notifier-container>
@@ -11,37 +11,54 @@
     <div class="card row pb-5">
       <div class="row title-project warning-color-dark narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
         <div></div>
-        <div class="font-weight-bold" *ngIf="descProxie.proxie">
-          Proxie {{ descProxie.proxie.name }}
+        <div class="font-weight-bold">
+          Proxie {{ currentProxie }}
         </div>
         <div>
         </div>
       </div>
       <div class="px-4">
-        <div class="row" *ngIf="descProxie.proxie">
-          <mat-tab-group animationDuration="0ms" class="col-md-10">
+        <div class="row" *ngIf="descProxie.targets">
+          <mat-tab-group animationDuration="0ms" class="col-md-12">
             <mat-tab label="Details">
-              <div class="mt-3">
-                <mat-form-field class="px-3">
-                  <input matInput type="text" placeholder="Display name" value="{{descProxie.proxie.displayName}}" disabled="disabled">
-                </mat-form-field>
-                <mat-form-field class="px-3">
-                  <input matInput type="text" placeholder="Description" value="{{descProxie.proxie.description}}" disabled="disabled">
-                </mat-form-field>
-                <div>
-                  <mat-form-field class="px-3">
-                    <input matInput type="text" placeholder="Created" value="{{descProxie.proxie.createdAt | dateFormat}}" disabled="disabled">
-                  </mat-form-field>
-                  <mat-form-field class="px-3">
-                    <input matInput type="text" placeholder="Last modified" value="{{descProxie.proxie.lastModifiedAt | dateFormat}}" disabled="disabled">
-                  </mat-form-field>
+              <form [formGroup]="updateProxieForm" novalidate (ngSubmit)="updateProxie(updateProxieForm.value)">
+                <div class="row mx-0">
+                  <div class="mt-3 col-md-10">
+                    <mat-form-field class="px-3">
+                      <input matInput type="text" placeholder="Display name" value="{{descProxie.proxie.displayName}}" disabled="disabled">
+                    </mat-form-field>
+                    <mat-form-field class="px-3">
+                      <input matInput type="text" placeholder="Description" value="{{descProxie.proxie.description}}" disabled="disabled">
+                    </mat-form-field>
+                    <div>
+                      <mat-form-field class="px-3">
+                        <input matInput type="text" placeholder="Base Path" formControlName="basePath">
+                      </mat-form-field>
+                      <mat-form-field class="px-3">
+                        <input matInput type="text" placeholder="Target endpoint" formControlName="target">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-1 mt-3">
+                    <div *ngIf="disabled">
+                      <button type="button" outline="true" class="mr-3 mb-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="disabled = !disabled; createForms()">
+                        <mdb-icon far icon="edit" size="2x"></mdb-icon>
+                      </button>
+                      <button type="button" outline="true" class="mb-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="deleteProxie()">
+                        <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
+                      </button>
+                    </div>
+                    <div *ngIf="!disabled">
+                      <button  outline="true" class="mr-3 mb-3" mdbBtn color="green" type="submit">
+                        <mdb-icon far icon="check-circle" size="2x"></mdb-icon>
+                      </button>
+                      <button type="button" outline="true" class="mb-3" mdbBtn color="red" (click)="disabled = !disabled; createForms()">
+                        <mdb-icon far icon="times-circle" size="2x"></mdb-icon>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <mat-form-field class="px-3">
-                    <input matInput type="text" placeholder="Base Path" value="{{descProxie.proxie.basepaths[0]}}" disabled="disabled">
-                  </mat-form-field>
-                </div>
-              </div>
+              </form>
             </mat-tab>
             <mat-tab label="Deployment">
               <div class="mt-3">

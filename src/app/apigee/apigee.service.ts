@@ -111,7 +111,7 @@ export class ApigeeService {
   }
 
   getProxie(id: any): Observable<any> {
-    return this.http.get(endpoint.api + `apigee/proxies/${id}`, this.getHeaders()).pipe(
+    return this.http.get(endpoint.api + `apigee/proxie/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
@@ -121,7 +121,12 @@ export class ApigeeService {
   }
 
   getProxieRevision(id: any, rev: any): Observable<any> {
-    return this.http.get(endpoint.api + `apigee/proxies/${id}/${rev}`, this.getHeaders()).pipe(
+    return this.http.get(endpoint.api + `apigee/proxie/${id}/${rev}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getProxieTarget(id: any, rev: any): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/proxie/target/${id}/${rev}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
@@ -130,8 +135,23 @@ export class ApigeeService {
       map(this.extractData));
   }
   
-  actionProxie(proxie: object, action: string): Observable<any> {
-    return this.http.post(endpoint.api + `apigee/proxie/${action}`, proxie, this.getHeaders()).pipe(
+  createProxie(proxie: object): Observable<any> {
+    return this.http.post(endpoint.api + `apigee/proxie/create`, proxie, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  autoCreateProduct(proxie: object): Observable<any> {
+    return this.http.post(endpoint.api + `apigee/product/autocreate`, proxie, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  updateProxie(proxie: object): Observable<any> {
+    return this.http.post(endpoint.api + `apigee/proxie/update`, proxie, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  deleteProxie(proxie: string): Observable<any> {
+    return this.http.delete(endpoint.api + `apigee/proxie/${proxie}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 

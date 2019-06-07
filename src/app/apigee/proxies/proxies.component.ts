@@ -74,13 +74,22 @@ export class ProxiesComponent implements OnInit {
     this.postProxie = {
       "proxie": proxie
     }
-    this.apigee.actionProxie(this.postProxie, proxie.action).subscribe(
+    this.apigee.createProxie(this.postProxie).subscribe(
       data => {
-        switch(proxie.action) {
-          case 'create': 
-            this.handlerCreateProxieResponse(data);
-            break;
-        }  
+        this.handlerCreateProxieResponse(data, this.postProxie);
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
+  }
+
+  autoCreateProduct(proxie: any){
+    proxie['environments'] = this.allEnvironments;
+    console.log('proxie:', proxie)
+    this.apigee.autoCreateProduct(proxie).subscribe(
+      data => {
+        this.handlerCreateProductResponse(data);
       },
       error => {
         this.handlerError(error);
@@ -94,6 +103,7 @@ export class ProxiesComponent implements OnInit {
     }
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "orgAdmin") {
+      this.getEnvironments();
       this.getProxies();
       this.createForms();
     } else {
@@ -103,6 +113,18 @@ export class ProxiesComponent implements OnInit {
 
   jwtDecode() {
     this.jwtDecoded = this.auth.jwtTokenDecode();
+  }
+
+  getEnvironments() {
+    this.apigee.getEnvironments().subscribe(
+      data  => {
+        this.handlerEnvironmentResponse(data);
+      },
+      error => {
+        console.log(error);
+        this.handlerError(error);
+      }
+    );
   }
 
   getProxies() {
@@ -166,14 +188,35 @@ export class ProxiesComponent implements OnInit {
     this.showAddOffers = false;
   }
 
-  handlerCreateProxieResponse(data: any){
+  handlerCreateProxieResponse(data: any, proxie: any) {
     this.notifier.showNotification(
       'success',
-      `${data.message.name} created.`
+      `${data.message} created.`
     );
     this.allProxies = [];
     this.getProxies();
     this.addOffersHide();
+    this.autoCreateProduct(proxie);
+  }
+
+  handlerCreateProductResponse(data: any){
+    this.notifier.showNotification(
+      'success',
+      `${data.message.displayName} created.`
+    );
+  }
+
+  handlerEnvironmentResponse(data: any) { 
+    this.allEnvironments = data.environments;
+    this.allEnvironments = this.allEnvironments.sort((a: any, b: any) => {
+      if (a['name'] < b['name']) {
+        return this.sorted ? -1 : 1;
+      }
+      if (a['name'] > b['name']) {
+        return this.sorted ? 1 : -1;
+      }
+      return 0;
+    });
   }
 
   handlerDeployProxieResponse(data: any){
