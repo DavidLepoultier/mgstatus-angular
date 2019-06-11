@@ -1,0 +1,89 @@
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/' + fromTo.link ]" routerLinkActive="router-link-active">{{ fromTo.display }}</a></mdb-breadcrumb-item>
+  <mdb-breadcrumb-item class="active">{{ currentProduct }}</mdb-breadcrumb-item>
+  <!-- <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>   -->
+</mdb-breadcrumb>
+<notifier-container></notifier-container>
+<div class="container-fluid mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-1 min-heigth"></div>
+    <div class="col-md-10">
+    <div class="card row pb-5">
+      <div class="row title-project warning-color-dark narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+        <div></div>
+        <div class="font-weight-bold">
+          Product {{ currentProduct }}
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="px-4">
+        <div class="row" *ngIf="descProduct.name">
+          <mat-tab-group animationDuration="0ms" class="col-md-12">
+            <mat-tab label="Details">
+              <form [formGroup]="updateProductForm" novalidate (ngSubmit)="updateProduct(updateProductForm.value)">
+                <div class="row mx-0">
+                  <div class="mt-3 col-md-10">
+                    <mat-form-field class="px-3">
+                      <input matInput type="text" placeholder="Display name" value="{{descProduct.displayName}}" disabled="disabled">
+                    </mat-form-field>
+                    <mat-form-field class="px-3">
+                      <input matInput type="text" placeholder="Description" value="{{descProduct.description}}" disabled="disabled">
+                    </mat-form-field>
+                    <div>
+                      <mat-form-field class="mat-form-field-quota px-3">
+                        <input matInput type="text" placeholder="Quota" value="{{descProduct.quota}}" disabled="disabled">
+                      </mat-form-field>
+                      <mat-form-field class="mat-form-field-quota px-3">
+                        <input matInput type="text" placeholder="Quota interval" value="{{descProduct.quotaInterval}}" disabled="disabled">
+                      </mat-form-field>
+                      <mat-form-field class="mat-form-field-quota px-3">
+                        <input matInput type="text" placeholder="Quota timeunit" value="{{descProduct.quotaTimeUnit}}" disabled="disabled">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-1 mt-3">
+                    <div *ngIf="disabled">
+                      <!-- <button type="button" outline="true" class="mr-3 mb-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="disabled = !disabled; createForms()">
+                        <mdb-icon far icon="edit" size="2x"></mdb-icon>
+                      </button> -->
+                      <button type="button" outline="true" class="mb-3" mdbBtn color="light" data-toggle="modal" data-target="#basicExample" (click)="deleteProduct()">
+                        <mdb-icon fas icon="trash-alt" size="2x"></mdb-icon>
+                      </button>
+                    </div>
+                    <!-- <div *ngIf="!disabled">
+                      <button  outline="true" class="mr-3 mb-3" mdbBtn color="green" type="submit">
+                        <mdb-icon far icon="check-circle" size="2x"></mdb-icon>
+                      </button>
+                      <button type="button" outline="true" class="mb-3" mdbBtn color="red" (click)="disabled = !disabled; createForms()">
+                        <mdb-icon far icon="times-circle" size="2x"></mdb-icon>
+                      </button>
+                    </div> -->
+                  </div>
+                </div>
+              </form>
+            </mat-tab>
+            <mat-tab label="Proxies">
+              <div class="mt-3">
+                <div *ngFor="let proxies of descProduct.proxies; let p = index">
+                  <mat-form-field *ngIf="proxies != 'edgemicro-auth'" class="full-width mb-1 px-3">
+                    <input matInput type="text" placeholder="Proxie name" value="{{ proxies }}" disabled="disabled">
+                  </mat-form-field>
+                </div>
+                <!-- <table class="developer-table">
+                  <tr class="developer-table" *ngFor="let proxies of descProduct.proxies; let p = index">
+                    <td class="text-muted font-weight-bold environment-width"> {{ proxies }} </td>
+                    <td class="text-muted font-weight-bold deployment-width"> 
+                      <mat-slide-toggle [checked]="environment.deploy" (click)="deployProxie(!environment.deploy, descProduct.proxie, environment.env)"></mat-slide-toggle>
+                    </td>  
+                  </tr>
+                </table> -->
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>

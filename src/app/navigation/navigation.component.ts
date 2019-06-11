@@ -12,8 +12,7 @@ export class NavigationComponent implements OnInit {
   constructor(public auth:AuthService, private router:Router) { }
 
   navigation = [
-    //{ link: 'dashboard', label: 'dashboard', icon: 'tachometer-alt' },
-    { link: 'r-Gate', label: 'r-Gateway', icon: 'project-diagram' },
+    { link: 'r-Gate', label: 'r-Gateway', icon: 'fa-project-diagram', iconType: 'fas' }
   ];
   
   navigationSideMenu = [];
@@ -21,12 +20,15 @@ export class NavigationComponent implements OnInit {
   jwtDecoded: object = {};
 
   navigationDeveloper = [
-    { link: 'myApps', label: 'myApps', icon: 'mobile-alt' },
+    { link: 'myProxies', label: 'myProxies', icon: 'fa-bezier-curve', iconType: 'fas' },
+    { link: 'myProducts', label: 'myProducts', icon: 'fa-product-hunt', iconType: 'fab' },
+    { link: 'myApps', label: 'myApps', icon: 'fa-mobile-alt', iconType: 'fas' }
   ];
 
   navigationAdminTenant = [
-    { link: 'proxies', label: 'Proxies', icon: 'bezier-curve' },
-    { link: 'allApps', label: 'Apps', icon: 'mobile-alt' }
+    { link: 'proxies', label: 'Proxies', icon: 'fa-bezier-curve', iconType: 'fas' },
+    { link: 'products', label: 'Products', icon: 'fa-product-hunt', iconType: 'fab' },
+    { link: 'allApps', label: 'Apps', icon: 'fa-mobile-alt', iconType: 'fas' }
   ];
 
   navigationAdmin = [

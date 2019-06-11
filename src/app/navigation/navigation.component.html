@@ -15,7 +15,8 @@
       <ul *ngIf="checkAuth()" class="navbar-nav mr-auto">
         <li class="nav-item" *ngFor="let item of navigationSideMenu">
           <a href="#" [routerLink]="[item.link]" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
-            <mdb-icon fas icon="{{ item.icon }}"></mdb-icon> {{ item.label }}
+            <!-- <mdb-icon icon="{{ item.icon }}"></mdb-icon> {{ item.label }} -->
+            <i class="{{ item.iconType }} {{ item.icon }}"></i> {{ item.label }}
           </a>
         </li>
       </ul>

@@ -100,8 +100,18 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  getProduct(product: any): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/product/${product}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   getProxies(): Observable<any> {
     return this.http.get(endpoint.api + `apigee/proxies`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getMyProxies(): Observable<any> {
+    return this.http.get(endpoint.api + `apigee/my-proxies`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
@@ -114,7 +124,7 @@ export class ApigeeService {
     return this.http.get(endpoint.api + `apigee/proxie/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
-
+  
   getDeploymentStatus(id: any): Observable<any> {
     return this.http.get(endpoint.api + `apigee/proxies/deployment/status/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
@@ -140,6 +150,11 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  updateMyProxie(proxie: object): Observable<any> {
+    return this.http.put(endpoint.api + `apigee/my-proxies/update`, proxie, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   autoCreateProduct(proxie: object): Observable<any> {
     return this.http.post(endpoint.api + `apigee/product/autocreate`, proxie, this.getHeaders()).pipe(
       map(this.extractData));
@@ -152,6 +167,11 @@ export class ApigeeService {
 
   deleteProxie(proxie: string): Observable<any> {
     return this.http.delete(endpoint.api + `apigee/proxie/${proxie}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  deleteProduct(product: string): Observable<any> {
+    return this.http.delete(endpoint.api + `apigee/product/${product}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 

@@ -32,6 +32,10 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { UniquePipe } from './pipes/unique.pipe';
 import { UniqueProjectPipe } from './pipes/unique-project.pipe';
 import { ProxieDetailComponent } from './apigee/proxie-detail/proxie-detail.component';
+import { ProductsComponent } from './apigee/products/products.component';
+import { ProductsDetailComponent } from './apigee/products-detail/products-detail.component';
+import { MyProxiesComponent } from './apigee/my-proxies/my-proxies.component';
+import { MyProductsComponent } from './apigee/my-products/my-products.component';
 
 const appRoutes: Routes = [
   {
@@ -75,6 +79,11 @@ const appRoutes: Routes = [
     data: { title: 'All Apps' }
   },
   {
+    path: 'myProxies',
+    component: MyProxiesComponent,
+    data: { title: 'myProxies' }
+  },
+  {
     path: 'proxies',
     component: ProxiesComponent,
     data: { title: 'Proxies' }
@@ -83,6 +92,21 @@ const appRoutes: Routes = [
     path: 'proxie/:id',
     component: ProxieDetailComponent,
     data: { title: 'Proxie detail' }
+  },
+  {
+    path: 'myProducts',
+    component: MyProductsComponent,
+    data: { title: 'myProducts' }
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    data: { title: 'Products' }
+  },
+  {
+    path: 'product/:id',
+    component: ProductsDetailComponent,
+    data: { title: 'Product detail' }
   },
   {
     path: 'orgs',
@@ -167,7 +191,11 @@ const customNotifierOptions: NotifierOptions = {
     FilterPipe,
     UniquePipe,
     UniqueProjectPipe,
-    ProxieDetailComponent
+    ProxieDetailComponent,
+    ProductsComponent,
+    ProductsDetailComponent,
+    MyProxiesComponent,
+    MyProductsComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

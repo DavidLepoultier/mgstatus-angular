@@ -14,6 +14,7 @@ export class ProxieDetailComponent implements OnInit {
 
   showModal: boolean = false;
   allEnvironments: any = [];
+  allProxies: any = [];
   searchText: string;
   descProxie: object = {};
   sorted = true;  
@@ -23,6 +24,10 @@ export class ProxieDetailComponent implements OnInit {
   disabled: boolean = true;
   updateProxieForm: FormGroup;
   currentProxie: string;
+  fromTo: object = {
+    link: '',
+    display: ''
+  };
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder, private route:ActivatedRoute) { 
     this.notifier = notifierSvc;
@@ -33,7 +38,22 @@ export class ProxieDetailComponent implements OnInit {
       this.router.navigate(['/']);
     }
     this.jwtDecode();
-    if(this.jwtDecoded['role'] === "orgAdmin") {
+    if(this.jwtDecoded['role'] === "orgAdmin" || this.jwtDecoded['role'] === "developer") {
+      switch(this.jwtDecoded['role']) {
+        case 'orgAdmin':
+          this.fromTo = {
+            link: 'proxies',
+            display: 'Proxies'
+          }
+        break;
+        case 'developer':
+          this.fromTo = {
+            link: 'myProxies',
+            display: 'myProxies'
+          }
+          this.getProxies();
+        break;
+      }
       this.getEnvironments();
       this.getProxieDescription();
       this.currentProxie = this.route.snapshot.params['id']
@@ -49,6 +69,42 @@ export class ProxieDetailComponent implements OnInit {
       target: new FormControl({value: this.descProxie['targets'], disabled: this.disabled}),
       proxie: new FormControl(this.descProxie['proxie'].name)
     })
+  }
+
+  getProxies() {
+    this.apigee.getMyProxies().subscribe(
+      data => {
+        this.handlerServerResponse(data);
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
+  }
+
+  handlerServerResponse(data: any) {
+    this.allProxies = data.apis;
+  }
+
+  updateMyProxies(proxie: any){
+    for (let index = 0; index < this.allProxies.apis.length; index++) {
+      if(this.allProxies.apis[index] === proxie) {
+        this.allProxies.apis.splice(index, 1);
+      }
+    }
+    let body = {
+      user: this.jwtDecoded['user'],
+      apis: this.allProxies['apis'],
+      products: this.allProxies['products']
+    }
+    this.apigee.updateMyProxie(body).subscribe(
+      data => {
+        console.log('remove done')
+      },
+      error => {
+        this.handlerError(error);
+      }
+    )
   }
 
   updateProxie(proxie: any){
@@ -136,13 +192,11 @@ export class ProxieDetailComponent implements OnInit {
                 this.handlerError(error);
               }
             );
-            console.log(this.descProxie)
           },
           error => {
             this.handlerError(error);
           }
         );
-        //console.log(data);
       },
       error => {
         this.handlerError(error);
@@ -184,11 +238,9 @@ export class ProxieDetailComponent implements OnInit {
       'success',
       `${data.message} deleted.`
     );
-    // this.allProxies = [];
-    // this.getProxieDescription();
-    //this.modalHide();
+    this.updateMyProxies(this.route.snapshot.params['id'])
     setTimeout(() => {
-        this.router.navigate(['/proxies'],);
+        this.router.navigate(['/' + this.fromTo['link']],);
     }, 2000);
   }
 
