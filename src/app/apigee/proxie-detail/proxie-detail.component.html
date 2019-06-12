@@ -1,7 +1,7 @@
 <mdb-breadcrumb>
   <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/' + fromTo['link'] ]" routerLinkActive="router-link-active">{{ fromTo['display'] }}</a></mdb-breadcrumb-item>
   <mdb-breadcrumb-item *ngIf="descProxie['proxie']" class="active">{{ currentProxie }}</mdb-breadcrumb-item>
-  <!-- <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>   -->
+  <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>  
 </mdb-breadcrumb>
 <notifier-container></notifier-container>
 <div class="container-fluid mx-auto p-3 mt-2">

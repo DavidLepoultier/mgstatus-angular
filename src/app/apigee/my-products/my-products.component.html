@@ -1,5 +1,6 @@
 <mdb-breadcrumb>
     <mdb-breadcrumb-item class="active">myProducts</mdb-breadcrumb-item>
+    <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>
   </mdb-breadcrumb>
   <notifier-container></notifier-container>
   <div class="container-fluid mx-auto p-3 mt-2">

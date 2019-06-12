@@ -43,7 +43,7 @@ export class ResourceDetailComponent implements OnInit {
       this.jwtDecode();
     if(this.jwtDecoded['role'] === "admin")
       this.colProxies = 'col-md-6';
-    if(this.jwtDecoded['role'] != "admin")
+    if(this.jwtDecoded['role'] === 'developer')
       this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.rest.getResource(this.route.snapshot.params['id']).subscribe(
       data  => {

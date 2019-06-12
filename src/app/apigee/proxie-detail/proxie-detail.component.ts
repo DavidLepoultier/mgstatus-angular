@@ -28,6 +28,7 @@ export class ProxieDetailComponent implements OnInit {
     link: '',
     display: ''
   };
+  orgPref:any;
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder, private route:ActivatedRoute) { 
     this.notifier = notifierSvc;
@@ -41,12 +42,14 @@ export class ProxieDetailComponent implements OnInit {
     if(this.jwtDecoded['role'] === "orgAdmin" || this.jwtDecoded['role'] === "developer") {
       switch(this.jwtDecoded['role']) {
         case 'orgAdmin':
+          this.orgPref.name = '';
           this.fromTo = {
             link: 'proxies',
             display: 'Proxies'
           }
         break;
         case 'developer':
+          this.orgPref = JSON.parse(this.auth.userOrgPreference());
           this.fromTo = {
             link: 'myProxies',
             display: 'myProxies'

@@ -17,6 +17,7 @@ export class MyProductsComponent implements OnInit {
   searchText: string;
   sorted = true;
   jwtDecoded: object = {};
+  orgPref:any;
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder) { 
     this.notifier = notifierSvc;
@@ -28,6 +29,7 @@ export class MyProductsComponent implements OnInit {
     }
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "developer") {
+      this.orgPref = JSON.parse(this.auth.userOrgPreference());
       this.getProducts();
     } else {
       this.router.navigate(['/']);

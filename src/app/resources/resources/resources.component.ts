@@ -30,7 +30,7 @@ export class ResourcesComponent implements OnInit {
   ngOnInit() {
     if(this.auth.userIsLoggedIn())
       this.jwtDecode();
-    if(this.jwtDecoded['role'] != "admin")
+    if(this.jwtDecoded['role'] === "developer")
       this.orgPref = JSON.parse(this.auth.userOrgPreference());
     this.getResources();
   }

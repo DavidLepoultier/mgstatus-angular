@@ -28,6 +28,7 @@ export class MyProxiesComponent implements OnInit {
   addProxiesForm: FormGroup;
   showAddOffers: boolean = false;
   postProxie: object = {};
+  orgPref:any;
 
   application_validation_messages = {
     'proxie': [
@@ -120,6 +121,7 @@ export class MyProxiesComponent implements OnInit {
     }
     this.jwtDecode();
     if(this.jwtDecoded['role'] === "developer") {
+      this.orgPref = JSON.parse(this.auth.userOrgPreference());
       this.getProxies();
       this.getEnvironments();
       this.createForms();
