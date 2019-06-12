@@ -1,6 +1,6 @@
 <mdb-breadcrumb>
-  <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/' + fromTo.link ]" routerLinkActive="router-link-active">{{ fromTo.display }}</a></mdb-breadcrumb-item>
-  <mdb-breadcrumb-item *ngIf="descProxie.proxie" class="active">{{ currentProxie }}</mdb-breadcrumb-item>
+  <mdb-breadcrumb-item class="blue-text"><a href="#" [routerLink]="['/' + fromTo['link'] ]" routerLinkActive="router-link-active">{{ fromTo['display'] }}</a></mdb-breadcrumb-item>
+  <mdb-breadcrumb-item *ngIf="descProxie['proxie']" class="active">{{ currentProxie }}</mdb-breadcrumb-item>
   <!-- <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>   -->
 </mdb-breadcrumb>
 <notifier-container></notifier-container>
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="px-4">
-        <div class="row" *ngIf="descProxie.targets">
+        <div class="row" *ngIf="descProxie['targets']">
           <mat-tab-group animationDuration="0ms" class="col-md-12">
             <mat-tab label="Details">
               <form [formGroup]="updateProxieForm" novalidate (ngSubmit)="updateProxie(updateProxieForm.value)">
