@@ -78,11 +78,11 @@ const appRoutes: Routes = [
     component: AllAppsComponent,
     data: { title: 'All Apps' }
   },
-  {
-    path: 'myProxies',
-    component: MyProxiesComponent,
-    data: { title: 'myProxies' }
-  },
+  // {
+  //   path: 'myProxies',
+  //   component: MyProxiesComponent,
+  //   data: { title: 'myProxies' }
+  // },
   {
     path: 'proxies',
     component: ProxiesComponent,
@@ -93,11 +93,11 @@ const appRoutes: Routes = [
     component: ProxieDetailComponent,
     data: { title: 'Proxie detail' }
   },
-  {
-    path: 'myProducts',
-    component: MyProductsComponent,
-    data: { title: 'myProducts' }
-  },
+  // {
+  //   path: 'myProducts',
+  //   component: MyProductsComponent,
+  //   data: { title: 'myProducts' }
+  // },
   {
     path: 'products',
     component: ProductsComponent,

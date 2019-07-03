@@ -42,7 +42,7 @@ export class ProxieDetailComponent implements OnInit {
     if(this.jwtDecoded['role'] === "orgAdmin" || this.jwtDecoded['role'] === "developer") {
       switch(this.jwtDecoded['role']) {
         case 'orgAdmin':
-          this.orgPref.name = '';
+          //this.orgPref.name = 'mini-gateway';
           this.fromTo = {
             link: 'proxies',
             display: 'Proxies'
@@ -241,7 +241,8 @@ export class ProxieDetailComponent implements OnInit {
       'success',
       `${data.message} deleted.`
     );
-    this.updateMyProxies(this.route.snapshot.params['id'])
+    //this.updateMyProxies(this.route.snapshot.params['id'])
+    this.getProxies();
     setTimeout(() => {
         this.router.navigate(['/' + this.fromTo['link']],);
     }, 2000);

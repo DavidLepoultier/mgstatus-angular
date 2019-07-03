@@ -20,8 +20,8 @@ export class NavigationComponent implements OnInit {
   jwtDecoded: object = {};
 
   navigationDeveloper = [
-    { link: 'myProxies', label: 'myProxies', icon: 'fa-bezier-curve', iconType: 'fas' },
-    { link: 'myProducts', label: 'myProducts', icon: 'fa-product-hunt', iconType: 'fab' },
+    // { link: 'myProxies', label: 'myProxies', icon: 'fa-bezier-curve', iconType: 'fas' },
+    // { link: 'myProducts', label: 'myProducts', icon: 'fa-product-hunt', iconType: 'fab' },
     { link: 'myApps', label: 'myApps', icon: 'fa-mobile-alt', iconType: 'fas' }
   ];
 
