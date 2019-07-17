@@ -3,24 +3,35 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-
+import { AuthService } from '../auth/auth.service'
 
 const endpoint = {
   "api": environment.apiUrl,
   "auth": environment.authUrl
 }
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class ResourceService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth:AuthService) { }
+
+  private getHeaders() {
+    let token: object = JSON.parse(this.auth.userIsLoggedIn());
+    let orgPref: object = JSON.parse(this.auth.userOrgPreference());
+    let orgSet = '';
+    if(orgPref['name'] != 'unset')
+      orgSet = orgPref['name'];
+    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'x-access-token': token['token'],
+        'x-org-pref': orgSet,
+        'Content-Type':  'application/json'
+      })
+    };
+    return httpOptions;
+  }
 
   private extractData(res: Response) {
     let body = res;
@@ -28,37 +39,37 @@ export class ResourceService {
   }
 
   getResources(org: string): Observable<any> {
-    return this.http.get(endpoint.api + `resources/tenant/${org}`).pipe(
+    return this.http.get(endpoint.api + `resources/tenant/${org}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
   
   getResource(id: any): Observable<any> {
-    return this.http.get(endpoint.api + `resources/${id}`).pipe(
+    return this.http.get(endpoint.api + `resources/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
   addProject (project: any): Observable<any> {
     console.log(project);
-    return this.http.post(endpoint.api + 'resources', JSON.stringify(project), httpOptions).pipe(
+    return this.http.post(endpoint.api + 'resources', JSON.stringify(project), this.getHeaders()).pipe(
       tap((project) => console.log(`added project w/ id=${project['id']}`)),
       catchError(this.handleError<any>('addProject'))
     );
   }
 
   updateProduct (id: any, product: any): Observable<any> {
-    return this.http.put(endpoint.api + 'products/' + id, JSON.stringify(product), httpOptions).pipe(
+    return this.http.put(endpoint.api + 'products/' + id, JSON.stringify(product), this.getHeaders()).pipe(
       tap(_ => console.log(`updated product id=${id}`)),
       catchError(this.handleError<any>('updateProduct'))
     );
   }
 
   deleteProject (id: any): Observable<any> {
-    return this.http.delete(endpoint.api + `resources/${id}`, httpOptions).pipe(
+    return this.http.delete(endpoint.api + `resources/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
   deleteContainer (project: any, container: any): Observable<any> {
-    return this.http.delete(endpoint.api + `resources/${project}/${container}`, httpOptions).pipe(
+    return this.http.delete(endpoint.api + `resources/${project}/${container}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
