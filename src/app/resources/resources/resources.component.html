@@ -1,6 +1,6 @@
 <mdb-breadcrumb>
   <mdb-breadcrumb-item class="active">r-Gateway</mdb-breadcrumb-item>    
-  <div *ngIf="orgPref.name" class="ml-auto">{{ orgPref.name }}</div>
+  <div *ngIf="orgPref.name != 'allOrgs'" class="ml-auto">{{ orgPref.name }}</div>
 </mdb-breadcrumb>
 <div *ngIf="error; then errorBlock else projectBlock"></div>
 <ng-template #errorBlock>
@@ -21,12 +21,14 @@
         <mat-form-field class="full-width">
           <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
         </mat-form-field>
-        <h6 class="text-muted font-weight-bold">Organizations</h6>
-        <section>
-          <div class="full-width" *ngFor="let org of projects | filter: null : filterBox | unique: 'org' ">
-            <mat-checkbox (change)="checkCheckBoxvalue($event)" [name]="org" [value]="org">{{org}}</mat-checkbox>
-          </div>
-        </section>
+        <ng-container *ngIf="orgPref.name == 'allOrgs'">
+          <h6 class="text-muted font-weight-bold">Organizations</h6>
+          <section>
+            <div class="full-width" *ngFor="let org of projects | filter: null : filterBox | unique: 'org' ">
+              <mat-checkbox (change)="checkCheckBoxvalue($event)" [name]="org" [value]="org">{{org}}</mat-checkbox>
+            </div>
+          </section>
+        </ng-container>
         <h6 class="text-muted font-weight-bold">Environments</h6>
         <section>
           <div class="full-width" *ngFor="let env of projects | filter: null : filterBox  | unique: 'env' ">

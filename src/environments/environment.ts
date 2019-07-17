@@ -6,8 +6,7 @@
 export const environment = {
   production: false,
   apiUrl: '/api/',
-  authUrl: '/auth/',
-  techAdm: 'https://techadmin.api.intraorange/apigee-mgt'
+  authUrl: '/auth/'
 };
 
 /*

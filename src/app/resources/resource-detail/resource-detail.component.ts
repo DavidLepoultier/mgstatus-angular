@@ -39,6 +39,9 @@ export class ResourceDetailComponent implements OnInit {
   constructor(public rest:ResourceService, private route: ActivatedRoute, private router: Router, private auth:AuthService) { }
 
   ngOnInit() {
+    if(!this.auth.userIsLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
     if(this.auth.userIsLoggedIn())
       this.jwtDecode();
     if(this.jwtDecoded['role'] === "admin")

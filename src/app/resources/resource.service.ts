@@ -27,8 +27,8 @@ export class ResourceService {
     return body || { };
   }
 
-  getResources(): Observable<any> {
-    return this.http.get(endpoint.api + 'resources').pipe(
+  getResources(org: string): Observable<any> {
+    return this.http.get(endpoint.api + `resources/tenant/${org}`).pipe(
       map(this.extractData));
   }
   

@@ -60,7 +60,6 @@ export class NavigationComponent implements OnInit {
   checkAuth() {
     if(this.auth.userIsLoggedIn()) {
       this.jwtDecode();
-      //console.log(this.jwtDecoded['role']);
       if(this.jwtDecoded['role'])
         switch(this.jwtDecoded['role']) {
           case 'developer':
@@ -101,7 +100,7 @@ export class NavigationComponent implements OnInit {
       return true;
     } else {
       this.navigationSideMenu = [
-        ...this.navigation
+        //...this.navigation
       ];
       this.navigationOtherSideMenu = [
         ...this.navigationLogin
