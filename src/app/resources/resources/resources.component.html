@@ -21,7 +21,7 @@
         <mat-form-field class="full-width">
           <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
         </mat-form-field>
-        <ng-container *ngIf="orgPref.name == 'allOrgs'">
+        <ng-container *ngIf="!orgPref.name">
           <h6 class="text-muted font-weight-bold">Organizations</h6>
           <section>
             <div class="full-width" *ngFor="let org of projects | filter: null : filterBox | unique: 'org' ">

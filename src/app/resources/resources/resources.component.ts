@@ -31,15 +31,14 @@ export class ResourcesComponent implements OnInit {
     if(!this.auth.userIsLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
-      if(this.auth.userIsLoggedIn())
+      if(this.auth.userIsLoggedIn()) {
         this.jwtDecode();
-      if(this.jwtDecoded['role'] === "admin")
-        this.orgPref = {name: 'allOrgs'};
-      if(this.jwtDecoded['role'] === "developer")
-        this.orgPref = JSON.parse(this.auth.userOrgPreference());
-      if(this.jwtDecoded['role'] === "orgAdmin")
-        this.orgPref = JSON.parse(this.auth.userOrgPreference());
-      this.getResources(this.orgPref.name);
+        if(this.jwtDecoded['role'] === "developer")
+          this.orgPref = JSON.parse(this.auth.userOrgPreference());
+        if(this.jwtDecoded['role'] === "orgAdmin")
+          this.orgPref = JSON.parse(this.auth.userOrgPreference());
+        this.getResources();
+      }
     }
   }
 
@@ -51,8 +50,8 @@ export class ResourcesComponent implements OnInit {
     this.filterBox = event;
   }
 
-  getResources(org: string) {
-    this.rest.getResources(org).subscribe(
+  getResources() {
+    this.rest.getResources().subscribe(
       data  => {
         this.handlerServerResponse(data);
       },
@@ -71,8 +70,6 @@ export class ResourcesComponent implements OnInit {
 
   handlerServerResponse(resources: any) {
     this.projects = [];
-    console.log(resources)
-
     this.projects = resources.resources;
     this.projects.success = resources.success; 
     const date = Date.now();
@@ -111,7 +108,7 @@ export class ResourcesComponent implements OnInit {
   delete(id: any) {
     this.rest.deleteProject(id)
       .subscribe(res => {
-          this.getResources(this.orgPref.name);
+          this.getResources();
         }, (err) => {
           console.log(err);
         }

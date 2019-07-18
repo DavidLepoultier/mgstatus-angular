@@ -38,38 +38,38 @@ export class ResourceService {
     return body || { };
   }
 
-  getResources(org: string): Observable<any> {
-    return this.http.get(endpoint.api + `resources/tenant/${org}`, this.getHeaders()).pipe(
+  getResources(): Observable<any> {
+    return this.http.get(endpoint.api + `rgates/tenant`, this.getHeaders()).pipe(
       map(this.extractData));
   }
   
   getResource(id: any): Observable<any> {
-    return this.http.get(endpoint.api + `resources/${id}`, this.getHeaders()).pipe(
+    return this.http.get(endpoint.api + `rgates/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
   addProject (project: any): Observable<any> {
     console.log(project);
-    return this.http.post(endpoint.api + 'resources', JSON.stringify(project), this.getHeaders()).pipe(
+    return this.http.post(endpoint.api + 'rgates', JSON.stringify(project), this.getHeaders()).pipe(
       tap((project) => console.log(`added project w/ id=${project['id']}`)),
       catchError(this.handleError<any>('addProject'))
     );
   }
 
-  updateProduct (id: any, product: any): Observable<any> {
-    return this.http.put(endpoint.api + 'products/' + id, JSON.stringify(product), this.getHeaders()).pipe(
-      tap(_ => console.log(`updated product id=${id}`)),
-      catchError(this.handleError<any>('updateProduct'))
-    );
-  }
+  // updateProduct (id: any, product: any): Observable<any> {
+  //   return this.http.put(endpoint.api + 'products/' + id, JSON.stringify(product), this.getHeaders()).pipe(
+  //     tap(_ => console.log(`updated product id=${id}`)),
+  //     catchError(this.handleError<any>('updateProduct'))
+  //   );
+  // }
 
   deleteProject (id: any): Observable<any> {
-    return this.http.delete(endpoint.api + `resources/${id}`, this.getHeaders()).pipe(
+    return this.http.delete(endpoint.api + `rgates/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
   deleteContainer (project: any, container: any): Observable<any> {
-    return this.http.delete(endpoint.api + `resources/${project}/${container}`, this.getHeaders()).pipe(
+    return this.http.delete(endpoint.api + `rgates/${project}/${container}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 
