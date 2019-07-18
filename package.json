@@ -38,7 +38,7 @@
     "jwt-decode": "^2.2.0",
     "ng2-charts": "^2.2.2",
     "rxjs": "^6.5.1",
-    "web-animations-js": "^2.3.1",
+    "web-animations-js": "^2.3.2",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
