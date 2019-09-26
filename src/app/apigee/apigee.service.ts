@@ -165,6 +165,11 @@ export class ApigeeService {
       map(this.extractData));
   }
 
+  hideProduct(product: object): Observable<any> {
+    return this.http.put(endpoint.api + `apigee/product/hidden`, product, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   deleteProxie(proxie: string): Observable<any> {
     return this.http.delete(endpoint.api + `apigee/proxie/${proxie}`, this.getHeaders()).pipe(
       map(this.extractData));

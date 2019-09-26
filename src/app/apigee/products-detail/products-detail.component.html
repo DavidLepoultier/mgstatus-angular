@@ -24,6 +24,15 @@
               <form [formGroup]="updateProductForm" novalidate (ngSubmit)="updateProduct(updateProductForm.value)">
                 <div class="row mx-0">
                   <div class="mt-3 col-md-10">
+                    <table class="developer-table">
+                      <tr class="developer-table">
+                        <td class="text-muted font-weight-bold environment-width"> Hidden </td>
+                        <td class="text-muted font-weight-bold deployment-width"> 
+                          <mat-slide-toggle [checked]="descProduct.hidden" (click)="hideProduct(!descProduct.hidden, descProduct)"></mat-slide-toggle>
+                        </td>  
+                      </tr>
+                    </table>
+                    <hr class="mr-4 mt-0 mb-4">
                     <mat-form-field class="px-3">
                       <input matInput type="text" placeholder="Display name" value="{{descProduct.displayName}}" disabled="disabled">
                     </mat-form-field>
@@ -70,14 +79,27 @@
                     <input matInput type="text" placeholder="Proxie name" value="{{ proxies }}" disabled="disabled">
                   </mat-form-field>
                 </div>
-                <!-- <table class="developer-table">
-                  <tr class="developer-table" *ngFor="let proxies of descProduct.proxies; let p = index">
-                    <td class="text-muted font-weight-bold environment-width"> {{ proxies }} </td>
-                    <td class="text-muted font-weight-bold deployment-width"> 
-                      <mat-slide-toggle [checked]="environment.deploy" (click)="deployProxie(!environment.deploy, descProduct.proxie, environment.env)"></mat-slide-toggle>
-                    </td>  
-                  </tr>
-                </table> -->
+              </div>
+            </mat-tab>
+            <mat-tab *ngIf="descProduct.hidden" label="Developers">
+              <div class="mt-3">
+                <div *ngFor="let developer of descProduct.developers; let d = index">
+                  <mat-form-field class="full-width mb-1 px-3">
+                    <input matInput type="text" placeholder="Developer email" value="{{ developer }}" disabled="disabled">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <form [formGroup]="addDeveloperForm" novalidate (ngSubmit)="addDeveloperForm(updateProductForm.value, descProduct)">
+                    <mat-form-field class="full-width mb-1 px-3">
+                      <input matInput type="email" placeholder="Add developer email" formControlName="developerEmail" required>
+                    </mat-form-field>
+                      <mat-error *ngFor="let validation of validation_messages.developerEmail">
+                        <mat-error *ngIf="addDeveloperForm.get('developerEmail').hasError(validation.type) && (addDeveloperForm.get('developerEmail').dirty || addDeveloperForm.get('developerEmail').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                  </form>
+                </div>
               </div>
             </mat-tab>
           </mat-tab-group>

@@ -21,11 +21,19 @@ export class ProductsDetailComponent implements OnInit {
   jwtDecoded: object = {};
   disabled: boolean = true;
   updateProductForm: FormGroup;
+  addDeveloperForm: FormGroup;
   fromTo: object = {
     link: '',
     display: ''
   };
   orgPref:any;
+
+  validation_messages = {
+    'developerEmail': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Enter a valid email' }
+    ]
+  }
 
   constructor(private router:Router, private auth:AuthService, private apigee:ApigeeService, notifierSvc:NotifierSvc, private fb:FormBuilder, private route:ActivatedRoute) { 
     this.notifier = notifierSvc;
@@ -74,6 +82,15 @@ export class ProductsDetailComponent implements OnInit {
     })
   }
 
+  createFormsDeveloper() {
+    this.addDeveloperForm = this.fb.group({
+      developerEmail: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$')
+      ]))
+    })
+  }
+
   getProducts() {
     this.apigee.getMyProxies().subscribe(
       data => {
@@ -89,7 +106,19 @@ export class ProductsDetailComponent implements OnInit {
     this.apigee.getProduct(product).subscribe(
       data  => {
         this.descProduct = data.product;
+        this.descProduct.hidden = false;
+        this.descProduct.developers = [];
+        for (let index = 0; index < this.descProduct.attributes.length; index++) {
+          const element = this.descProduct.attributes[index];
+          if (element.name === 'hidden' && element.value === 'true' ) {
+            this.descProduct.hidden = true;
+          }
+          if (element.name === 'developers') {
+            this.descProduct.developers = element.value;
+          }
+        }
         this.createForms();
+        this.createFormsDeveloper();
       },
       error => {
         this.handlerError(error);
@@ -118,6 +147,17 @@ export class ProductsDetailComponent implements OnInit {
     )
   }
 
+  hideProduct(status: boolean, product: any) {
+    product.hidden = status
+    this.apigee.hideProduct(product).subscribe(
+      data => {
+        this.handlerHideProductResponse(data)
+      },
+      error => {
+        this.handlerError(error);
+    });
+  }
+
   deleteProduct(){
     this.apigee.deleteProduct(this.route.snapshot.params['id']).subscribe(
       data => {
@@ -131,6 +171,15 @@ export class ProductsDetailComponent implements OnInit {
 
   handlerServerResponse(data: any) {
     this.allProducts = data.apis;
+  }
+
+  handlerHideProductResponse(data: any) {
+    this.notifier.showNotification(
+      'success',
+      `Update hidden status.`
+    );
+    this.descProduct.hidden = !this.descProduct.hidden;
+    this.getProductDescription(this.route.snapshot.params['id']);
   }
 
   handlerDeleteProductResponse(data: any) {

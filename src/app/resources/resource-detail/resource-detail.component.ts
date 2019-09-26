@@ -121,6 +121,13 @@ export class ResourceDetailComponent implements OnInit {
       } else {
         this.project.endpoint = '';
       }
+      if (this.project.filter && this.project.filter.filter) {
+        this.project.filterProxy = true;
+        this.project.proxyFilter = this.project.filter.filterPattern;
+      } else {
+        this.project.filterProxy = false;
+        this.project.proxyFilter = 'edgemicro_';
+      }
     }
   }
 }

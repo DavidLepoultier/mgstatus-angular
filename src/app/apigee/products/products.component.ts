@@ -63,6 +63,16 @@ export class ProductsComponent implements OnInit {
 
   handlerServerResponse(data: any) { 
     this.allProducts = data.products;
+    for (let index = 0; index < this.allProducts.length; index++) {
+      const element = this.allProducts[index].attributes;
+      this.allProducts[index].hidden = false;
+      for (let attr = 0; attr < element.length; attr++) {
+        const attribute = element[attr];
+        if (attribute.name === 'hidden' && attribute.value === 'true' ) {
+          this.allProducts[index].hidden = true;
+        }
+      }
+    }
     this.allProducts = this.allProducts.sort((a: any, b: any) => {
       if (a['displayName'] < b['displayName']) {
         return this.sorted ? -1 : 1;

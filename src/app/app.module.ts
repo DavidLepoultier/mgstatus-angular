@@ -36,6 +36,8 @@ import { ProductsComponent } from './apigee/products/products.component';
 import { ProductsDetailComponent } from './apigee/products-detail/products-detail.component';
 import { MyProxiesComponent } from './apigee/my-proxies/my-proxies.component';
 import { MyProductsComponent } from './apigee/my-products/my-products.component';
+import { ProxyNamePipe } from './pipes/proxy-name.pipe';
+import { OffersComponent } from './apigee/offers/offers.component';
 
 const appRoutes: Routes = [
   {
@@ -107,6 +109,11 @@ const appRoutes: Routes = [
     path: 'product/:id',
     component: ProductsDetailComponent,
     data: { title: 'Product detail' }
+  },
+  {
+    path: 'offers',
+    component: OffersComponent,
+    data: { title: 'Offers' }
   },
   {
     path: 'orgs',
@@ -195,7 +202,9 @@ const customNotifierOptions: NotifierOptions = {
     ProductsComponent,
     ProductsDetailComponent,
     MyProxiesComponent,
-    MyProductsComponent
+    MyProductsComponent,
+    ProxyNamePipe,
+    OffersComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

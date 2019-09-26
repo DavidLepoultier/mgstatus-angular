@@ -27,11 +27,18 @@
           <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allProducts | filter: searchText; let i = index">
             <mat-expansion-panel-header [routerLink]="['/product/' + el.name]" routerLinkActive="router-link-active">
             <!-- <mat-expansion-panel-header> -->
-              <mat-panel-title class="developer-table">
+              <!-- <mat-panel-title class="developer-table">
                 <table class="developer-table">
                   <td class="text-muted font-weight-bold app-width"> {{ el.displayName }} </td>
                 </table>
-              </mat-panel-title>
+              </mat-panel-title> -->
+              <mat-panel-title class="text-muted font-weight-bold">{{ el.displayName }}</mat-panel-title>
+              <mat-panel-description>
+                <ng-container *ngIf="el.hidden; then hidden"></ng-container>
+                <ng-template #hidden>
+                  <mdb-badge pill="true" warning="true" class="badge-font">Hidden</mdb-badge>
+                </ng-template>
+              </mat-panel-description>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
         </mat-accordion>
