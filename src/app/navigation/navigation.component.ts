@@ -21,7 +21,7 @@ export class NavigationComponent implements OnInit {
 
   navigationDeveloper = [
     // { link: 'myProxies', label: 'myProxies', icon: 'fa-bezier-curve', iconType: 'fas' },
-    // { link: 'myProducts', label: 'myProducts', icon: 'fa-product-hunt', iconType: 'fab' },
+    // { link: 'offers', label: 'Offers', icon: 'fa-product-hunt', iconType: 'fab' },
     { link: 'myApps', label: 'myApps', icon: 'fa-mobile-alt', iconType: 'fas' }
   ];
 

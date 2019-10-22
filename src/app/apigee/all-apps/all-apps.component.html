@@ -46,18 +46,18 @@
                   <mat-tab label="Keys">
                     <div class="mt-3">
                       <mat-form-field class="full-width mb-1 px-3">
-                        <input matInput [type]="showKey ? 'text' : 'password'" placeholder="Consumer Key" value="{{el.credentials[0].consumerKey}}" disabled="disabled">
+                        <input matInput [type]="showKey ? 'text' : 'password'" placeholder="Consumer Key" value="{{el.credentials[0].consumerKey}}" readonly>
                         <mat-icon matSuffix (click)="showKey = !showKey">{{showKey ? 'visibility_off' : 'visibility'}}</mat-icon>
                       </mat-form-field>
                       <mat-form-field class="full-width mb-1 px-3">
-                        <input matInput [type]="showSecret ? 'text' : 'password'" placeholder="Consumer Secret" value="{{el.credentials[0].consumerSecret}}" disabled="disabled">
+                        <input matInput [type]="showSecret ? 'text' : 'password'" placeholder="Consumer Secret" value="{{el.credentials[0].consumerSecret}}" readonly>
                         <mat-icon matSuffix (click)="showSecret = !showSecret">{{showSecret ? 'visibility_off' : 'visibility'}}</mat-icon>
                       </mat-form-field>
                       <mat-form-field class="full-width mb-1 px-3">
-                        <input matInput type="text" placeholder="Key Issued" value="{{el.credentials[0].issuedAt | dateFormat}}" disabled="disabled">
+                        <input matInput type="text" placeholder="Key Issued" value="{{el.credentials[0].issuedAt | dateFormat}}" readonly>
                       </mat-form-field>
                       <mat-form-field class="full-width mb-1 px-3">
-                        <input matInput type="text" placeholder="Expires" value="{{el.credentials[0].expiresAt | dateFormat}}" disabled="disabled">
+                        <input matInput type="text" placeholder="Expires" value="{{el.credentials[0].expiresAt | dateFormat}}" readonly>
                       </mat-form-field>
                     </div>  
                   </mat-tab>
@@ -65,7 +65,7 @@
                     <div class="mt-3">
                       <div *ngFor="let p of el.credentials[0].apiProducts; let c = index">
                         <mat-form-field class="full-width mb-1 px-3">
-                          <input matInput type="text" placeholder="Api Product" value="{{p.apiproduct}}" disabled="disabled">
+                          <input matInput type="text" placeholder="Api Product" value="{{p.apiproduct}}" readonly>
                         </mat-form-field>
                         <ng-container *ngIf="p.status === 'approved'; then pApproved; else pNotApproved"></ng-container>
                         <ng-template #pApproved>
@@ -80,15 +80,15 @@
                   <mat-tab label="Details">
                     <div class="mt-3">
                       <mat-form-field class="full-width mb-1 px-3">
-                        <input matInput type="text" placeholder="name" value="{{el.name}}" disabled="disabled">
+                        <input matInput type="text" placeholder="name" value="{{el.name}}" readonly>
                       </mat-form-field>
                       <div *ngFor="let a of el.attributes; let t = index">
                         <mat-form-field *ngIf="a.value" class="full-width mb-1 px-3">
-                          <input matInput type="text" placeholder="{{a.name}}" value="{{a.value}}" disabled="disabled">
+                          <input matInput type="text" placeholder="{{a.name}}" value="{{a.value}}" readonly>
                         </mat-form-field>
                       </div>
                       <mat-form-field *ngIf="el.callbackUrl" class="full-width mb-1 px-3">
-                        <input matInput type="text" placeholder="callbackUrl" value="{{el.callbackUrl}}" disabled="disabled">
+                        <input matInput type="text" placeholder="callbackUrl" value="{{el.callbackUrl}}" readonly>
                       </mat-form-field>
                     </div>
                   </mat-tab>

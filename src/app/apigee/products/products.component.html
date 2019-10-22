@@ -26,12 +26,6 @@
         <mat-accordion>
           <mat-expansion-panel style="border-radius: 0rem;" *ngFor="let el of allProducts | filter: searchText; let i = index">
             <mat-expansion-panel-header [routerLink]="['/product/' + el.name]" routerLinkActive="router-link-active">
-            <!-- <mat-expansion-panel-header> -->
-              <!-- <mat-panel-title class="developer-table">
-                <table class="developer-table">
-                  <td class="text-muted font-weight-bold app-width"> {{ el.displayName }} </td>
-                </table>
-              </mat-panel-title> -->
               <mat-panel-title class="text-muted font-weight-bold">{{ el.displayName }}</mat-panel-title>
               <mat-panel-description>
                 <ng-container *ngIf="el.hidden; then hidden"></ng-container>
@@ -47,65 +41,3 @@
     <div class="col-md-1"></div>
   </div>
 </div>
-
-<!-- <div [style.display]="showAddOffers ? 'block' : 'none'" [class]="showAddOffers ? 'modal fade top in show' : 'modal fade top'" 
-  id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog cascading-modal" role="document">
-    <form class="text-center" [formGroup]="addProxiesForm" novalidate (ngSubmit)="actionOffers(addProxiesForm.value)">
-      <div class="modal-content">
-        <div class="text-center mt-4 mb-3">
-          <h4 class="modal-title font-weight-bold">Add Proxie</h4>
-        </div>
-        <div class="row mb-3">
-          <div class="col-2"></div>
-          <div class="col-8">
-            <mat-form-field class="full-width">
-              <input matInput type="text" placeholder="Proxie name (without edgemicro_)" formControlName="proxie" required>
-              <mat-error *ngFor="let validation of application_validation_messages.proxie">
-                <mat-error *ngIf="addProxiesForm.get('proxie').hasError(validation.type) && (addProxiesForm.get('proxie').dirty || addProxiesForm.get('proxie').touched)">
-                  {{validation.message}}
-                </mat-error>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input matInput type="text" placeholder="Description" formControlName="description">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <mat-label>Base path</mat-label>
-              <input matInput type="text" placeholder="Bast path" formControlName="basePath" required>
-              <mat-error *ngFor="let validation of application_validation_messages.basePath">
-                <mat-error *ngIf="addProxiesForm.get('basePath').hasError(validation.type) && (addProxiesForm.get('basePath').dirty || addProxiesForm.get('basePath').touched)">
-                  {{validation.message}}
-                </mat-error>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <mat-label>Target</mat-label>
-              <input matInput type="text" placeholder="Target" formControlName="target" required>
-              <mat-error *ngFor="let validation of application_validation_messages.target">
-                <mat-error *ngIf="addProxiesForm.get('target').hasError(validation.type) && (addProxiesForm.get('target').dirty || addProxiesForm.get('target').touched)">
-                  {{validation.message}}
-                </mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-2"></div>
-        </div>
-        <div class="modal-content">
-          <div class="row">
-            <div class="col-md-6">
-              <button type="button" mdbBtn color="light" class="d-flex ml-auto waves-light my-3 px-4 py-2" data-dismiss="modal" (click)="addOffersHide()" mdbWavesEffect>
-                Cancel
-              </button>
-            </div>
-            <div class="col-md-6">
-              <button type="submit" mdbBtn color="primary" class="d-flex mr-auto waves-light my-3 px-4 py-2" [disabled]="!addProxiesForm.valid" mdbWavesEffect>
-                Create
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div> -->

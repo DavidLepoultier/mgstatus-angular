@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+// import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { AppComponent } from './app.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -34,10 +34,10 @@ import { UniqueProjectPipe } from './pipes/unique-project.pipe';
 import { ProxieDetailComponent } from './apigee/proxie-detail/proxie-detail.component';
 import { ProductsComponent } from './apigee/products/products.component';
 import { ProductsDetailComponent } from './apigee/products-detail/products-detail.component';
-import { MyProxiesComponent } from './apigee/my-proxies/my-proxies.component';
-import { MyProductsComponent } from './apigee/my-products/my-products.component';
+// import { MyProxiesComponent } from './apigee/my-proxies/my-proxies.component';
+// import { MyProductsComponent } from './apigee/my-products/my-products.component';
 import { ProxyNamePipe } from './pipes/proxy-name.pipe';
-import { OffersComponent } from './apigee/offers/offers.component';
+// import { OffersComponent } from './apigee/offers/offers.component';
 
 const appRoutes: Routes = [
   {
@@ -110,11 +110,11 @@ const appRoutes: Routes = [
     component: ProductsDetailComponent,
     data: { title: 'Product detail' }
   },
-  {
-    path: 'offers',
-    component: OffersComponent,
-    data: { title: 'Offers' }
-  },
+  // {
+  //   path: 'offers',
+  //   component: OffersComponent,
+  //   data: { title: 'Offers' }
+  // },
   {
     path: 'orgs',
     component: OrgsComponent,
@@ -201,10 +201,10 @@ const customNotifierOptions: NotifierOptions = {
     ProxieDetailComponent,
     ProductsComponent,
     ProductsDetailComponent,
-    MyProxiesComponent,
-    MyProductsComponent,
-    ProxyNamePipe,
-    OffersComponent
+    // MyProxiesComponent,
+    // MyProductsComponent,
+    ProxyNamePipe
+    // OffersComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
