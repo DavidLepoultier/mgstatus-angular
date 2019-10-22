@@ -34,10 +34,10 @@ import { UniqueProjectPipe } from './pipes/unique-project.pipe';
 import { ProxieDetailComponent } from './apigee/proxie-detail/proxie-detail.component';
 import { ProductsComponent } from './apigee/products/products.component';
 import { ProductsDetailComponent } from './apigee/products-detail/products-detail.component';
-// import { MyProxiesComponent } from './apigee/my-proxies/my-proxies.component';
-// import { MyProductsComponent } from './apigee/my-products/my-products.component';
+import { MyProxiesComponent } from './apigee/my-proxies/my-proxies.component';
+import { MyProductsComponent } from './apigee/my-products/my-products.component';
 import { ProxyNamePipe } from './pipes/proxy-name.pipe';
-// import { OffersComponent } from './apigee/offers/offers.component';
+import { OffersComponent } from './apigee/offers/offers.component';
 
 const appRoutes: Routes = [
   {
@@ -201,10 +201,10 @@ const customNotifierOptions: NotifierOptions = {
     ProxieDetailComponent,
     ProductsComponent,
     ProductsDetailComponent,
-    // MyProxiesComponent,
-    // MyProductsComponent,
-    ProxyNamePipe
-    // OffersComponent
+    MyProxiesComponent,
+    MyProductsComponent,
+    ProxyNamePipe,
+    OffersComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
