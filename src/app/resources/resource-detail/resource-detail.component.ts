@@ -102,7 +102,7 @@ export class ResourceDetailComponent implements OnInit {
       this.project = response.resource[0];
       var container = 0;
       for (let index = 0; index < this.project.containers.length; index++) {
-        if ((this.date - this.project.containers[index].time) < 60000) {
+        if ((this.date - this.project.containers[index].time) < 120000) {
           this.chartColors[0].backgroundColor.push("#46BFBD");
         } else {
           this.chartColors[0].backgroundColor.push("#bdbdbd");

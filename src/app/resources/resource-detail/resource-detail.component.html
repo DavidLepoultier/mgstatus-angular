@@ -79,7 +79,7 @@
                       <mat-expansion-panel-header>
                         <mat-panel-title class="text-muted font-weight-bold">{{ container.id }}</mat-panel-title>
                         <mat-panel-description>
-                          <ng-container *ngIf="(date - container.time) < 60000; then running; else notRunning"></ng-container>
+                          <ng-container *ngIf="(date - container.time) < 120000; then running; else notRunning"></ng-container>
                           <ng-template #running>
                             <i class="fab fa-docker text-container-run ml-auto mb-0 mt-0"></i>
                           </ng-template>
@@ -94,10 +94,10 @@
                           <div class="card ml-2 mb-3">
                             <div class="border border-light">
                               <p class="text-muted mx-2 mt-2 mb-0">Created: <i class="float-right font-weight-bold">{{ container.created | date: 'yyyy/MM/dd HH:mm' : cet }}</i></p>
-                              <div *ngIf="(date - container.time) < 60000">
+                              <div *ngIf="(date - container.time) < 120000">
                                 <p class="text-muted mx-2 my-0">Uptime: <i class="float-right font-weight-bold">{{ container.uptime }}</i></p> 
                               </div>
-                              <div *ngIf="(date - container.time) > 60000">
+                              <div *ngIf="(date - container.time) > 120000">
                                 <p class="red-text mx-2 my-0">Downtime: <i class="float-right font-weight-bold">{{ (container.time) | downtime }}</i></p>
                               </div>
                               <p class="text-muted mx-2 my-0">Polling interval: <i class="float-right font-weight-bold">{{ container.configPollInterval }} sec</i></p>

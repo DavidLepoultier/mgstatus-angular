@@ -77,7 +77,7 @@ export class ResourcesComponent implements OnInit {
       const element = this.projects[index];
       var running = 0;
       for (let container = 0; container < element.containers.length; container++) {
-        if ((date - element.containers[container].time) < 60000) {
+        if ((date - element.containers[container].time) < 120000) {
           running++;
         } 
       }
