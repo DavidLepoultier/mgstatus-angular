@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ResourcesComponent } from './resources/resources/resources.component';
 import { ResourceDetailComponent } from './resources/resource-detail/resource-detail.component';
 import { RouterModule, Routes } from '@angular/router';
-import { ChartsModule } from 'ng2-charts';
+// import { ChartsModule } from 'ng2-charts';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './footer/footer.component';
@@ -216,8 +216,7 @@ const customNotifierOptions: NotifierOptions = {
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
     DemoMaterialModule,
-    MatNativeDateModule,
-    ChartsModule
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent],

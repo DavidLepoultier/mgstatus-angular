@@ -1,21 +1,15 @@
 <!--Navbar-->
   <nav class="navbar navbar-expand-lg navbar-dark special-color-dark sticky-top">
-    
-    <!-- Navbar brand -->
-    <mdb-navbar-brand>
-      <a class="navbar-brand mr-0" href="#" routerLink="/" routerLinkActive="active" ><i class="h6-responsive">r-APIBackbone</i>
-        <i class="font-xsmall">Frontend-remoteGateway</i>
-      </a>
-    </mdb-navbar-brand>
-
-    <!-- Collapsible content -->
-    <links>
-
-      <!-- Links -->
+    <a class="navbar-brand mr-4" href="#" routerLink="/" routerLinkActive="active" >
+      <h2><em>r-API</em>Backbone</h2>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul *ngIf="checkAuth()" class="navbar-nav mr-auto">
         <li class="nav-item" *ngFor="let item of navigationSideMenu">
           <a href="#" [routerLink]="[item.link]" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
-            <!-- <mdb-icon icon="{{ item.icon }}"></mdb-icon> {{ item.label }} -->
             <i class="{{ item.iconType }} {{ item.icon }}"></i> {{ item.label }}
           </a>
         </li>
@@ -28,15 +22,13 @@
             </a>
           </li>
         </ul>
-       </div>
-
+      </div>
       <div *ngIf="auth.userIsLoggedIn()">
         <ul *ngIf="jwtDecoded['role'] === 'developer'" class="navbar-nav nav-flex-icons">
           <li class="nav-item dropdown" dropdown>
-            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
               Organizations<span class="caret"></span></a>
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-              <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a> -->
               <a *ngFor="let item of jwtDecoded['tenants']" (click)="setOrgPref(item)" class="dropdown-item waves-light" mdbWavesEffect>
                 {{ item }}
               </a>
@@ -45,12 +37,11 @@
         </ul>
       </div>
       <div *ngIf="auth.userIsLoggedIn()">
-        <ul class="navbar-nav nav-flex-icons">
+        <ul class="navbar-nav ml-auto nav-flex-icons">
           <li class="nav-item dropdown" dropdown>
-            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
               <mdb-icon fas icon="user"></mdb-icon> {{ jwtDecoded['user'] }}<span class="caret"></span></a>
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-              <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a> -->
               <a *ngFor="let item of navigationOtherSideMenu" href="#" [routerLink]="[item.link]" class="dropdown-item waves-light" mdbWavesEffect>
                 {{ item.label }}
               </a>
@@ -59,36 +50,8 @@
               </a>
             </div>
           </li>
-          <!-- <li class="nav-item">
-            <a href="#" (click)="auth.logout()" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
-              Logout
-            </a>
-          </li> -->
-        </ul>
-        
+        </ul>      
       </div>
-        
-
-        <!-- <li class="nav-item">
-          <a href="https://github.com/DavidLepoultier/mgstatus-angular" target="_blank" class="nav-link">
-            <i class="fab fa-git-square fa-2x"></i>
-          </a>
-        </li> -->
-        <!-- <li class="nav-item">
-            <a href="#" [routerLink]="login" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
-            <mdb-icon fas icon="user"></mdb-icon> Login<span class="caret"></span></a>
-        </li> -->
-        <!-- Dropdown -->
-        <!-- <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Log out</a>
-          </div>
-        </li> -->
-      <!-- Links -->
-    </links>
-    <!-- Collapsible content -->
+    </div>
   </nav>
 <!--/.Navbar-->
