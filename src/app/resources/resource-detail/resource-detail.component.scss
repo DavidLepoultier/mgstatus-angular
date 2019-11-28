@@ -1,0 +1,49 @@
+
+.data {
+  margin-left: auto;
+  margin-top: 1rem;
+  text-align: right;
+  margin-right: 2rem;
+  p {
+    color: gray;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+}
+
+[class^="btn-outline-"],
+[class*=" btn-outline-"] {
+  border: 0 !important;
+  box-shadow: unset;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.text-container-run {
+  color: #46BFBD;
+}
+
+div[class^="docker-containers"],
+div[class*=" docker-containers"] {
+  width: 100%;
+	float: left;
+  padding: 0 .5rem;
+  margin-bottom: .75rem;
+  .card {
+		//cursor: pointer;
+		transition: box-shadow .2s linear;
+		-webkit-transition: box-shadow .2s linear;
+		&:hover {
+			box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+		}
+  }
+}
+
+.my-green-text {
+  color: #46BFBD;
+}
+
+.tooltip-red {
+  background: #b71c1c;
+}

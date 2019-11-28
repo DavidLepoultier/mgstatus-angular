@@ -1,0 +1,47 @@
+<mdb-breadcrumb>
+  <mdb-breadcrumb-item class="active">Login</mdb-breadcrumb-item>  
+</mdb-breadcrumb>
+<notifier-container></notifier-container>
+<div *ngIf="!isAuthenticated" class="container-fluid w-responsive mx-auto p-3 mt-2">
+  <div class="row mt-4">
+    <div class="col-md-3 min-heigth"></div>
+    <div class="col-md-6">
+      <div class="card">
+        <p class="text-center h3 pt-5 mb-4">Login</p>
+        <form class="text-center" [formGroup]="loginForm" novalidate (ngSubmit)="login(loginForm.value)">
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+              <mat-form-field class="full-width">
+                <input matInput type="email" placeholder="Email" formControlName="email" required>
+                <mat-error *ngFor="let validation of account_validation_messages.email">
+                  <mat-error *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                    {{validation.message}}
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="full-width mb-3">
+                <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="password" required>
+                <mat-error *ngFor="let validation of account_validation_messages.password">
+                  <mat-error *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                    {{ validation.message }}
+                  </mat-error>
+                </mat-error>
+                <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <button class="mb-4" color="primary" mat-raised-button type="submit" [disabled]="!loginForm.valid">
+                Login
+                <i class="fas fa-sign-in-alt ml-1"></i>
+              </button>
+              <p class="pb-4">No account?
+                <a href="#" [routerLink]="['/register']" routerLinkActive="router-link-active">Create one!</a>
+              </p>
+            </div>
+            <div class="col-1"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

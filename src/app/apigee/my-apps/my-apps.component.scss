@@ -1,0 +1,44 @@
+.min-heigth-tab {
+	min-height: 270px;
+}
+
+.mat-expansion-panel-header-description {
+  display: unset;
+}
+
+.badge-product {
+  float: right;
+  margin-top: -55px;
+  z-index: 2;
+}
+
+[class^="btn-outline-"],
+[class*=" btn-outline-"] {
+  border: 0 !important;
+  box-shadow: unset;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.card {
+  //cursor: pointer;
+  transition: box-shadow .2s linear;
+  -webkit-transition: box-shadow .2s linear;
+  border-radius: 0rem;
+}
+
+.data-table-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.badge-font {
+  font-size: 0.9rem;
+  float: right;
+  text-align: right;
+  margin-right: 2rem;
+}
+
+.table-link {
+  color: #007bff;
+}
