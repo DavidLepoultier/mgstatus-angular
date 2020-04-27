@@ -65,8 +65,8 @@ export class AuthService {
   logout() {
     sessionStorage.removeItem('jbb-data');
     sessionStorage.removeItem('orgName');
-    this.router.navigate([`/reload/r-Gate`]);
-    //this.router.navigate(['/']);
+    //this.router.navigate([`/reload/r-Gate`]);
+    this.router.navigate(['/']);
   }
 
   register(credentials: any): Observable<any> {

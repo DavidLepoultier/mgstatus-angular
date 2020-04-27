@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { NotifierSvc } from '../../services/notifier.service'
 import { Router } from '@angular/router';
-import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   jbbData:any = null;
   isAuthenticated:boolean = false;
   welcomeMessage:String = '';
-  notifier: NotifierSvc;
+
+  myClass = '';
 
   account_validation_messages = {
     'email': [
@@ -29,11 +30,16 @@ export class LoginComponent implements OnInit {
     ]
   }
 
-  constructor(private auth:AuthService, notifierSvc:NotifierSvc, private router:Router, private fb: FormBuilder) { 
-    this.notifier = notifierSvc;
-  }
+  constructor(private auth:AuthService, private router:Router, private fb: FormBuilder, private snackBar: SnackBarComponent) { }
 
   ngOnInit() {
+    if (window.scrollY <= 70) {
+      window.scrollTo(0, 0);
+      this.myClass = '';
+    } else {
+      window.scrollTo(0, 121);
+      this.myClass = 'update-wrapper';
+    }
     if(this.auth.userIsLoggedIn()) {
       this.refreshFlags();
       this.router.navigate(['/']);
@@ -64,15 +70,13 @@ export class LoginComponent implements OnInit {
   login(loginForm: any) {
     this.auth.login(loginForm).subscribe(
       data  => this.handlerLoginSuccess(data),
-      error => this.handlerError(error)
+      error => this.handlerError(error.error)
     );
   }
 
   handlerError(error: any) {
-    this.notifier.showNotification(
-      'error',
-      error.error.message
-    );
+    console.log(error)
+    this.snackBar.openSnackBar(error.message,'Close','failed');
   }
 
   handlerLoginSuccess(data: any) {

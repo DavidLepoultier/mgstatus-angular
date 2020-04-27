@@ -1,0 +1,41 @@
+<myHeader class="">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a routerLink="./" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link waves-light" mdbWavesEffect>
+              Deployments profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="./deployment/add" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
+              Add Deployment profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="./environments" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link waves-light" mdbWavesEffect>
+              Environments
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="./environment/add" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
+              Add environment
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="./sequences" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
+              Deployment sequences
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="./sequence/add" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>
+              Add sequence
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</myHeader>
+<router-outlet></router-outlet>

@@ -1,0 +1,101 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-1 col-xl-2 min-heigth"></div>
+        <div class="col-md-10 col-xl-8">
+          <div *ngIf="!running">
+            <div class="card">
+              <p class="text-center h3 pt-5 mb-4">Create Organization</p>
+              <form class="text-center" [formGroup]="createOrgForm" novalidate (ngSubmit)="createOrg(createOrgForm.value)">
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Organization's name" formControlName="orgName" required>
+                      <mat-error *ngFor="let validation of account_validation_messages.orgName">
+                        <mat-error *ngIf="createOrgForm.get('orgName').hasError(validation.type) && (createOrgForm.get('orgName').dirty || createOrgForm.get('orgName').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="full-width">
+                      <mat-form-field class="mid-left-width">
+                        <mat-label>Select deployment profile</mat-label>
+                        <mat-select formControlName="deployment" required>
+                          <mat-option>--</mat-option>
+                          <mat-option *ngFor="let dep of deployments" [value]="dep.id">
+                            {{dep.deploymentName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <mat-expansion-panel class="full-width mb-3">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          Admin user
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Username" formControlName="ADMIN_USER" required>
+                        <mat-error *ngFor="let validation of account_validation_messages.ADMIN_USER">
+                          <mat-error *ngIf="createOrgForm.get('ADMIN_USER').hasError(validation.type) && (createOrgForm.get('ADMIN_USER').dirty || createOrgForm.get('ADMIN_USER').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <input matInput [type]="show ? 'text' : 'password'" placeholder="Password" formControlName="ADMIN_PASSWORD" required>
+                        <mat-error *ngFor="let validation of account_validation_messages.ADMIN_PASSWORD">
+                          <mat-error *ngIf="createOrgForm.get('ADMIN_PASSWORD').hasError(validation.type) && (createOrgForm.get('ADMIN_PASSWORD').dirty || createOrgForm.get('ADMIN_PASSWORD').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                        <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </mat-form-field>
+                    </mat-expansion-panel>
+                    <button class="mb-4" color="warn" mat-raised-button type="submit" [disabled]="!createOrgForm.valid">
+                      Create organization
+                    </button>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+              </form>
+            </div>
+          </div>          
+          <div *ngIf="running">
+            <div class="card">
+              <p class="text-center h3 pt-5 mb-4">Creating Organization</p>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <div *ngIf="newOrg.deployState" class="full-width">
+                    <div *ngFor="let dep of newOrg.deployState">
+                      <div *ngFor="let status of dep.status">
+                        <p class="mb-0 mt-0 text-muted font-weight-bold">
+                          <i *ngIf="status.state == 'succeeded'" class="fas fa-check-circle succeeded-left"></i>
+                          <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
+                            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                          </svg>
+                          {{ status.name }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button class="mt-4 mb-4" color="primary" mat-raised-button (click)="close()" [disabled]="newOrg.state != 'created'">
+                      Close
+                    </button>
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </div>
+          </div>     
+        </div>
+        <div class="col-md-1 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>

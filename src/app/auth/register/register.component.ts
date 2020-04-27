@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { NotifierSvc } from '../../services/notifier.service'
 import { Router } from '@angular/router';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
@@ -16,7 +15,6 @@ export class RegisterComponent implements OnInit {
   jbbData:any = null;
   jwtDecoded: object = {};
   isAuthenticated:boolean = false;
-  notifier:NotifierSvc;
 
   account_validation_messages = {
     'firstName': [
@@ -35,9 +33,7 @@ export class RegisterComponent implements OnInit {
     ]
   }
 
-  constructor(private auth:AuthService, notifierSvc:NotifierSvc, private router:Router, private fb: FormBuilder) { 
-    this.notifier = notifierSvc;
-  }
+  constructor(private auth:AuthService, private router:Router, private fb: FormBuilder) { }
 
   ngOnInit() {
     if(this.auth.userIsLoggedIn()) {
@@ -90,10 +86,7 @@ export class RegisterComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.notifier.showNotification(
-      'error',
-      error.error
-    );
+
   }
 
   jwtDecode() {

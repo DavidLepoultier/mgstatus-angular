@@ -1,8 +1,7 @@
 <mdb-breadcrumb>
-  <mdb-breadcrumb-item class="active">Login</mdb-breadcrumb-item>  
+  <!-- <mdb-breadcrumb-item></mdb-breadcrumb-item>   -->
 </mdb-breadcrumb>
-<notifier-container></notifier-container>
-<div *ngIf="!isAuthenticated" class="container-fluid w-responsive mx-auto p-3 mt-2">
+<div *ngIf="!isAuthenticated" class="container-fluid w-responsive mx-auto p-3 mt-top">
   <div class="row mt-4">
     <div class="col-md-3 min-heigth"></div>
     <div class="col-md-6">
@@ -33,9 +32,6 @@
                 Login
                 <i class="fas fa-sign-in-alt ml-1"></i>
               </button>
-              <p class="pb-4">No account?
-                <a href="#" [routerLink]="['/register']" routerLinkActive="router-link-active">Create one!</a>
-              </p>
             </div>
             <div class="col-1"></div>
           </div>

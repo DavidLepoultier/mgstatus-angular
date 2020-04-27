@@ -1,0 +1,44 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">New template</p>
+            <form class="text-center" [formGroup]="templateForm" novalidate (ngSubmit)="saveConfig(templateForm.value)">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Template's name" formControlName="templateName" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.templateName">
+                      <mat-error *ngIf="templateForm.get('templateName').hasError(validation.type) && (templateForm.get('templateName').dirty || templateForm.get('templateName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Template
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <textarea matInput matTextareaAutosize matAutosizeMinRows=30 matAutosizeMaxRows=30 placeholder="Content" formControlName="template" required>
+                      </textarea>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <button class="mb-4" color="warn" mat-raised-button type="submit" [disabled]="!templateForm.valid">
+                    Save template
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

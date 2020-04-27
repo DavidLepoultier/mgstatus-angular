@@ -1,0 +1,106 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">New environment</p>
+            <form class="text-center" [formGroup]="registerEnvForm" novalidate (ngSubmit)="saveConfig(registerEnvForm.value)">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Environment's name" formControlName="envName" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.envName">
+                      <mat-error *ngIf="registerEnvForm.get('envName').hasError(validation.type) && (registerEnvForm.get('envName').dirty || registerEnvForm.get('envName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Database
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Database Username" formControlName="KONG_PG_USER" required>
+                      <mat-error *ngFor="let validation of account_validation_messages.KONG_PG_USER">
+                        <mat-error *ngIf="registerEnvForm.get('KONG_PG_USER').hasError(validation.type) && (registerEnvForm.get('KONG_PG_USER').dirty || registerEnvForm.get('KONG_PG_USER').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput [type]="show ? 'text' : 'password'" placeholder="Database Password" formControlName="KONG_PG_PASSWORD" required>
+                      <mat-error *ngFor="let validation of account_validation_messages.KONG_PG_PASSWORD">
+                        <mat-error *ngIf="registerEnvForm.get('KONG_PG_PASSWORD').hasError(validation.type) && (registerEnvForm.get('KONG_PG_PASSWORD').dirty || registerEnvForm.get('KONG_PG_PASSWORD').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                      <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <div class="row">
+                    <div class="col-4">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Kong version" formControlName="KONG_VERSION" required>
+                        <mat-error *ngFor="let validation of account_validation_messages.KONG_VERSION">
+                          <mat-error *ngIf="registerEnvForm.get('KONG_VERSION').hasError(validation.type) && (registerEnvForm.get('KONG_VERSION').dirty || registerEnvForm.get('KONG_VERSION').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-3">
+                          <mat-slide-toggle class="full-width mt-4" formControlName="INTERNET" [(ngModel)]="disabledInt">
+                            Internet
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-9">
+                          <mat-form-field *ngIf="disabledInt" class="full-width mb-0">
+                            <input matInput placeholder="Domain name" formControlName="KONG_INTERNET_FQDN" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-3">
+                          <mat-slide-toggle class="full-width mt-4" formControlName="GIN" [(ngModel)]="disabledGin">
+                            GIN
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-9">
+                          <mat-form-field *ngIf="disabledGin" class="full-width mb-0">
+                            <input matInput placeholder="Domain name" formControlName="KONG_GIN_FQDN" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                  <mat-slide-toggle class="full-width" formControlName="SSL_INTERNET" [(ngModel)]="disabledSSLInt">
+                    SSL Internet
+                  </mat-slide-toggle>
+                  <mat-form-field *ngIf="disabledSSLInt" class="full-width">
+                    <textarea matInput matTextareaAutosize matAutosizeMinRows=4 matAutosizeMaxRows=10 placeholder="SSL Certificate crt" formControlName="SSL_INTERNET_CERT_CRT" required>
+                    </textarea>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="disabledSSLInt" class="full-width">
+                    <textarea matInput matTextareaAutosize matAutosizeMinRows=4 matAutosizeMaxRows=10 placeholder="SSL Certificate key" formControlName="SSL_INTERNET_CERT_KEY" required>
+                    </textarea>
+                  </mat-form-field>           
+                  <button class="mb-4 mt-2" color="warn" mat-raised-button type="submit" [disabled]="!registerEnvForm.valid">
+                    Save environment
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

@@ -1,0 +1,123 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">New deployment profile</p>
+            <form class="text-center" [formGroup]="registerDepForm" novalidate (ngSubmit)="saveConfig(registerDepForm.value)">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Deployment profile name" formControlName="deploymentName" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.deploymentName">
+                      <mat-error *ngIf="registerDepForm.get('deploymentName').hasError(validation.type) && (registerDepForm.get('deploymentName').dirty || registerDepForm.get('deploymentName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="full-width">
+                    <mat-form-field class="mid-left-width">
+                      <mat-label>Select deployment sequence</mat-label>
+                      <mat-select formControlName="deploymentSequenceId" required>
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let seq of sequences" [value]="seq.id">
+                          {{seq.seqName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="mid-right-width">
+                      <mat-label>Select Kong environment</mat-label>
+                      <mat-select formControlName="environmentId" required>
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let env of environments" [value]="env.id">
+                          {{env.envName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <!-- <mat-form-field class="full-width">
+                    <input matInput placeholder="Environment's name" formControlName="envName" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.envName">
+                      <mat-error *ngIf="registerDepForm.get('envName').hasError(validation.type) && (registerDepForm.get('envName').dirty || registerDepForm.get('envName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field> -->
+                  <!-- <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Database
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Database Username" formControlName="KONG_PG_USER" required>
+                      <mat-error *ngFor="let validation of account_validation_messages.KONG_PG_USER">
+                        <mat-error *ngIf="registerDepForm.get('KONG_PG_USER').hasError(validation.type) && (registerDepForm.get('KONG_PG_USER').dirty || registerDepForm.get('KONG_PG_USER').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput [type]="show ? 'text' : 'password'" placeholder="Database Password" formControlName="KONG_PG_PASSWORD" required>
+                      <mat-error *ngFor="let validation of account_validation_messages.KONG_PG_PASSWORD">
+                        <mat-error *ngIf="registerDepForm.get('KONG_PG_PASSWORD').hasError(validation.type) && (registerDepForm.get('KONG_PG_PASSWORD').dirty || registerDepForm.get('KONG_PG_PASSWORD').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                      <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <div class="row">
+                    <div class="col-4">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Kong version" formControlName="KONG_VERSION" required>
+                        <mat-error *ngFor="let validation of account_validation_messages.KONG_VERSION">
+                          <mat-error *ngIf="registerDepForm.get('KONG_VERSION').hasError(validation.type) && (registerDepForm.get('KONG_VERSION').dirty || registerDepForm.get('KONG_VERSION').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-3">
+                          <mat-slide-toggle class="full-width mt-4" formControlName="INTERNET" [(ngModel)]="disabledInt">
+                            Internet
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-9">
+                          <mat-form-field *ngIf="disabledInt" class="full-width mb-0">
+                            <input matInput placeholder="Domain name" formControlName="KONG_INTERNET_FQDN" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-3">
+                          <mat-slide-toggle class="full-width mt-4" formControlName="GIN" [(ngModel)]="disabledGin">
+                            GIN
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-9">
+                          <mat-form-field *ngIf="disabledGin" class="full-width mb-0">
+                            <input matInput placeholder="Domain name" formControlName="KONG_GIN_FQDN" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>             -->
+                  <button class="mb-4 mt-2" color="warn" mat-raised-button type="submit" [disabled]="!registerDepForm.valid">
+                    Save profile
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

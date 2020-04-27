@@ -1,0 +1,127 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
+import { Router } from '@angular/router';
+import { OrganizationService } from 'src/app/services/organization.service';
+import { DeploymentProfileService } from 'src/app/services/deployment-profile.service';
+
+@Component({
+  selector: 'app-create-organization',
+  templateUrl: './create-organization.component.html',
+  styleUrls: ['./create-organization.component.scss']
+})
+export class CreateOrganizationComponent implements OnInit {
+
+  createOrgForm: FormGroup;
+  deployments = [];
+
+  show: boolean = false;
+  isAuthenticated:boolean = false;
+  running: boolean = false;
+  newOrg = {};
+  status = 0;
+
+  config = {
+    id: '',
+    orgName: '',
+    deployment: '',
+    ADMIN_USER: '',
+    ADMIN_PASSWORD: ''
+  }
+
+  account_validation_messages = {
+    'orgName': [ 
+      { type: 'required', message: "Organization's name is required" }
+    ],
+    'deployment': [
+      { type: 'required', message: "Deployment profile is required"}
+    ],
+    'ADMIN_PASSWORD': [
+      { type: 'require', message: "Password admin is required"}
+    ],
+    'ADMIN_USER': [
+      { type: 'require', message: "Username admin is required"}
+    ]
+  }
+
+  constructor( private router:Router, private fb: FormBuilder, private org: OrganizationService, private dep: DeploymentProfileService, private snackBar: SnackBarComponent) { 
+  }
+
+  myClass = '';
+
+  ngOnInit() {
+    window.scrollTo(0, 0);
+    this.myClass = '';
+    this.getDeployments();
+    this.createForms();
+  }
+
+  createForms() {
+    // user links form validations
+    this.createOrgForm = this.fb.group({
+      id: new FormControl(this.config.id),
+      orgName: new FormControl(this.config.orgName, Validators.compose([
+        Validators.required,
+      ])),
+      deployment: new FormControl(this.config.deployment, Validators.compose([
+        Validators.required,
+      ])),
+      ADMIN_PASSWORD: new FormControl(this.config.ADMIN_PASSWORD, Validators.compose([
+        Validators.required,
+      ])),
+      ADMIN_USER: new FormControl(this.config.ADMIN_USER, Validators.compose([
+        Validators.required,
+      ]))
+    })
+  }
+
+  getDeployments(){
+    this.dep.getAllDeployment().subscribe(
+      data => this.deployments = data.deployments
+    )
+  }
+
+  createOrg(createOrgForm: any) {
+    this.org.createOrg(createOrgForm).subscribe(
+      data  => this.handlerSuccess(data),
+      error => this.handlerError(error.error)
+    );
+  }
+
+  getOrgById(id) {
+    this.org.getOrgId(id).subscribe(
+      data => {
+        this.newOrg = data.organization;
+        if(data.organization.state == "created") {
+          this.status = 1;
+        }
+      }
+    );   
+  }
+
+  autoRefreshOrg(id) {
+    let intervalId = setInterval(() => {
+      this.getOrgById(id);
+      if (this.status == 1) clearInterval(intervalId);
+    }, 2000);
+  }
+
+  close() {
+    this.router.navigate(['/orgs']);
+  }
+
+  handlerSuccess(data: any) {
+    this.snackBar.openSnackBar(data.message,'Close','');
+    this.org.getOrgId(data.createId).subscribe(
+      data => this.newOrg = data.organization
+    );
+    this.running = true;
+    this.status = 0;
+    this.autoRefreshOrg(data.createId);
+  }
+
+  handlerError(error: any) {
+    console.log(error)
+    this.snackBar.openSnackBar(error.message.message,'Close','failed');
+  }
+}

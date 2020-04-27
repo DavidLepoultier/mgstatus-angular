@@ -1,0 +1,60 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">Sequence</p>
+            <form class="text-center" [formGroup]="sequenceForm" novalidate>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Sequence's name" formControlName="seqName" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.seqName">
+                      <mat-error *ngIf="sequenceForm.get('seqName').hasError(validation.type) && (sequenceForm.get('seqName').dirty || sequenceForm.get('seqName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Template sequence
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div formArrayName="sequence_points">
+                      <div *ngFor="let item of sequencePoints.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <mat-form-field class="mid-width">
+                          <mat-label>Sequence #{{ pointIndex }}</mat-label>
+                          <mat-select  [(value)]="item.value.template" required>
+                            <mat-option>--</mat-option>
+                            <mat-option *ngFor="let tpl of templates" [value]="tpl.id">
+                              {{ tpl.templateName }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <button class="ml-2" color="warn" mat-button (click)="deleteSequencePoint(pointIndex)">
+                          Delete
+                        </button>
+                      </div>
+                      <button mat-button (click)="addSequencePoint()">Add Sequence</button>
+                    </div>
+                  </mat-expansion-panel>
+                  <button class="mr-2" color="primary" mat-raised-button (click)="updateConfig(sequenceForm.value)" [disabled]="!sequenceForm.valid">
+                    Save sequence
+                  </button>
+                  <button class="mb-4" color="warn" mat-raised-button (click)="deleteSeq()">
+                    Delete sequence
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

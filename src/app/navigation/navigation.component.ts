@@ -9,15 +9,20 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
   
-  constructor(public auth:AuthService, private router:Router) { }
-
-  navigation = [
-    { link: 'r-Gate', label: 'r-Gateway', icon: 'fa-project-diagram', iconType: 'fas' }
-  ];
+  constructor(public auth:AuthService, private router:Router) {}
   
+  activeLink = "";
   navigationSideMenu = [];
+  navigationPages = [];
   navigationOtherSideMenu = [];
   jwtDecoded: object = {};
+
+  navigation = [];
+
+  navigationDefault = [
+    { link: 'r-Gate', label: 'r-Gateway', icon: 'fa-project-diagram', iconType: 'fas' },
+    { link: 'orgs', label: 'organizations', icon: 'fa-project-diagram', iconType: 'fas' }
+  ];
 
   navigationDeveloper = [
     // { link: 'myProxies', label: 'myProxies', icon: 'fa-bezier-curve', iconType: 'fas' },
@@ -33,6 +38,7 @@ export class NavigationComponent implements OnInit {
 
   navigationAdmin = [
     { link: 'orgs', label: 'Organizations' },
+    { link: 'flexible', label: 'Configuration' }
   ];
 
   navigationProfile = [
@@ -40,12 +46,56 @@ export class NavigationComponent implements OnInit {
   ];
 
   navigationLogin = [
-    { link: 'login', label: 'Log in', icon: 'user' }
+    { link: 'login', label: 'Login', icon: 'user' }
   ];
 
+  navigationOrganization = [
+    { link: 'orgs', label: 'Organizations' },
+  ];
+  navigationSetup = [
+    { link: 'flexible', label: 'Flexible' },
+    { link: 'kong', label: 'Kong' },
+    { link: 'templates', label: 'kube templates' }
+  ]
+
   ngOnInit() {
-    
+    this.navPageDefault();
   }
+
+  navPageDefault () {
+    switch(location.pathname){
+      case '/flexible':
+        this.navigation = [
+          ...this.navigationSetup
+        ];
+        this.activeLink = 'flexible'
+      break;
+      default: 
+        this.navigation = [
+          ...this.navigationOrganization
+        ];
+        this.activeLink = 'orgs'
+      break;
+    }
+  }
+
+  navSelect (page: string) {
+    switch(page) { 
+      case 'orgs':
+        this.navigation = [
+          ...this.navigationOrganization
+        ];
+        this.activeLink = 'orgs'
+      break;
+      case 'flexible':
+        this.navigation = [
+          ...this.navigationSetup
+        ];
+        this.activeLink = 'flexible'
+      break;    
+    }
+  }
+  
 
   jwtDecode() {
     this.jwtDecoded = this.auth.jwtTokenDecode();

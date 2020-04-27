@@ -1,0 +1,97 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-1 min-heigth"></div>
+        <div class="col-md-10">
+          <div *ngIf="!running">
+            <div class="card">
+              <p class="text-center h3 pt-5 mb-4 myTitle">organization {{ config.orgName }}</p>
+              <form [formGroup]="updateOrgForm" novalidate>
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-10">
+                    <div class="full-width">
+                      <mat-form-field class="mid-left-width">
+                        <mat-label>Profile</mat-label>
+                        <mat-select formControlName="deployment" [(value)]="deployment" required>
+                          <mat-option *ngFor="let dep of deployments" [value]="dep.id">
+                            {{dep.deploymentName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <button *ngIf="config.deployment != updateOrgForm.get('deployment').value" class="ml-4 mt-2" color="warn" mat-raised-button (click)="updateProfile(updateOrgForm.value)">
+                        Change profile
+                      </button>
+                      <div *ngFor="let dep of config.deployState">
+                        <mat-expansion-panel class="full-width mb-3">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              Deployment {{ dep.name }} -- {{ dep.datetime | dateFormat }}
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div *ngFor="let status of dep.status">
+                            <p class="mb-0 mt-0 text-muted font-weight-bold">
+                              <i *ngIf="status.state == 'succeeded'" class="fas fa-check-circle succeeded-left"></i>
+                              <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
+                                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                              </svg>
+                              {{ status.name }}
+                            </p>
+                          </div>
+                        </mat-expansion-panel>
+                      </div>
+                    </div>
+                    <mat-list>
+                      <mat-divider class="mt-2"></mat-divider>
+                      <mat-list-item class="text-muted font-weight-bold">Endpoint</mat-list-item>
+                      <mat-list-item *ngFor="let end of config.environment.endpoints"><a [href]="end.endpoint" _blank>{{ end.endpoint }}</a></mat-list-item>
+                    </mat-list>
+                    <div class="text-center">
+                      <button class="mt-4 mb-4" color="primary" mat-raised-button (click)="close()">
+                        Close
+                      </button>
+                      <button class="ml-4 mt-4 mb-4" color="warn" mat-raised-button (click)="deleteConfirm()">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+              </form>
+            </div>
+          </div>        
+          <div *ngIf="running">
+            <div class="card">
+              <p class="text-center h3 pt-5 mb-4">Updating Organization</p>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <div *ngIf="config.deployState" class="full-width">
+                    <div *ngFor="let status of deployState.status">
+                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                        <i *ngIf="status.state == 'succeeded'" class="fas fa-check-circle succeeded-left"></i>
+                        <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
+                          <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                        </svg>
+                        {{ status.name }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button class="mt-4 mb-4" color="primary" mat-raised-button (click)="close()" [disabled]="config.state != 'created'">
+                      Close
+                    </button>
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>

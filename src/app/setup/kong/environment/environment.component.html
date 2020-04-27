@@ -1,0 +1,47 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1 col-xl-2 min-heigth">
+          <mat-form-field class="full-width">
+            <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
+          </mat-form-field>
+        </div>
+        <div class="col-md-10 col-xl-8">
+          <div *ngFor="let p of environments | filter: searchText : filterBox | uniqueProject; let i=index;">
+            <div class="triple-column mb-3">
+              <!-- Card -->
+              <div class="card">
+                <!-- Content -->
+                <a href="#" [routerLink]="['/kong/environments/' + p.id ]" routerLinkActive="router-link-active" class="waves-light border border-light" mdbWavesEffect>
+                  <div class="warning-color-dark texte-center white-text d-flex font-weight-bold">              
+                    <div class="first-content align-self-center ml-4 py-2">
+                      {{ p.envName }}
+                    </div>
+                    <div class="second-content align-self-center ml-auto mr-4">
+                      <i class="fas fa-project-diagram"> </i>
+                    </div>
+                  </div>
+                
+                  <!-- Data -->
+                  <!-- <div class="third-content mr-auto ml-2 mb-2 mt-2">
+                    <p class="mb-0 mt-0 text-muted font-weight-bold">Organization: <i>{{ p.org }}</i></p>
+                    <p class="mb-0 mt-0 text-muted font-weight-bold">Environment: <i>{{ p.env }}</i></p>
+                  </div> -->
+                  <!-- Content -->
+                  <div class="card-body">
+                    <div *ngIf="p.containers">
+                      {{ p.envName }}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>

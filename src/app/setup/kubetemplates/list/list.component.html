@@ -1,0 +1,35 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1 col-xl-2 min-heigth">
+          <mat-form-field class="full-width">
+            <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
+          </mat-form-field>
+        </div>
+        <div class="col-md-10 col-xl-8">
+          <div *ngFor="let p of templates | filter: searchText : filterBox | uniqueProject; let i=index;">
+            <div class="triple-column mb-3">
+              <div class="card">
+                <a href="#" [routerLink]="['/templates/' + p.id ]" routerLinkActive="router-link-active" class="waves-light border border-light" mdbWavesEffect>
+                  <div class="warning-color-dark texte-center white-text d-flex font-weight-bold">              
+                    <div class="first-content align-self-center ml-4 py-2">
+                      {{ p.templateName }}
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div *ngIf="p.containers">
+                      {{ p.templateName }}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>
