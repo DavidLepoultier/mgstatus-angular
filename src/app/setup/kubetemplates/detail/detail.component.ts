@@ -21,8 +21,33 @@ export class DetailComponent implements OnInit {
   config = {
     id: '',
     templateName: '',
-    template: ''
+    template: '',
+    templateType: '',
   }
+
+  templateTypes = [
+    {
+      name: 'Namespace'
+    },
+    {
+      name: 'Service'
+    },
+    {
+      name: 'ConfigMap'
+    },
+    {
+      name: 'Secret'
+    },
+    {
+      name: 'DeployConfig'
+    },
+    {
+      name: 'Job'
+    },
+    {
+      name: 'Ingress'
+    }
+  ]
 
   account_validation_messages = {
     'templateName': [ 
@@ -30,6 +55,9 @@ export class DetailComponent implements OnInit {
     ],
     'template': [ 
       { type: 'required', message: "Template is required" }
+    ],
+    'templateType': [ 
+      { type: 'required', message: "Template type is required" }
     ]
   }
 
@@ -50,6 +78,9 @@ export class DetailComponent implements OnInit {
     this.templateForm = this.fb.group({
       id: new FormControl(this.config.id),
       templateName: new FormControl(this.config.templateName, Validators.compose([
+        Validators.required,
+      ])),
+      templateType: new FormControl(this.config.templateType, Validators.compose([
         Validators.required,
       ])),
       template: new FormControl(this.config.template)

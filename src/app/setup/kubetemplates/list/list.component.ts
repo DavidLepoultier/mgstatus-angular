@@ -8,6 +8,9 @@ import { KubeTemplatesService } from 'src/app/services/kube-templates.service';
 })
 export class ListComponent implements OnInit {
 
+  filterBox:any = '';
+  searchText: string;
+  sorted = true;
   templates: [];
   myClass = '';
 
@@ -25,6 +28,10 @@ export class ListComponent implements OnInit {
         this.templates = data.kubetemplates;
       }
     );
+  }
+
+  checkCheckBoxvalue(event: any){
+    this.filterBox = event;
   }
 
 }

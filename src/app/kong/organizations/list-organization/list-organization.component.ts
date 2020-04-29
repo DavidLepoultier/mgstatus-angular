@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ListOrganizationComponent implements OnInit {
 
+  searchText: string;
   organizations: [];
   myClass = '';
 

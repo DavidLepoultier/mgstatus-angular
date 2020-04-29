@@ -8,6 +8,7 @@ import { DeploymentProfileService } from 'src/app/services/deployment-profile.se
 })
 export class DeploymentComponent implements OnInit {
 
+  searchText: string;
   deployments: [];
   myClass = '';
 

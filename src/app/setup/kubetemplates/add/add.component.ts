@@ -21,7 +21,8 @@ export class AddComponent implements OnInit {
   config = {
     id: '',
     templateName: '',
-    template: ''
+    template: '',
+    templateType: ''
   }
 
   account_validation_messages = {
@@ -30,11 +31,38 @@ export class AddComponent implements OnInit {
     ],
     'template': [ 
       { type: 'required', message: "Template is required" }
+    ],
+    'templateType': [
+      { type: 'required', message: "Template type is required" }
     ]
   }
 
   constructor( private router:Router, private fb: FormBuilder, private tpl: KubeTemplatesService, private snackBar: SnackBarComponent) { 
   }
+
+  templateTypes = [
+    {
+      name: 'Namespace'
+    },
+    {
+      name: 'Service'
+    },
+    {
+      name: 'ConfigMap'
+    },
+    {
+      name: 'Secret'
+    },
+    {
+      name: 'DeployConfig'
+    },
+    {
+      name: 'Job'
+    },
+    {
+      name: 'Ingress'
+    }
+  ]
 
   myClass = '';
 
@@ -49,6 +77,9 @@ export class AddComponent implements OnInit {
     this.templateForm = this.fb.group({
       id: new FormControl(this.config.id),
       templateName: new FormControl(this.config.templateName, Validators.compose([
+        Validators.required,
+      ])),
+      templateType: new FormControl(this.config.templateType, Validators.compose([
         Validators.required,
       ])),
       template: new FormControl(this.config.template)

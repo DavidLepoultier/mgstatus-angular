@@ -2,14 +2,6 @@
 LOG_FILE=/apps/logs/nginx.log
 echo "Log Location: [ $LOG_FILE ]"
 
-copy_resourcesFile() {
-  if [[ ! -f /apps/resources/resources.dat ]]
-    then
-    echo "Copy resources.dat into /apps/resources/"
-    cp /apps/v1/resources.dat /apps/resources/resources.dat
-  fi
-}
-
 start_nginx() {
   echo "Starting nginx server..."
   nginx

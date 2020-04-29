@@ -29,7 +29,9 @@ export class DetailDeploymentComponent implements OnInit {
   }
 
   account_validation_messages = {
-
+    'deploymentName': [
+      { type: 'required', message: 'Deployment name is required' },
+    ]
   }
 
   constructor( private dep: DeploymentProfileService, private seq: KongSequenceService, private route: ActivatedRoute, private router:Router, private fb: FormBuilder, private env: KongEnvironmentService, private snackBar: SnackBarComponent) { 

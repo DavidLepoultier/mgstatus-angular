@@ -29,7 +29,7 @@
                   </mat-form-field>
                   <mat-form-field class="mid-right-width">
                     <mat-label>Kong Environment</mat-label>
-                    <mat-select formControlName="environmentId" [(value)]="config.envrionmentId" required>
+                    <mat-select formControlName="environmentId" [(value)]="config.environmentId" required>
                       <mat-option>--</mat-option>
                       <mat-option *ngFor="let env of environments" [value]="env.id">
                         {{ env.envName }}

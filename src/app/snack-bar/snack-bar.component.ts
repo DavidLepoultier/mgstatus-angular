@@ -14,6 +14,7 @@ import {
 export class SnackBarComponent {
   
   addExtraClass: boolean = false;
+  data: string;
   
   message: string = 'Snack Bar opened.';
   actionButtonLabel: string = '';

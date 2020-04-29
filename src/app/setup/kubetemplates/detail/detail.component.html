@@ -10,25 +10,42 @@
               <div class="row">
                 <div class="col-1"></div>
                 <div class="col-10">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="Template's name" formControlName="templateName" required>
-                    <mat-error *ngFor="let validation of account_validation_messages.templateName">
-                      <mat-error *ngIf="templateForm.get('templateName').hasError(validation.type) && (templateForm.get('templateName').dirty || templateForm.get('templateName').touched)">
-                        {{validation.message}}
-                      </mat-error>
-                    </mat-error>
-                  </mat-form-field>
-                  <mat-expansion-panel class="mb-3">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        Template
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-form-field class="full-width">
-                      <textarea matInput matTextareaAutosize matAutosizeMinRows=30 matAutosizeMaxRows=30 placeholder="Content" formControlName="template" required>
-                      </textarea>
-                    </mat-form-field>
-                  </mat-expansion-panel>
+                  <div class="row">
+                    <div class="full-width">
+                      <mat-form-field class="mid-left-width">
+                        <input matInput placeholder="Template's name" formControlName="templateName" required>
+                        <mat-error *ngFor="let validation of account_validation_messages.templateName">
+                          <mat-error *ngIf="templateForm.get('templateName').hasError(validation.type) && (templateForm.get('templateName').dirty || templateForm.get('templateName').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="mid-right-width">
+                        <mat-label>Select template type</mat-label>
+                        <mat-select formControlName="templateType" required>
+                          <mat-option>--</mat-option>
+                          <mat-option *ngFor="let type of templateTypes" [value]="type.name">
+                            {{type.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="full-width">
+                      <mat-expansion-panel class="mb-3">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            Template
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-form-field class="full-width">
+                          <textarea matInput matTextareaAutosize matAutosizeMinRows=30 matAutosizeMaxRows=30 placeholder="Content" formControlName="template" required>
+                          </textarea>
+                        </mat-form-field>
+                      </mat-expansion-panel>
+                    </div>
+                  </div> 
                   <button class="mr-2" color="primary" mat-raised-button (click)="updateConfig(templateForm.value)" [disabled]="!templateForm.valid">
                     Update template
                   </button>

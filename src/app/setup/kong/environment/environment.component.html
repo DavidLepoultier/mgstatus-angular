@@ -9,7 +9,7 @@
           </mat-form-field>
         </div>
         <div class="col-md-10 col-xl-8">
-          <div *ngFor="let p of environments | filter: searchText : filterBox | uniqueProject; let i=index;">
+          <div *ngFor="let p of environments | filter: searchText; let i=index;">
             <div class="triple-column mb-3">
               <!-- Card -->
               <div class="card">

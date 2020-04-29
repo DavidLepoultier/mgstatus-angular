@@ -33,7 +33,7 @@ export class FeconfigComponent implements OnInit {
     'KONG_PG_HOST': [ 
       { type: 'required', message: "PostgreSQL's IP is required" }
     ],
-    'KONG_PG_USER': [
+    'KONG_PG_PORT': [
       { type: 'required', message: "PostgreSQL's Port is required" }
     ],
     'PGUSER': [

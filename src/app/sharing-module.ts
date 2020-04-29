@@ -7,6 +7,8 @@ import { DowntimePipe } from './pipes/downtime.pipe';
 import { UniquePipe } from './pipes/unique.pipe';
 import { ProxyNamePipe } from './pipes/proxy-name.pipe';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { SortPipe } from './pipes/sort.pipe';
+import { SortTemplateNamePipe } from './pipes/sort-template-name.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     PipesPipe,
     DowntimePipe,
     UniquePipe,
+    SortPipe,
+    SortTemplateNamePipe,
     ProxyNamePipe,
     SnackBarComponent
   ],
@@ -25,12 +29,14 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     DateFormatPipe,
     PipesPipe,
     DowntimePipe,
+    SortPipe,
+    SortTemplateNamePipe,
     UniquePipe,
     ProxyNamePipe,
     SnackBarComponent
   ],
   imports: [],
-  providers: [SnackBarComponent, FilterPipe, UniqueProjectPipe],
+  providers: [SnackBarComponent, FilterPipe, UniquePipe, SortPipe, SortTemplateNamePipe],
   bootstrap: [],
   schemas: []
 })

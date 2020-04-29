@@ -8,6 +8,7 @@ import { KongSequenceService } from 'src/app/services/kong-sequence.service';
 })
 export class SeqencesComponent implements OnInit {
 
+  searchText: string;
   sequences: [];
   myClass = '';
   

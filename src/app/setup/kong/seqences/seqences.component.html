@@ -9,7 +9,7 @@
           </mat-form-field>
         </div>
         <div class="col-md-10 col-xl-8">
-          <div *ngFor="let p of sequences | filter: searchText : filterBox | uniqueProject; let i=index;">
+          <div *ngFor="let p of sequences | filter: searchText; let i=index;">
             <div class="triple-column mb-3">
               <div class="card">
                 <a href="#" [routerLink]="['/kong/sequences/' + p.id ]" routerLinkActive="router-link-active" class="waves-light border border-light" mdbWavesEffect>

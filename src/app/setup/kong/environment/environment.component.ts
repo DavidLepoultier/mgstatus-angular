@@ -8,6 +8,7 @@ import { KongEnvironmentService } from 'src/app/services/kong-environment.servic
 })
 export class EnvironmentComponent implements OnInit {
 
+  searchText: string;
   environments: [];
   myClass = '';
 

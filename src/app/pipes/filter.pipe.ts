@@ -19,37 +19,20 @@ export class FilterPipe implements PipeTransform {
     if (!searchText && !checkBox) {
       return items;
     }
-    if(checkBox && checkBox.checked) {
-      let resource = this.checkBoxArray.filter((j: any) => j === checkBox.source.value);
-      if (resource.length === 0)
-        this.checkBoxArray.push(checkBox.source.value);
-    }
-
-    if(checkBox && !checkBox.checked) {
-      let index: number = this.checkBoxArray.indexOf(checkBox.source.value);
-      if (index !== -1) {
-        this.checkBoxArray.splice(index, 1);
-      }
-    }
         
     this.mdbTable.setDataSource(items);
     this.result = [];
     this.result = this.mdbTable.getDataSource();
-    if(checkBox && this.checkBoxArray.length > 0) {
-      this.result = [];
-      for (let index = 0; index < this.checkBoxArray.length; index++) {
-        const element = this.checkBoxArray[index];
-        this.result = [
-          ...this.mdbTable.filterLocalDataBy(element)
-        ]
-        this.mdbTable.setDataSource(this.result);
-      }
-      
+    if(checkBox && checkBox.checked) {
+      let value = checkBox.source.value.toLocaleLowerCase();
+      console.log(value);
+      this.result = this.mdbTable.filterLocalDataBy(value) 
+      console.log(this.result)
     }
-
     if(searchText) {
       searchText = searchText.toLocaleLowerCase();
       this.result = this.mdbTable.filterLocalDataBy(searchText);
+      console.log(this.result)
     } 
 
     return this.result;
