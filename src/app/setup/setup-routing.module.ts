@@ -17,6 +17,7 @@ import { DetailSequenceComponent } from './kong/seqences/detail-sequence/detail-
 import { DetailDeploymentComponent } from './kong/deployment/detail-deployment/detail-deployment.component';
 import { AddDeploymentComponent } from './kong/deployment/add-deployment/add-deployment.component';
 import { DeploymentComponent } from './kong/deployment/deployment.component';
+import { SmtpComponent } from './flexible/smtp/smtp.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
         path: '',
         children: [
           { path: 'kubeconfig', component: KubeconfigComponent },
+          { path: 'mailer', component: SmtpComponent },
           { path: '', component: FeconfigComponent }
         ]
       }

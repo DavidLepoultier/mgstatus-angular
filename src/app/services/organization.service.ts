@@ -18,13 +18,16 @@ export class OrganizationService {
   constructor(private http: HttpClient, private auth:AuthService) { }
 
   private getHeaders() {
-    let token: object = JSON.parse(this.auth.userIsLoggedIn());    
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'x-access-token': token['token'],
-        'Content-Type':  'application/json'
-      })
-    };
+    let token: object = JSON.parse(this.auth.userIsLoggedIn()); 
+    let httpOptions = {}   
+    if (token) {
+      httpOptions = {
+        headers: new HttpHeaders({
+          'x-access-token': token['token'],
+          'Content-Type':  'application/json'
+        })
+      };
+    }
     return httpOptions;
   }
   
@@ -43,6 +46,11 @@ export class OrganizationService {
       map(this.extractData));
   }
 
+  redeployOrg(id: any, action: any): Observable<any> {
+    return this.http.put(endpoint.api + `orgs/${id}`, action, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   getOrganizations(): Observable<any> {
     return this.http.get(endpoint.api + `orgs`, this.getHeaders()).pipe(
       map(this.extractData));
@@ -50,6 +58,36 @@ export class OrganizationService {
 
   getOrgId(id: any): Observable<any> {
     return this.http.get(endpoint.api + `orgs/${id}`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getDeployStateOrgId(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `orgs/${id}/deploystate`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getMembers(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `orgs/${id}/members`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  removeMembers(id: any, emails: any): Observable<any> {
+    return this.http.post(endpoint.api + `orgs/${id}/members/remove`, emails, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  addMembers(id: any, emails: any): Observable<any> {
+    return this.http.post(endpoint.api + `orgs/${id}/members/add`, emails, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  updateMembers(id: any, email: any, role: any): Observable<any> {
+    return this.http.put(endpoint.api + `orgs/${id}/members/${email}`, role, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
+  getOrgsByDepId(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `orgs/dep/${id}`, this.getHeaders()).pipe(
       map(this.extractData));
   }
 

@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PageNotFoundComponent }    from './page-not-found/page-not-found.component';
 import { LoginComponent } from './auth/login/login.component';
+import { SubscribeComponent } from './auth/subscribe/subscribe.component';
+import { VerifyComponent } from './auth/subscribe/verify/verify.component';
 
 // import { AuthGuard }                          from './auth/auth.guard';
 // import { SelectivePreloadingStrategyService } from './selective-preloading-strategy.service';
@@ -29,18 +31,13 @@ import { LoginComponent } from './auth/login/login.component';
 // ];
 
 const appRoutes: Routes = [
-    // {
-    //   path: 'orgs',
-    //   component: OrgsComponent,
-    //   data: { title: 'Organizations' }
-    // },
-    // { path: 'reload/:id',
-    //   component: ReloadComponent,
-    //   data: { title: 'Reload' }
-    // },
     {
       path: 'login',
       component: LoginComponent
+    },
+    { 
+      path: 'subscribe/verify/:id',  
+      component: VerifyComponent
     },
     { path: '',
       redirectTo: '/orgs',
@@ -49,8 +46,6 @@ const appRoutes: Routes = [
     { path: '**', component: PageNotFoundComponent }
   ];
   
-
-
 @NgModule({
   imports: [
     RouterModule.forRoot(

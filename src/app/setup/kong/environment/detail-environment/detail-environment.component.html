@@ -10,14 +10,27 @@
               <div class="row">
                 <div class="col-1"></div>
                 <div class="col-10">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="Environment name" formControlName="envName" required>
-                    <mat-error *ngFor="let validation of account_validation_messages.envName">
-                      <mat-error *ngIf="registerEnvForm.get('envName').hasError(validation.type) && (registerEnvForm.get('envName').dirty || registerEnvForm.get('envName').touched)">
-                        {{validation.message}}
-                      </mat-error>
-                    </mat-error>
-                  </mat-form-field>
+                  <div class="row">
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Environment name" formControlName="envName" required>
+                        <mat-error *ngFor="let validation of account_validation_messages.envName">
+                          <mat-error *ngIf="registerEnvForm.get('envName').hasError(validation.type) && (registerEnvForm.get('envName').dirty || registerEnvForm.get('envName').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <section class="radio-section text-muted">
+                        <label class="mr-2">Environment type:</label>
+                        <mat-radio-group formControlName="envType" required>
+                          <mat-radio-button class="mr-2 mat-orange" value="opensource">Opensource</mat-radio-button>
+                          <mat-radio-button class="mr-2 mat-orange" value="enterprise">Enterprise</mat-radio-button>
+                        </mat-radio-group>
+                      </section>
+                    </div>
+                  </div>
                   <mat-expansion-panel class="mb-3">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
@@ -56,7 +69,7 @@
                     <div class="col-8">
                       <div class="row">
                         <div class="col-3">
-                          <mat-slide-toggle class="full-width mt-4" formControlName="INTERNET" [(ngModel)]="disabledInt">
+                          <mat-slide-toggle color="orange" class="full-width mt-4" formControlName="INTERNET" [(ngModel)]="disabledInt">
                             Internet
                           </mat-slide-toggle>
                         </div>
@@ -68,7 +81,7 @@
                       </div>
                       <div class="row">
                         <div class="col-3">
-                          <mat-slide-toggle class="full-width mt-4" formControlName="GIN" [(ngModel)]="disabledGin">
+                          <mat-slide-toggle color="orange" class="full-width mt-4" formControlName="GIN" [(ngModel)]="disabledGin">
                             GIN
                           </mat-slide-toggle>
                         </div>
@@ -80,7 +93,7 @@
                       </div>
                     </div>
                   </div>
-                  <mat-slide-toggle class="full-width" formControlName="SSL_INTERNET" [(ngModel)]="disabledSSLInt">
+                  <mat-slide-toggle color="orange" class="full-width" formControlName="SSL_INTERNET" [(ngModel)]="disabledSSLInt">
                     SSL Internet
                   </mat-slide-toggle>
                   <mat-form-field *ngIf="disabledSSLInt" class="full-width">
@@ -91,7 +104,7 @@
                     <textarea matInput matTextareaAutosize matAutosizeMinRows=4 matAutosizeMaxRows=10 placeholder="SSL Certificate key" formControlName="SSL_INTERNET_CERT_KEY" required>
                     </textarea>
                   </mat-form-field>
-                  <button class="mr-2 mt-2" color="primary" mat-raised-button (click)="updateConfig(registerEnvForm.value)" [disabled]="!registerEnvForm.valid">
+                  <button class="mr-2 mt-2" color="orange" mat-raised-button (click)="updateConfig(registerEnvForm.value)" [disabled]="!registerEnvForm.valid">
                     Update environment
                   </button>
                   <button class="mb-4" color="warn" mat-raised-button (click)="deleteEnv()">

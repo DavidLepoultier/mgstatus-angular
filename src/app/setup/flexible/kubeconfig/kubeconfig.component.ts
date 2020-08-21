@@ -140,7 +140,7 @@ export class KubeconfigComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    
+    this.snackBar.openSnackBar(error.message,'Close','failed');
   }
 
   // handlerServerResponse(data: any) {

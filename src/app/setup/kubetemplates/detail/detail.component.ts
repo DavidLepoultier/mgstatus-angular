@@ -107,13 +107,6 @@ export class DetailComponent implements OnInit {
     );
   }
 
-  saveConfig(templateForm: any) {
-    this.tpl.addTplConfig(templateForm).subscribe(
-      data  => this.handlerSuccess(data),
-      error => this.handlerError(error)
-    );
-  }
-
   updateConfig(templateForm: any) {
     this.tpl.updateTplConfig(this.route.snapshot.params['id'], templateForm).subscribe(
       data  => this.handlerSuccess(data),
@@ -123,6 +116,7 @@ export class DetailComponent implements OnInit {
 
   handlerSuccess(data: any) {
     this.snackBar.openSnackBar(data.message,'Close','');
+    this.router.navigate(['/templates']);
   }
 
   handlerError(error: any) {

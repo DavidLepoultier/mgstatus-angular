@@ -42,6 +42,21 @@ export class AuthService {
     return sessionStorage.getItem('jbb-data');
   }
 
+  getUserVerify(id: any): Observable<any> {
+    return this.http.get(endpoint.auth + `verify/${id}`).pipe(
+      map(this.extractData));
+  }
+
+  userVerify(id: any, user: any): Observable<any> {
+    return this.http.post(endpoint.auth + `verify/${id}`, user).pipe(
+      map(this.extractData));
+  }
+
+  userResetPassword(id: any, user: any): Observable<any> {
+    return this.http.post(endpoint.auth + `resetpassword/${id}`, user).pipe(
+      map(this.extractData));
+  }
+
   userOrgPreference() {
     if(sessionStorage.getItem('jbb-data')) {
       let token = this.jwtTokenDecode();
@@ -81,7 +96,11 @@ export class AuthService {
 
   jwtTokenDecode() {
     let data: object = JSON.parse(sessionStorage.getItem('jbb-data'));
-    return jwtDecode(data['token']);
+    if (sessionStorage.getItem('jbb-data')) {
+      return jwtDecode(data['token']);
+    } else {
+      return false
+    }
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

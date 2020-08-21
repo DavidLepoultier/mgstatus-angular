@@ -38,17 +38,17 @@ export class NavigationComponent implements OnInit {
 
   navigationAdmin = [
     { link: 'orgs', label: 'Organizations' },
+    { link: 'users', label: 'Users' },
     { link: 'flexible', label: 'Configuration' }
   ];
 
   navigationProfile = [
-    //{ link: 'profile', label: 'My Account' }
+    { link: '/profile', label: 'Profile' }
   ];
 
   navigationLogin = [
     { link: 'login', label: 'Login', icon: 'user' }
   ];
-
   navigationOrganization = [
     { link: 'orgs', label: 'Organizations' },
   ];
@@ -56,44 +56,144 @@ export class NavigationComponent implements OnInit {
     { link: 'flexible', label: 'Flexible' },
     { link: 'kong', label: 'Kong' },
     { link: 'templates', label: 'kube templates' }
-  ]
+  ];
+  navigationUser = [
+    { link: 'users', label: 'Users' },
+    { link: 'roles', label: 'Roles' },
+  ];
 
   ngOnInit() {
     this.navPageDefault();
   }
 
   navPageDefault () {
-    switch(location.pathname){
-      case '/flexible':
-        this.navigation = [
-          ...this.navigationSetup
-        ];
-        this.activeLink = 'flexible'
-      break;
-      default: 
+    if(this.auth.userIsLoggedIn()) {
+      this.jwtDecode();
+      if(this.jwtDecoded['role'] == 'admin') {
+        switch(location.pathname){
+          case '/flexible':
+            this.navigation = [
+              ...this.navigationSetup
+            ];
+            this.activeLink = 'flexible'
+          break;
+          case '/kong':
+            this.navigation = [
+              ...this.navigationSetup
+            ];
+            this.activeLink = 'kong'
+          break;
+          case '/templates':
+            this.navigation = [
+              ...this.navigationSetup
+            ];
+            this.activeLink = 'templates'
+          break;
+          case '/users':
+            this.navigation = [
+              ...this.navigationUser
+            ];
+            this.activeLink = 'users'
+          break;
+          case '/roles':
+            this.navigation = [
+              ...this.navigationUser
+            ];
+            this.activeLink = 'users'
+          break;
+          default: 
+            this.navigation = [
+              ...this.navigationOrganization
+            ];
+            this.activeLink = 'orgs'
+          break;
+        }
+      } else {
         this.navigation = [
           ...this.navigationOrganization
         ];
         this.activeLink = 'orgs'
-      break;
+      }
     }
   }
 
   navSelect (page: string) {
-    switch(page) { 
-      case 'orgs':
+    if(this.auth.userIsLoggedIn()) {
+      this.jwtDecode();
+      console.log('role:', this.jwtDecoded['role'])
+      if(this.jwtDecoded['role'] == 'admin') {
+        console.log('page', page)
+        switch(page){
+          case 'flexible':
+            this.navigation = [
+              ...this.navigationSetup
+            ];
+            this.activeLink = 'flexible'
+          break;
+          case 'kong':
+            this.navigation = [
+              ...this.navigationSetup
+            ];
+            this.activeLink = 'kong'
+          break;
+          case 'templates':
+            this.navigation = [
+              ...this.navigationSetup
+            ];
+            this.activeLink = 'templates'
+          break;
+          case 'users':
+            this.navigation = [
+              ...this.navigationUser
+            ];
+            this.activeLink = 'users'
+          break;
+          default: 
+            this.navigation = [
+              ...this.navigationOrganization
+            ];
+            this.activeLink = 'orgs'
+          break;
+        }
+      } else {
         this.navigation = [
           ...this.navigationOrganization
         ];
         this.activeLink = 'orgs'
-      break;
-      case 'flexible':
-        this.navigation = [
-          ...this.navigationSetup
-        ];
-        this.activeLink = 'flexible'
-      break;    
+      }
     }
+    // switch(page) { 
+    //   case 'flexible':
+    //     this.navigation = [
+    //       ...this.navigationSetup
+    //     ];
+    //     this.activeLink = 'flexible'
+    //   break;
+    //   case 'kong':
+    //     this.navigation = [
+    //       ...this.navigationSetup
+    //     ];
+    //     this.activeLink = 'kong'
+    //   break;
+    //   case 'templates':
+    //     this.navigation = [
+    //       ...this.navigationSetup
+    //     ];
+    //     this.activeLink = 'templates'
+    //   break;
+    //   case 'users':
+    //     this.navigation = [
+    //       ...this.navigationUser
+    //     ];
+    //     this.activeLink = 'users'
+    //   break;
+    //   default: 
+    //     this.navigation = [
+    //       ...this.navigationOrganization
+    //     ];
+    //     this.activeLink = 'orgs'
+    //   break;    
+    // }
   }
   
 
@@ -135,8 +235,8 @@ export class NavigationComponent implements OnInit {
               ...this.navigation
             ];
             this.navigationOtherSideMenu = [
-              ...this.navigationAdmin,
-              ...this.navigationProfile
+              ...this.navigationProfile,
+              ...this.navigationAdmin
             ];
           break;
           default:

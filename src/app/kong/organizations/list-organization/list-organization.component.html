@@ -13,17 +13,17 @@
             <div class="triple-column mb-3">
               <div class="card">
                 <a href="#" [routerLink]="['/orgs/' + p.id ]" routerLinkActive="router-link-active" class="waves-light border border-light" mdbWavesEffect>
-                  <div class="warning-color-dark texte-center white-text d-flex font-weight-bold">              
+                  <div class="backgroud-orange texte-center white-text d-flex font-weight-bold">              
                     <div class="first-content align-self-center ml-4 py-2">
                       {{ p.orgName }}
                     </div>
                     <div class="second-content align-self-center ml-auto mr-4">
-                      <i class="fas fa-project-diagram"> </i>
+                      <i class="fa fa-project-diagram"> </i>
                     </div>
                   </div>
                   <div class="card-body">
                     <p *ngIf="p.state == 'created'" class="mb-4 mt-0 text-muted font-weight-bold">
-                      <i class="fas fa-check-circle succeeded"></i>
+                      <i class="fa fa-check-circle succeeded"></i>
                     </p>
                     <p *ngIf="p.state != 'created'" class="mb-0 mt-0 text-muted font-weight-bold">
                       <svg class="spinner" viewBox="0 0 50 50">

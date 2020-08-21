@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 })
 export class DateFormatPipe extends DatePipe implements PipeTransform {
 
-  DATE_FMT = 'EEE, dd/MM/yyyy - HH:mm';
+  DATE_FMT = 'EEE, dd/MM/yyyy - HH:mm:ss';
 
   transform(value: any, args?: any): any {
     //Downtime

@@ -42,7 +42,7 @@
           <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item dropdown" dropdown>
               <a dropdownToggle mdbWavesEffect class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                <mdb-icon fas icon="user"></mdb-icon> {{ jwtDecoded['user'] }}<span class="caret"></span></a>
+                <mdb-icon fas icon="user"></mdb-icon> {{ jwtDecoded['firstname'] }} {{ jwtDecoded['lastname'] }}<span class="caret"></span></a>
               <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
                 <a *ngFor="let item of navigationOtherSideMenu" (click)="navSelect(item.link)" href="#" [routerLink]="[item.link]" class="dropdown-item waves-light" mdbWavesEffect>
                   {{ item.label }}

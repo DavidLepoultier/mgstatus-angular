@@ -20,6 +20,10 @@ import { KongModule } from './kong/kong.module';
 import { SetupModule } from './setup/setup.module';
 import { LoginComponent } from './auth/login/login.component';
 import { SharingModule } from './sharing-module';
+import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
+import { SubscribeComponent } from './auth/subscribe/subscribe.component';
+import { VerifyComponent } from './auth/subscribe/verify/verify.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import { SharingModule } from './sharing-module';
     NavigationComponent,
     FooterComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    SubscribeComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +46,8 @@ import { SharingModule } from './sharing-module';
     MatNativeDateModule,
     KongModule,
     SetupModule,
+    UsersModule,
+    RolesModule,
     SharingModule,
     AppRoutingModule
   ],

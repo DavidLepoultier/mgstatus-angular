@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class OrganizationsComponent implements OnInit {
 
   myClass = '';
+  create: boolean = false;
   
   constructor(private auth: AuthService, private router: Router) { }
 
@@ -18,6 +19,9 @@ export class OrganizationsComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       window.scrollTo(0, 0);
+      let userToken = this.auth.jwtTokenDecode();
+      if (userToken.role == "admin") 
+        this.create = true;
       this.myClass = '';
     }
   }

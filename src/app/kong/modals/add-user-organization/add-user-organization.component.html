@@ -1,0 +1,79 @@
+<h1 mat-dialog-title class='text-center'>Add member</h1>
+<div mat-dialog-content>
+  <div class="row col-12 pr-3 pl-3">
+    <!-- <div class="mid-left-width"> -->
+      <!-- <mat-form-field class="full-width">
+        <input type="text"
+               placeholder="Add email user"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto"
+               multiple>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let email of filteredOptions | async" [value]="email">
+            {{email}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Toppings" [formControl]="myControl" multiple>
+          <mat-select-trigger>
+            {{myControl.value ? myControl.value[0] : ''}}
+            <span *ngIf="myControl.value?.length > 1" class="example-additional-selection">
+              (+{{myControl.value.length - 1}} {{myControl.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <input type="text"
+               placeholder="Add email user"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto"
+               multiple>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let email of filteredOptions | async" [value]="email">
+              {{email}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-option *ngFor="let email of emails" [value]="email">{{email}}</mat-option>
+        </mat-select>
+      </mat-form-field> -->
+    <!-- </div> -->
+    <div class="col-9">
+      <mat-form-field class="full-width">
+        <mat-select [formControl]="emailMultiCtrl" placeholder="Add user(s) email" [multiple]="true" #multiSelect required>
+          <mat-select-trigger>
+            {{emailMultiCtrl.value ? emailMultiCtrl.value[0] : ''}}
+            <span *ngIf="emailMultiCtrl.value?.length > 1" class="example-additional-selection">
+              (+{{emailMultiCtrl.value.length - 1}} {{emailMultiCtrl.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option>
+            <ngx-mat-select-search [showToggleAllCheckbox]="true" noEntriesFoundLabel="No email found..." placeholderLabel="Find email..." (toggleAll)="toggleSelectAll($event)"
+              [formControl]="emailMultiFilterCtrl" [toggleAllCheckboxTooltipMessage]="tooltipMessage"
+              [toogleAllCheckboxTooltipPosition]="'above'"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let email of filteredEmailsMulti | async" [value]="email">
+            {{email}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <mat-form-field class="full-width">
+        <mat-select [formControl]="role" placeholder="Role" required>
+          <mat-option *ngFor="let r of roles" [value]="r.name">
+            {{ r.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div class="raw">
+    <button class="mt-4" mat-raised-button (click)="close()">
+      Cancel
+    </button>
+    <button class="float-right mt-4" color="orange" mat-raised-button (click)="add()" [disabled]="!emailMultiCtrl.valid || !role.valid">
+      Add
+    </button>
+</div>

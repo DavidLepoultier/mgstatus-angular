@@ -33,13 +33,8 @@ export class LoginComponent implements OnInit {
   constructor(private auth:AuthService, private router:Router, private fb: FormBuilder, private snackBar: SnackBarComponent) { }
 
   ngOnInit() {
-    if (window.scrollY <= 70) {
-      window.scrollTo(0, 0);
-      this.myClass = '';
-    } else {
-      window.scrollTo(0, 121);
-      this.myClass = 'update-wrapper';
-    }
+    window.scrollTo(0, 0);
+    this.myClass = '';
     if(this.auth.userIsLoggedIn()) {
       this.refreshFlags();
       this.router.navigate(['/']);
@@ -75,7 +70,6 @@ export class LoginComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    console.log(error)
     this.snackBar.openSnackBar(error.message,'Close','failed');
   }
 

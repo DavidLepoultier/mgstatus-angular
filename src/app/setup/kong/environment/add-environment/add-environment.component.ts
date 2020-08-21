@@ -24,6 +24,7 @@ export class AddEnvironmentComponent implements OnInit {
   config = {
     id: '',
     envName: '',
+    envType: '',
     KONG_PG_USER: '',
     KONG_PG_PASSWORD: '',
     KONG_VERSION: '',
@@ -67,6 +68,9 @@ export class AddEnvironmentComponent implements OnInit {
     this.registerEnvForm = this.fb.group({
       id: new FormControl(this.config.id),
       envName: new FormControl(this.config.envName, Validators.compose([
+        Validators.required,
+      ])),
+      envType: new FormControl(this.config.envType, Validators.compose([
         Validators.required,
       ])),
       KONG_PG_USER: new FormControl(this.config.KONG_PG_USER, Validators.compose([

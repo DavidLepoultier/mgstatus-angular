@@ -24,6 +24,10 @@ import { SharingModule } from '../sharing-module';
 import { DeploymentComponent } from './kong/deployment/deployment.component';
 import { AddDeploymentComponent } from './kong/deployment/add-deployment/add-deployment.component';
 import { DetailDeploymentComponent } from './kong/deployment/detail-deployment/detail-deployment.component';
+import { OffersComponent } from './kong/offers/offers.component';
+import { AddOfferComponent } from './kong/offers/add-offer/add-offer.component';
+import { DetailOfferComponent } from './kong/offers/detail-offer/detail-offer.component';
+import { SmtpComponent } from './flexible/smtp/smtp.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,11 @@ import { DetailDeploymentComponent } from './kong/deployment/detail-deployment/d
     DetailSequenceComponent,
     DeploymentComponent,
     AddDeploymentComponent,
-    DetailDeploymentComponent
+    DetailDeploymentComponent,
+    OffersComponent,
+    AddOfferComponent,
+    DetailOfferComponent,
+    SmtpComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,110 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">Mailer Setup</p>
+            <form class="text-center" [formGroup]="mailerForm" novalidate (ngSubmit)="saveConfig(mailerForm.value)">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        KAPIBB
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="KAPIBB Front url" formControlName="frontUrl" required>
+                      <mat-error *ngFor="let validation of validation_messages.frontUrl">
+                        <mat-error *ngIf="mailerForm.get('frontUrl').hasError(validation.type) && (mailerForm.get('frontUrl').dirty || mailerForm.get('frontUrl').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Mail from address" formControlName="mailFrom" required>
+                      <mat-error *ngFor="let validation of validation_messages.mailFrom">
+                        <mat-error *ngIf="mailerForm.get('mailFrom').hasError(validation.type) && (mailerForm.get('mailFrom').dirty || mailerForm.get('mailFrom').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        KONG
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Kong Admin Email from" formControlName="adminMailFrom" required>
+                      <mat-error *ngFor="let validation of validation_messages.adminMailFrom">
+                        <mat-error *ngIf="mailerForm.get('adminMailFrom').hasError(validation.type) && (mailerForm.get('adminMailFrom').dirty || mailerForm.get('adminMailFrom').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Kong Portal Email from" formControlName="portalMailFrom" required>
+                      <mat-error *ngFor="let validation of validation_messages.portalMailFrom">
+                        <mat-error *ngIf="mailerForm.get('portalMailFrom').hasError(validation.type) && (mailerForm.get('portalMailFrom').dirty || mailerForm.get('portalMailFrom').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Kong Mail Domain" formControlName="domain" required>
+                      <mat-error *ngFor="let validation of validation_messages.domain">
+                        <mat-error *ngIf="mailerForm.get('domain').hasError(validation.type) && (mailerForm.get('domain').dirty || mailerForm.get('domain').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        SMTP
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="SMTP Server" formControlName="server" required>
+                      <mat-error *ngFor="let validation of validation_messages.server">
+                        <mat-error *ngIf="mailerForm.get('server').hasError(validation.type) && (mailerForm.get('server').dirty || mailerForm.get('server').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="SMTP Port" formControlName="port" required>
+                      <mat-error *ngFor="let validation of validation_messages.port">
+                        <mat-error *ngIf="mailerForm.get('port').hasError(validation.type) && (mailerForm.get('port').dirty || mailerForm.get('port').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="SMTP User" formControlName="authUser">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput [type]="show ? 'text' : 'password'" placeholder="SMTP Password" formControlName="authPass">
+                      <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <button class="mb-4" color="orange" mat-raised-button type="submit" [disabled]="!mailerForm.valid">
+                    Save config
+                  </button>
+
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

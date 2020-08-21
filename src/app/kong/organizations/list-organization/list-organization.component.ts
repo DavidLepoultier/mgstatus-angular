@@ -13,13 +13,18 @@ export class ListOrganizationComponent implements OnInit {
   searchText: string;
   organizations: [];
   myClass = '';
+  token = ''
 
-  constructor(private org: OrganizationService ) { }
+  constructor(private org: OrganizationService, private router: Router, private auth: AuthService ) { }
   
   ngOnInit() {
-      window.scrollTo(0, 0);
-      this.myClass = '';
+    this.token = this.auth.jwtTokenDecode()
+    let checkToken = !this.token
+    window.scrollTo(0, 0);
+    this.myClass = '';
+    if (!checkToken) {
       this.getOrgs();
+    }
   }
 
   getOrgs(){

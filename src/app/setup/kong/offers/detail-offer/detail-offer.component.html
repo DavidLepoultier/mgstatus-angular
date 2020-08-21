@@ -1,0 +1,173 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">Offer</p>
+            <form class="text-center" [formGroup]="registerOfferForm" novalidate>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Offer's name" formControlName="offerName" required>
+                    <mat-error *ngFor="let validation of validation_messages.offerName">
+                      <mat-error *ngIf="registerOfferForm.get('offerName').hasError(validation.type) && (registerOfferForm.get('offerName').dirty || registerOfferForm.get('offerName').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-2">
+                          <mat-slide-toggle class="full-width text-muted font-weigth mt-3" color="orange" formControlName="lifetime" [(ngModel)]="disabledLifetime">
+                            Lifetime
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-4">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Delete organization after" formControlName="lifetimeDays" min="1" max="15" [disabled]="!disabledLifetime" [required]="disabledLifetime">
+                            <span matSuffix>day(s)</span>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2 mt-3 text-left text-muted font-weigth">
+                          Organization
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Created organization" formControlName="maxOrg" min="1" max="5" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Active organization" formControlName="maxActiveOrg" min="1" max="5" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2 mt-3 text-left text-muted font-weigth">
+                          Nginx
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request CPU" formControlName="nginxCPU" min="125" max="250" required>
+                            <span matSuffix>mCPU</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request memory" formControlName="nginxMemory" min="128" max="512" required>
+                            <span matSuffix>Mo</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Replicat" formControlName="nginxReplicat" min="1" max="2" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2 mt-3 text-left text-muted font-weigth">
+                          Data-plane
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request CPU" formControlName="dpCPU" min="125" max="500" required>
+                            <span matSuffix>mCPU</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request memory" formControlName="dpMemory" min="256" max="1024" required>
+                            <span matSuffix>Mo</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Replicat" formControlName="dpReplicat" min="1" max="5" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2 mt-3 text-left text-muted font-weigth">
+                          Control-plane
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request CPU" formControlName="cpCPU" min="125" max="500" required>
+                            <span matSuffix>mCPU</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request memory" formControlName="cpMemory" min="256" max="1024" required>
+                            <span matSuffix>Mo</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Replicat" formControlName="cpReplicat" min="1" max="5" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2 mt-3 text-left text-muted font-weigth">
+                          Api status
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request CPU" formControlName="apiCPU" min="25" max="50" required>
+                            <span matSuffix>mCPU</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Request memory" formControlName="apiMemory" min="64" max="128" required>
+                            <span matSuffix>Mo</span>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                          <mat-form-field class="full-width">
+                            <input matInput type="number" placeholder="Replicat" formControlName="apiReplicat" min="1" max="1" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-4">
+                          <mat-slide-toggle class="full-width text-muted font-weigth mt-3" color="orange" formControlName="dedicatedServer">
+                            Dedicated server
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-4">
+                          <mat-slide-toggle class="full-width text-muted font-weigth mt-3" color="orange" formControlName="validation" [(ngModel)]="disabledSilab">
+                            Validation required
+                          </mat-slide-toggle>
+                        </div>
+                        <div class="col-4">
+                          <mat-slide-toggle *ngIf="disabledSilab" class="full-width text-muted font-weigth mt-3" color="orange" formControlName="silab">
+                            Code Silab
+                          </mat-slide-toggle>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="mr-2 mt-4" color="orange" mat-raised-button (click)="updateConfig(registerOfferForm.value)" [disabled]="!registerOfferForm.valid">
+                    Update offer
+                  </button>
+                  <button class="mb-4" color="warn" mat-raised-button (click)="deleteOffer()">
+                    Delete offer
+                  </button>         
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

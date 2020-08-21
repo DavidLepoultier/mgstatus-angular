@@ -1,0 +1,107 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1 col-xl-2 min-heigth"></div>
+        <div class="col-md-10 col-xl-8">
+          <div class="mid-left-width">
+            <mat-form-field class="full-width">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)">
+            </mat-form-field>
+          </div>
+          <div class="mid-rigth-width">
+            <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+          </div>
+          <table mat-table
+                [dataSource]="dataSource" matSort multiTemplateDataRows 
+                class="mat-elevation-z8 mb-4">
+            <ng-container matColumnDef="firstname">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Firstname</th>
+              <td mat-cell *matCellDef="let row"> {{row.firstname}} </td>
+            </ng-container>
+            <ng-container matColumnDef="lastname">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Lastname</th>
+              <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
+            </ng-container>
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Email</th>
+              <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="verified">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Status</th>
+              <td mat-cell *matCellDef="let row">
+                <ng-container *ngIf="row.verified">
+                  <i class="fa fa-check-circle succeeded-left"></i>
+                  Available
+                </ng-container>
+                <ng-container *ngIf="!row.verified">
+                  <i class="fa fa-clock pending-left"></i>
+                  Pending email verification
+                </ng-container>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <div class="example-element-description full-width">
+                    <div class="row col-12">
+                      <div class="col-6">
+                        <mat-form-field class="full-width">
+                          <input matInput placeholder="Firstname" [(ngModel)]="element.firstname">
+                        </mat-form-field>
+                      </div>
+                      <div class="col-6">
+                        <mat-form-field class="full-width">
+                          <input matInput placeholder="Lastname" [(ngModel)]="element.lastname">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row col-12">
+                      <div class="col-6">
+                        <mat-form-field class="full-width">
+                          <input matInput placeholder="Email" [(ngModel)]="element.email" readonly>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-6">
+                        <mat-form-field class="full-width">
+                          <mat-label>Role</mat-label>
+                          <mat-select [(ngModel)]="element.role">
+                            <mat-option value="admin">
+                              admin
+                            </mat-option>
+                            <mat-option value="user">
+                              user
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button class="mt-2 mb-2" color="orange" mat-raised-button (click)="modify(element)">
+                        Update
+                      </button>
+                      <button class="mt-2 ml-2 mb-2" color="warn" mat-raised-button (click)="deleteUser(element.id)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          </table>
+        </div>
+        <div class="col-md-1 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>

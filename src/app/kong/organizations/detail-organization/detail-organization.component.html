@@ -3,75 +3,683 @@
   <div class="page">
     <div class="container-fluid w-responsive">
       <div class="row">
-        <div class="col-md-1 min-heigth"></div>
-        <div class="col-md-10">
-          <div *ngIf="!running">
+        <div class="col-md-12 min-heigth">
+          <ng-container *ngIf="!running">
             <div class="card">
               <p class="text-center h3 pt-5 mb-4 myTitle">organization {{ config.orgName }}</p>
-              <form [formGroup]="updateOrgForm" novalidate>
                 <div class="row">
-                  <div class="col-1"></div>
-                  <div class="col-10">
+                  <div class="col-12">
                     <div class="full-width">
-                      <mat-form-field class="mid-left-width">
-                        <mat-label>Profile</mat-label>
-                        <mat-select formControlName="deployment" [(value)]="deployment" required>
-                          <mat-option *ngFor="let dep of deployments" [value]="dep.id">
-                            {{dep.deploymentName}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <button *ngIf="config.deployment != updateOrgForm.get('deployment').value" class="ml-4 mt-2" color="warn" mat-raised-button (click)="updateProfile(updateOrgForm.value)">
-                        Change profile
-                      </button>
-                      <div *ngFor="let dep of config.deployState">
-                        <mat-expansion-panel class="full-width mb-3">
-                          <mat-expansion-panel-header>
-                            <mat-panel-title>
-                              Deployment {{ dep.name }} -- {{ dep.datetime | dateFormat }}
-                            </mat-panel-title>
-                          </mat-expansion-panel-header>
-                          <div *ngFor="let status of dep.status">
-                            <p class="mb-0 mt-0 text-muted font-weight-bold">
-                              <i *ngIf="status.state == 'succeeded'" class="fas fa-check-circle succeeded-left"></i>
-                              <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
-                                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-                              </svg>
-                              {{ status.name }}
-                            </p>
+                      <mat-list>
+                        <div class="row pl-3 pr-3 mat-line-height">
+                          <div *ngFor="let item of menu | keyvalue">
+                            <a *ngIf="!item.value" class="mat-raised-menu-button" (click)="changeMenu(item.key)">
+                              <mat-card class="icon icon-enter button-unselect mb-0" >
+                                <i>{{item.key.replace('_', '') | titlecase}}</i>
+                              </mat-card>
+                            </a>
+                            <ng-container *ngIf="menuLast">
+                              <mat-card *ngIf="item.value" class="button-select-last mb-0">
+                                <mat-card-content>
+                                     <mat-card-subtitle>{{item.key.replace('_', '') | titlecase}}</mat-card-subtitle>
+                                </mat-card-content>
+                              </mat-card>
+                            </ng-container>
+                            <ng-container *ngIf="!menuLast">
+                              <mat-card *ngIf="item.value" class="button-select mb-0">
+                                <mat-card-content>
+                                     <mat-card-subtitle>{{item.key.replace('_', '') | titlecase}}</mat-card-subtitle>
+                                </mat-card-content>
+                              </mat-card>
+                            </ng-container>
                           </div>
-                        </mat-expansion-panel>
-                      </div>
+                        </div>
+                        <mat-divider class="full-width mb-0"></mat-divider>
+                        <ng-container *ngIf="showMenu == '_detail'">
+                          <div class="full-width pl-3 pr-3 mt-4">
+                            <table class="table-detail">           
+                              <thead>
+                                <tr style="height: 0;">
+                                    <th width="25%" style="height: 0;"></th>
+                                    <th width="25%" style="height: 0;"></th>
+                                    <th width="25%" style="height: 0;"></th>
+                                    <th width="25%" style="height: 0;"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Status</span>
+                                  </td>
+                                  <td class="table-content">
+                                    <i *ngIf="config.state == 'created'" class="fa fa-check-circle succeeded-min-left"></i>
+                                    Available
+                                  </td>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Created</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ config.created_at | dateFormat }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Created by</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ config.created_by }}
+                                  </td>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Project</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ config.project }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Mode</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ deploymentMode }}
+                                  </td>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Offer</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ environment.envType }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="table-label">
+                                    <span class="ng-binding">Kong version</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ config.environment.kongVersion }} <i *ngIf="environment.KONG_VERSION" class="red-text" [class.red-text]="config.environment.kongVersion != environment.KONG_VERSION" >(latest: {{ environment.KONG_VERSION }})</i>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="!userRole.organizations.PUT">
+                                  <td class="table-label">
+                                    <span class="ng-binding">Profile</span>
+                                  </td>
+                                  <td class="table-content">
+                                    {{ config.environment.deploymentName }}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <form *ngIf="userRole.organizations.PUT" [formGroup]="updateOrgForm" novalidate>
+                            <mat-list-item class="full-width mt-2">
+                              <mat-form-field class="mid-left-width">
+                                <mat-label>Profile</mat-label>
+                                <mat-select formControlName="deployment" [(value)]="deployment" required>
+                                  <mat-option *ngFor="let dep of deployments" [value]="dep.id">
+                                    {{dep.deploymentName}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <div class="mid-right-width">
+                                <button *ngIf="config.deployment != updateOrgForm.get('deployment').value" class="right" color="orange" mat-raised-button (click)="updateProfile(updateOrgForm.value)">
+                                  Change profile
+                                </button>
+                                <button *ngIf="config.deployment == updateOrgForm.get('deployment').value && config.environment.kongVersion != environment.KONG_VERSION" class="right" color="orange" mat-raised-button (click)="redeploy(updateOrgForm.value)">
+                                  Upgrade
+                                </button>
+                                <button *ngIf="config.deployment == updateOrgForm.get('deployment').value && config.environment.kongVersion == environment.KONG_VERSION" class="right" color="orange" mat-raised-button (click)="redeploy(updateOrgForm.value)">
+                                  Redeploy
+                                </button>
+                              </div>
+                            </mat-list-item>
+                          </form>
+                          <div class="full-width pl-3 pr-3 mt-4">
+                            <mat-divider class="full-width mb-2"></mat-divider>
+                            <mat-list-item class="text-muted font-weight-bold mb-2">Endpoint(s):</mat-list-item>
+                            <mat-list-item *ngFor="let end of config.environment.endpoints">
+                              <p class="text-muted font-weight-bold">Api access: 
+                                <i>
+                                  <a [href]="end.endpoint" target="_blank">{{ end.endpoint }}</a>
+                                </i>
+                              </p>
+                            </mat-list-item>
+                            <mat-list-item *ngIf="kongAdminUrl" class="text-muted font-weight-bold">
+                              <p class="text-muted font-weight-bold">Kong Api admin: 
+                                <i>
+                                  <a [href]="config.environment.adminUrl" target="_blank">{{ config.environment.adminUrl }}</a>
+                                </i>
+                              </p>
+                            </mat-list-item>
+                            <mat-list-item *ngIf="kongAdminUrl && config.environment.managerUrl" class="text-muted font-weight-bold">
+                              <p class="text-muted font-weight-bold">Kong Enterprise: 
+                                <i>
+                                  <a [href]="config.environment.managerUrl" target="_blank">{{ config.environment.managerUrl }}</a>
+                                </i>
+                              </p>
+                            </mat-list-item>
+                            <mat-list-item *ngIf="kongAdminUrl && config.environment.portalUrl" class="text-muted font-weight-bold">
+                              <p class="text-muted font-weight-bold">Kong Dev Portal: 
+                                <i>
+                                  <a [href]="config.environment.portalUrl" target="_blank">{{ config.environment.portalUrl }}</a>
+                                </i>
+                              </p>
+                            </mat-list-item>
+                            <!-- <mat-list-item *ngFor="let adm of kongAdm.status"><a [href]="adm.endpoint" _blank>{{ adm.endpoint }}</a> -- {{ adm.state }}</mat-list-item> -->
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == 'services'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Services</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name</th>
+                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container *ngIf="environment.envType == 'enterprise'" matColumnDef="workspace">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Workspace</th>
+                                <td mat-cell *matCellDef="let row"> {{row.workspace}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="target">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Target</th>
+                                <td mat-cell *matCellDef="let row"> {{row.protocol}}://{{row.host}}<ng-container *ngIf="row.port != 80 && row.port != 443">:{{row.port}}</ng-container> </td>
+                              </ng-container>
+                              <!-- <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let row" [attr.colspan]="columnsToDisplayKong.length">
+                                  <div class="example-element-detail mycollapsed"
+                                      [class.mycollapsed]="expandedElement === row ? false : true">
+                                    <div class="example-element-description">
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        target: {{ row.host }}
+                                      </p>
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        protocol: {{ row.protocol }}
+                                      </p>
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        port: {{ row.port }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKong"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKong;"
+                                  class="example-element-row"
+                                  [class.example-expanded-row]="expandedElement === element"
+                                  (click)="expandedElement = expandedElement === element ? null : element">
+                              </tr>
+                              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKong"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKong;">
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == '_workspaces'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Workspaces</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name</th>
+                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKong"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKong;">
+                              </tr>
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == '_kongadmins'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Kong Admins</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="username">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Username</th>
+                                <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Status</th>
+                                <td mat-cell *matCellDef="let row"> 
+                                  <ng-container *ngIf="row.status == 0">
+                                    <i class="fa fa-check-circle succeeded-left"></i>
+                                    Available
+                                  </ng-container>
+                                  <ng-container *ngIf="row.status != 0">
+                                    <i class="fa fa-clock pending-left"></i>
+                                    Pending email verification
+                                  </ng-container>
+                                </td>
+                              </ng-container>
+                              <ng-container matColumnDef="email">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Email</th>
+                                <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKongUser"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKongUser;">
+                              </tr>
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == '_members'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Members</mat-list-item>        
+                            </mat-list>
+                            <div class="row">
+                              <div class="col-3">
+                                <button *ngIf='userRole.members.POST' class="mt-2" color="orange" mat-raised-button (click)="addMemberDial(usersEmail)">
+                                  Add
+                                </button>
+                                <button *ngIf='userRole.members.DELETE' class="ml-3 mt-2" color="orange" mat-raised-button (click)="removeMembers(selection.selected)" [disabled]="selection.isEmpty()">
+                                  Remove
+                                </button>
+                              </div>
+                              <div class="col-3">
+                                <mat-form-field class="full-width">
+                                  <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-6">
+                                <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                              </div>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="email" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                                [checked]="selection.hasValue() && isAllSelected()"
+                                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                [aria-label]="checkboxLabel()"
+                                                color="orange">
+                                  </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                  <mat-checkbox (click)="$event.stopPropagation()"
+                                                (change)="$event ? selection.toggle(row) : null"
+                                                [checked]="selection.isSelected(row)"
+                                                [aria-label]="checkboxLabel(row)"
+                                                color="orange">
+                                  </mat-checkbox>
+                                </td>
+                              </ng-container>
+                              <ng-container matColumnDef="firstname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Firstname</th>
+                                <td mat-cell *matCellDef="let row"> {{row.firstname}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="lastname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Lastname</th>
+                                <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="email">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Email</th>
+                                <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="role">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Role</th>
+                                <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayUser.length">
+                                  <div class="example-element-detail"
+                                      [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div class="example-element-description full-width">
+                                      <div class="row col-12">
+                                        <div class="col-6">
+                                          <mat-form-field class="full-width">
+                                            <input matInput placeholder="Firstname" [(ngModel)]="element.firstname" disabled>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-6">
+                                          <mat-form-field class="full-width">
+                                            <input matInput placeholder="Lastname" [(ngModel)]="element.lastname" disabled>
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                      <div class="row col-12">
+                                        <div class="col-6">
+                                          <mat-form-field class="full-width">
+                                            <input matInput placeholder="Email" [(ngModel)]="element.email" disabled>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-6">
+                                          <mat-form-field class="full-width">
+                                            <mat-label>Role</mat-label>
+                                            <mat-select [(ngModel)]="element.role" [disabled]="!userRole.members.PUT">
+                                              <mat-option *ngFor="let r of rolesList" [value]="r.name">
+                                                {{ r.name }}
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                      <div *ngIf='userRole.members.PUT' class="text-center">
+                                        <button class="mt-2 mb-2" color="orange" mat-raised-button (click)="updateMember(element)">
+                                          Update
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayUser"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayUser;"
+                                  class="example-element-row"
+                                  [class.example-expanded-row]="expandedElement === element"
+                                  (click)="expandedElement = expandedElement === element ? null : element">
+                              </tr>
+                              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == '_history'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Deployment history</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Action</th>
+                                <td mat-cell *matCellDef="let row"> {{row.action}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at | dateFormat}}{{row.datetime | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let row" [attr.colspan]="columnsToDisplay.length">
+                                  <div class="example-element-detail mycollapsed"
+                                      [class.mycollapsed]="expandedElement === row ? false : true">
+                                    <div class="example-element-description">
+                                      <p class="mb-2 mt-0 font-weight-bold">
+                                        Profile: {{ row.name }}
+                                      </p>
+                                      <div *ngFor="let status of row.status">
+                                        <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                          <i *ngIf="status.state == 'succeeded'" class="fa fa-check-circle succeeded-left"></i>
+                                          <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
+                                            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                                          </svg>
+                                          <ng-container *ngIf="status.emails">
+                                            {{ status.emails }}
+                                          </ng-container>
+                                          <ng-container *ngIf="status.name">
+                                            {{ status.name }}
+                                          </ng-container>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                                  class="example-element-row"
+                                  [class.example-expanded-row]="expandedElement === element"
+                                  (click)="expandedElement = expandedElement === element ? null : element">
+                              </tr>
+                              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                              
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>    
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == 'routes'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Routes</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name</th>
+                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container *ngIf="environment.envType == 'enterprise'" matColumnDef="workspace">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Workspace</th>
+                                <td mat-cell *matCellDef="let row"> {{row.workspace}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="basepath">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Basepath</th>
+                                <td mat-cell *matCellDef="let row">
+                                  <mat-chip-list>
+                                    <mat-chip *ngFor="let path of row.basepath, let i=index, let l=count">
+                                      <a [href]="config.environment.endpoints[0].endpoint + path" target="_blank">
+                                        {{ path }}
+                                      </a>
+                                    </mat-chip>
+                                  </mat-chip-list>
+                                </td>
+                              </ng-container>
+                              <!-- <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let row" [attr.colspan]="columnsToDisplayKong.length">
+                                  <div class="example-element-detail mycollapsed"
+                                      [class.mycollapsed]="expandedElement === row ? false : true">
+                                    <div class="example-element-description">
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        id: {{ row.id }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKong"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKong;"
+                                  class="example-element-row"
+                                  [class.example-expanded-row]="expandedElement === element"
+                                  (click)="expandedElement = expandedElement === element ? null : element">
+                              </tr>
+                              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKong"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKong;">
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == 'consumers'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Consumers</mat-list-item>  
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="username">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Username</th>
+                                <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container *ngIf="environment.envType == 'enterprise'" matColumnDef="workspace">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Workspace</th>
+                                <td mat-cell *matCellDef="let row"> {{row.workspace}} </td>
+                              </ng-container>
+                              <!-- <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let row" [attr.colspan]="columnsToDisplayConsumer.length">
+                                  <div class="example-element-detail mycollapsed"
+                                      [class.mycollapsed]="expandedElement === row ? false : true">
+                                    <div class="example-element-description">
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        row: {{ row }}
+                                      </p>
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        consumerElement: {{ consumerElement }}
+                                      </p>
+                                      <p class="mb-0 mt-0 text-muted font-weight-bold">
+                                        port: {{ row.port }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayConsumer"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayConsumer;"
+                                  class="example-element-row"
+                                  [class.example-expanded-row]="expandedElement === element"
+                                  (click)="expandedElement = expandedElement === element ? null : element">
+                              </tr>
+                              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayConsumer"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayConsumer;">
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == '_plugins'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Plugins</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="created_at" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="created_at">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Created</th>
+                                <td mat-cell *matCellDef="let row"> {{row.created_at*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name</th>
+                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="workspace">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Workspace</th>
+                                <td mat-cell *matCellDef="let row"> {{row.workspace}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="applied_to">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Applied To</th>
+                                <td mat-cell *matCellDef="let row">
+                                  <mat-chip-list>
+                                    <mat-chip *ngFor="let applied_to of row.applied_to, let i=index, let l=count">
+                                      {{ applied_to }}
+                                    </mat-chip>
+                                  </mat-chip-list>
+                                </td>
+                              </ng-container>
+                              <ng-container matColumnDef="workspaces">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Workspaces</th>
+                                <td mat-cell *matCellDef="let row"> 
+                                   <ng-container *ngFor="let workspace of row.workspaces, let i=index, let l=count">
+                                     {{ workspace.name }}<ng-container *ngIf='i < l - 1 '>,</ng-container>
+                                   </ng-container>
+                                </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayPlugins"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayPlugins;">
+                              </tr>
+                            </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                      </mat-list>
                     </div>
-                    <mat-list>
-                      <mat-divider class="mt-2"></mat-divider>
-                      <mat-list-item class="text-muted font-weight-bold">Endpoint</mat-list-item>
-                      <mat-list-item *ngFor="let end of config.environment.endpoints"><a [href]="end.endpoint" _blank>{{ end.endpoint }}</a></mat-list-item>
-                    </mat-list>
                     <div class="text-center">
-                      <button class="mt-4 mb-4" color="primary" mat-raised-button (click)="close()">
+                      <button class="mt-4 mb-4" mat-raised-button (click)="goToOrgs()">
                         Close
                       </button>
-                      <button class="ml-4 mt-4 mb-4" color="warn" mat-raised-button (click)="deleteConfirm()">
+                      <button *ngIf='deleteOrg' class="ml-4 mt-4 mb-4" color="orange" mat-raised-button (click)="deleteConfirm()">
                         Delete
                       </button>
                     </div>
                   </div>
-                  <div class="col-1"></div>
                 </div>
-              </form>
             </div>
-          </div>        
-          <div *ngIf="running">
+          </ng-container>
+          <ng-container *ngIf="running">
             <div class="card">
               <p class="text-center h3 pt-5 mb-4">Updating Organization</p>
               <div class="row">
                 <div class="col-1"></div>
                 <div class="col-10">
-                  <div *ngIf="config.deployState" class="full-width">
+                  <div *ngIf="deployState" class="full-width">
                     <div *ngFor="let status of deployState.status">
                       <p class="mb-0 mt-0 text-muted font-weight-bold">
-                        <i *ngIf="status.state == 'succeeded'" class="fas fa-check-circle succeeded-left"></i>
+                        <i *ngIf="status.state == 'succeeded'" class="fa fa-check-circle succeeded-left"></i>
                         <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
                           <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
                         </svg>
@@ -80,7 +688,7 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button class="mt-4 mb-4" color="primary" mat-raised-button (click)="close()" [disabled]="config.state != 'created'">
+                    <button class="mt-4 mb-4" mat-raised-button (click)="close(config.id)" [disabled]="config.state != 'created'">
                       Close
                     </button>
                   </div>
@@ -88,9 +696,8 @@
                 <div class="col-1"></div>
               </div>
             </div>
-          </div>
+          </ng-container>
         </div>
-        <div class="col-md-1"></div>
       </div>
     </div>
   </div>

@@ -1,0 +1,61 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-1 col-xl-2 min-heigth"></div>
+        <div class="col-md-10 col-xl-8">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">Create Role</p>
+            <form class="text-center" [formGroup]="createRoleForm" novalidate (ngSubmit)="createRole(createRoleForm.value)">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Role's name" formControlName="name" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.name">
+                      <mat-error *ngIf="createRoleForm.get('name').hasError(validation.type) && (createRoleForm.get('name').dirty || createRoleForm.get('name').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="full-width text-left">
+                    <mat-divider class="mb-2"></mat-divider>
+                    <p class="text-muted font-weight-bold mb-2">Organizations</p>
+                    <section class="example-section">
+                      <mat-checkbox class="example-margin" color="orange" formControlName="organizationsPOST">Create</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="organizationsPUT">Update</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="organizationsDELETE">Delete</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="organizationsGET">Get</mat-checkbox>
+                    </section>
+                    <mat-divider class="mt-2 mb-2"></mat-divider>
+                    <p class="text-muted font-weight-bold mb-0">Users</p>
+                    <section class="example-section">
+                      <mat-checkbox class="example-margin" color="orange" formControlName="usersPOST">Create</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="usersPUT">Update</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="usersDELETE">Delete</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="usersGET">Get</mat-checkbox>
+                    </section>
+                    <mat-divider class="mt-2 mb-2"></mat-divider>
+                    <p class="text-muted font-weight-bold mb-0">Roles</p>
+                    <section class="example-section">
+                      <mat-checkbox class="example-margin" color="orange" formControlName="rolesPOST">Create</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="rolesPUT">Update</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="rolesDELETE">Delete</mat-checkbox>
+                      <mat-checkbox class="example-margin" color="orange" formControlName="rolesGET">Get</mat-checkbox>
+                    </section>
+                  </div>
+                  <button class="mt-3 mb-4" color="orange" mat-raised-button type="submit" [disabled]="!createRoleForm.valid">
+                    Create role
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>    
+        </div>
+        <div class="col-md-1 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>

@@ -1,0 +1,74 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-1 col-xl-2 min-heigth"></div>
+        <div class="col-md-10 col-xl-8">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">Create User</p>
+            <form class="text-center" [formGroup]="createUserForm" novalidate (ngSubmit)="createUser(createUserForm.value)">
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <div class="row col-12">
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Firstname" formControlName="firstname" required>
+                        <mat-error *ngFor="let validation of validation_messages.firstname">
+                          <mat-error *ngIf="createUserForm.get('firstname').hasError(validation.type) && (createUserForm.get('firstname').dirty || createUserForm.get('firstname').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Lastname" formControlName="lastname" required>
+                        <mat-error *ngFor="let validation of validation_messages.lastname">
+                          <mat-error *ngIf="createUserForm.get('lastname').hasError(validation.type) && (createUserForm.get('lastname').dirty || createUserForm.get('lastname').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row col-12">
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngFor="let validation of validation_messages.email">
+                          <mat-error *ngIf="createUserForm.get('email').hasError(validation.type) && (createUserForm.get('email').dirty || createUserForm.get('email').touched)">
+                            {{validation.message}}
+                          </mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <mat-label>Role</mat-label>
+                        <mat-select formControlName="role" required>
+                          <mat-option value="admin">
+                            admin
+                          </mat-option>
+                          <mat-option value="user">
+                            user
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <button class="mt-3 mb-4" color="orange" mat-raised-button type="submit" [disabled]="!createUserForm.valid">
+                    Create user
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>    
+        </div>
+        <div class="col-md-1 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</wrapper>

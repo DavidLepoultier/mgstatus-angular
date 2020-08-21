@@ -18,6 +18,7 @@ export class CreateOrganizationComponent implements OnInit {
   show: boolean = false;
   isAuthenticated:boolean = false;
   running: boolean = false;
+  history = [];
   newOrg = {};
   status = 0;
 
@@ -99,9 +100,18 @@ export class CreateOrganizationComponent implements OnInit {
     );   
   }
 
+  getDeployState(id: any) {
+    this.org.getDeployStateOrgId(id).subscribe(
+      data => {
+        this.history = data.organization.deployState
+      }
+    )
+  }
+
   autoRefreshOrg(id) {
     let intervalId = setInterval(() => {
       this.getOrgById(id);
+      this.getDeployState(id)
       if (this.status == 1) clearInterval(intervalId);
     }, 2000);
   }
@@ -122,6 +132,6 @@ export class CreateOrganizationComponent implements OnInit {
 
   handlerError(error: any) {
     console.log(error)
-    this.snackBar.openSnackBar(error.message.message,'Close','failed');
+    this.snackBar.openSnackBar(error.message,'Close','failed');
   }
 }

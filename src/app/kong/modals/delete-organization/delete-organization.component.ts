@@ -16,17 +16,6 @@ export class DeleteOrganizationComponent implements OnInit {
   constructor(
       private dialogRef: MatDialogRef<DeleteOrganizationComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-
-      // this.description = description;
-
-
-      // this.form = fb.group({
-      //     description: [description, Validators.required],
-      //     category: [category, Validators.required],
-      //     releasedAt: [moment(), Validators.required],
-      //     longDescription: [longDescription,Validators.required]
-      // });
-
   }
 
   ngOnInit() {

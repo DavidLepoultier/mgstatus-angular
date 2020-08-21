@@ -25,14 +25,11 @@ export class FilterPipe implements PipeTransform {
     this.result = this.mdbTable.getDataSource();
     if(checkBox && checkBox.checked) {
       let value = checkBox.source.value.toLocaleLowerCase();
-      console.log(value);
       this.result = this.mdbTable.filterLocalDataBy(value) 
-      console.log(this.result)
     }
     if(searchText) {
       searchText = searchText.toLocaleLowerCase();
       this.result = this.mdbTable.filterLocalDataBy(searchText);
-      console.log(this.result)
     } 
 
     return this.result;

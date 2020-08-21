@@ -12,10 +12,10 @@ import { CreateOrganizationComponent } from './organizations/create-organization
 import { ListOrganizationComponent } from './organizations/list-organization/list-organization.component';
 import { DetailOrganizationComponent } from './organizations/detail-organization/detail-organization.component';
 import { DeleteOrganizationComponent } from './modals/delete-organization/delete-organization.component';
-
+import { AddUserOrganizationComponent } from './modals/add-user-organization/add-user-organization.component';
 
 @NgModule({
-  declarations: [OrganizationsComponent, CreateOrganizationComponent, ListOrganizationComponent, DetailOrganizationComponent, DeleteOrganizationComponent],
+  declarations: [OrganizationsComponent, CreateOrganizationComponent, ListOrganizationComponent, DetailOrganizationComponent, DeleteOrganizationComponent, AddUserOrganizationComponent],
   imports: [
     CommonModule,
     CommonModule,
@@ -26,7 +26,7 @@ import { DeleteOrganizationComponent } from './modals/delete-organization/delete
     SharingModule,
     KongRoutingModule
   ],
-  entryComponents: [DeleteOrganizationComponent],
+  entryComponents: [DeleteOrganizationComponent, AddUserOrganizationComponent],
   providers: [],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

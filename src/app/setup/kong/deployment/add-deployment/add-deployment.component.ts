@@ -25,6 +25,7 @@ export class AddDeploymentComponent implements OnInit {
   config = {
     id: '',
     deploymentName: '',
+    deploymentMode: '',
     environmentId: '',
     deploymentSequenceId: ''
   }
@@ -53,6 +54,9 @@ export class AddDeploymentComponent implements OnInit {
     this.registerDepForm = this.fb.group({
       id: new FormControl(this.config.id),
       deploymentName: new FormControl(this.config.deploymentName, Validators.compose([
+        Validators.required,
+      ])),
+      deploymentMode: new FormControl(this.config.deploymentMode, Validators.compose([
         Validators.required,
       ])),
       environmentId: new FormControl(this.config.environmentId, Validators.compose([

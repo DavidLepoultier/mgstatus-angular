@@ -95,7 +95,7 @@ export class AddComponent implements OnInit {
 
   handlerSuccess(data: any) {
     this.snackBar.openSnackBar(data.message,'Close','');
-    this.createForms();
+    this.router.navigate(['/templates']);
   }
 
   handlerError(error: any) {

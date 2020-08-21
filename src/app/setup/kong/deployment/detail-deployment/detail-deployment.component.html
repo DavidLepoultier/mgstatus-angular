@@ -10,6 +10,17 @@
               <div class="row">
                 <div class="col-1"></div>
                 <div class="col-10">
+                  <div class="row">
+                    <div class="col-6">
+                      <section class="radio-section text-muted">
+                        <label class="mr-2">Mode:</label>
+                        <mat-radio-group formControlName="deploymentMode" required>
+                          <mat-radio-button class="mr-2 mat-orange" value="standalone">Standalone</mat-radio-button>
+                          <mat-radio-button class="mr-2 mat-orange" value="hybrid">Hybrid</mat-radio-button>
+                        </mat-radio-group>
+                      </section>
+                    </div>
+                  </div>
                   <mat-form-field class="full-width">
                     <input matInput placeholder="Profile name" formControlName="deploymentName" required>
                     <mat-error *ngFor="let validation of account_validation_messages.deploymentName">
@@ -18,28 +29,34 @@
                       </mat-error>
                     </mat-error>
                   </mat-form-field>
-                  <mat-form-field class="mid-left-width">
-                    <mat-label>Deployment Sequence</mat-label>
-                    <mat-select  formControlName="deploymentSequenceId" [(value)]="config.deploymentSequenceId" required>
-                      <mat-option>--</mat-option>
-                      <mat-option *ngFor="let seq of sequences" [value]="seq.id">
-                        {{ seq.seqName }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field class="mid-right-width">
-                    <mat-label>Kong Environment</mat-label>
-                    <mat-select formControlName="environmentId" [(value)]="config.environmentId" required>
-                      <mat-option>--</mat-option>
-                      <mat-option *ngFor="let env of environments" [value]="env.id">
-                        {{ env.envName }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <button class="mr-2 mt-2" color="primary" mat-raised-button (click)="updateConfig(registerDepForm.value)" [disabled]="!registerDepForm.valid">
+                  <div class="row">
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <mat-label>Deployment Sequence</mat-label>
+                        <mat-select formControlName="deploymentSequenceId" [(value)]="config.deploymentSequenceId" required>
+                          <mat-option>--</mat-option>
+                          <mat-option *ngFor="let seq of sequences" [value]="seq.id">
+                            {{ seq.seqName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                      <mat-form-field class="full-width">
+                        <mat-label>Kong Environment</mat-label>
+                        <mat-select formControlName="environmentId" [(value)]="config.environmentId" required>
+                          <mat-option>--</mat-option>
+                          <mat-option *ngFor="let env of environments" [value]="env.id">
+                            {{ env.envName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <button class="mt-2 mb-4" color="orange" mat-raised-button (click)="updateConfig(registerDepForm.value)" [disabled]="!registerDepForm.valid">
                     Update profile
                   </button>
-                  <button class="mb-4" color="warn" mat-raised-button (click)="deleteDeployment()">
+                  <button *ngIf="deleteButton" class="ml-2 mt-2 mb-4" color="warn" mat-raised-button (click)="deleteDeployment()">
                     Delete profile
                   </button>
                 </div>
