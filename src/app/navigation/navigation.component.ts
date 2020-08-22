@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
   
   constructor(public auth:AuthService, private router:Router) {}
   
@@ -108,21 +108,19 @@ export class NavigationComponent implements OnInit {
             this.activeLink = 'orgs'
           break;
         }
-      } else {
-        this.navigation = [
-          ...this.navigationOrganization
-        ];
-        this.activeLink = 'orgs'
-      }
+      } 
+    } else {
+      this.navigation = [
+        ...this.navigationOrganization
+      ];
+      this.activeLink = 'orgs'
     }
   }
 
   navSelect (page: string) {
     if(this.auth.userIsLoggedIn()) {
       this.jwtDecode();
-      console.log('role:', this.jwtDecoded['role'])
       if(this.jwtDecoded['role'] == 'admin') {
-        console.log('page', page)
         switch(page){
           case 'flexible':
             this.navigation = [
@@ -162,38 +160,6 @@ export class NavigationComponent implements OnInit {
         this.activeLink = 'orgs'
       }
     }
-    // switch(page) { 
-    //   case 'flexible':
-    //     this.navigation = [
-    //       ...this.navigationSetup
-    //     ];
-    //     this.activeLink = 'flexible'
-    //   break;
-    //   case 'kong':
-    //     this.navigation = [
-    //       ...this.navigationSetup
-    //     ];
-    //     this.activeLink = 'kong'
-    //   break;
-    //   case 'templates':
-    //     this.navigation = [
-    //       ...this.navigationSetup
-    //     ];
-    //     this.activeLink = 'templates'
-    //   break;
-    //   case 'users':
-    //     this.navigation = [
-    //       ...this.navigationUser
-    //     ];
-    //     this.activeLink = 'users'
-    //   break;
-    //   default: 
-    //     this.navigation = [
-    //       ...this.navigationOrganization
-    //     ];
-    //     this.activeLink = 'orgs'
-    //   break;    
-    // }
   }
   
 
@@ -235,8 +201,8 @@ export class NavigationComponent implements OnInit {
               ...this.navigation
             ];
             this.navigationOtherSideMenu = [
-              ...this.navigationProfile,
-              ...this.navigationAdmin
+              ...this.navigationAdmin,
+              ...this.navigationProfile
             ];
           break;
           default:

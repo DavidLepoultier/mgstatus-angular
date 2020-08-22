@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class CreateUserComponent implements OnInit {
   
   createUserForm: FormGroup;
+  show_result: boolean = true;
 
   constructor(private snackBar: SnackBarComponent, private user: UserService, private fb: FormBuilder, private router: Router) { }
 
@@ -59,6 +60,7 @@ export class CreateUserComponent implements OnInit {
   }
   
   createUser(user: any) {
+    this.show_result = false
     user.firstname = user.firstname[0].toUpperCase() + user.firstname.substr(1).toLowerCase();
     user.lastname = user.lastname[0].toUpperCase() + user.lastname.substr(1).toLowerCase();
     this.user.createUser(user).subscribe(
@@ -73,12 +75,13 @@ export class CreateUserComponent implements OnInit {
 
   handlerSuccess(data: any) {
     this.snackBar.openSnackBar(data.user,'Close','');
+    this.show_result = true
     this.close();
   }
 
   handlerError(error: any) {
-    console.log(error)
     this.snackBar.openSnackBar(error.message.message,'Close','failed');
+    this.show_result = true
     this.close();
   }
 

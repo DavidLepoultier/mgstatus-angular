@@ -12,6 +12,7 @@ export class SmtpComponent implements OnInit {
 
   myClass = '';
   mailerForm: FormGroup;
+  show: boolean = false;
 
   config = {
     id: '',

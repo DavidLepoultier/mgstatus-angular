@@ -77,6 +77,6 @@ export class LoginComponent implements OnInit {
     this.jbbData = data;
     this.refreshFlags();
     sessionStorage.setItem('jbb-data', JSON.stringify(this.jbbData))
-    this.router.navigate(['/']);
+    this.router.navigate(['/orgs']);
   }
 }

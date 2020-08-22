@@ -13,12 +13,14 @@ import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 export class ProfileComponent implements OnInit {
   verifyForm: FormGroup;
   setpassword = false;
-  currentUser = {};
   jbbData:any = null;
-  isAuthenticated:boolean = false;
-  welcomeMessage:String = '';
+  show:Boolean = false;
   
-  userToken = '';
+  userToken = {
+    firstname: '',
+    lastname: '',
+    user: ''
+  };
   myClass = '';
 
 
@@ -43,8 +45,6 @@ export class ProfileComponent implements OnInit {
     this.myClass = '';
     this.createForms();
     this.userToken = this.auth.jwtTokenDecode();
-    // console.log(userToken)
-    // this.getUser(userToken.id);
   }
 
   createForms() {

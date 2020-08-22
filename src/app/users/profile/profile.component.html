@@ -1,16 +1,20 @@
 <p>profile works!</p>
 <wrapper [class]='myClass'>
-  <div class="header"></div>
-  <div class="page">
+  <!-- <div class="header"></div> -->
+  <div class="page mt-5">
     <div class="container-fluid w-responsive">
       <div class="row">
         <div class="col-md-1 col-xl-2 min-heigth"></div>
         <div class="col-md-10 col-xl-8">
-          <div class="card">
+          <div class="card mt-5">
             <h2 class="text-center pt-5 mb-4">User Profile <em>{{ userToken.firstname }} {{ userToken.lastname }}</em></h2>
             <div class="row">
               <div class="col-1"></div>
               <div class="col-10">
+                <mat-divider class="full-width mb-4"></mat-divider>
+                <mat-form-field>
+                  <input matInput type="email" placeholder="Username" [value]="userToken.user" disabled>
+                </mat-form-field>
                 <mat-divider class="full-width mb-4"></mat-divider>
                 <p class="h5 mb-2">Reset Password</p>
               </div>
