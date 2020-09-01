@@ -51,9 +51,13 @@
                                   <td class="table-label">
                                     <span class="ng-binding">Status</span>
                                   </td>
-                                  <td class="table-content">
-                                    <i *ngIf="config.state == 'created'" class="fa fa-check-circle succeeded-min-left"></i>
+                                  <td *ngIf="config.state == 'created'" class="table-content">
+                                    <i class="fa fa-check-circle succeeded-min-left"></i>
                                     Available
+                                  </td>
+                                  <td *ngIf="config.state == 'failed'" class="table-content">
+                                    <i class="fa fa-exclamation-circle failed-min-left "></i>
+                                    Not available
                                   </td>
                                   <td class="table-label">
                                     <span class="ng-binding">Created</span>
@@ -452,7 +456,8 @@
                                       <div *ngFor="let status of row.status">
                                         <p class="mb-0 mt-0 text-muted font-weight-bold">
                                           <i *ngIf="status.state == 'succeeded'" class="fa fa-check-circle succeeded-left"></i>
-                                          <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
+                                          <i *ngIf="status.state == 'failed'" class="fa fa-exclamation-circle failed-left"></i>
+                                          <svg *ngIf="status.state != 'succeeded' && status.state != 'failed'" class="spinner" viewBox="0 0 50 50">
                                             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
                                           </svg>
                                           <ng-container *ngIf="status.emails">
@@ -680,7 +685,8 @@
                     <div *ngFor="let status of deployState.status">
                       <p class="mb-0 mt-0 text-muted font-weight-bold">
                         <i *ngIf="status.state == 'succeeded'" class="fa fa-check-circle succeeded-left"></i>
-                        <svg *ngIf="status.state != 'succeeded'" class="spinner" viewBox="0 0 50 50">
+                        <i *ngIf="status.state == 'failed'" class="fa fa-exclamation-circle failed-left"></i>
+                        <svg *ngIf="status.state != 'succeeded' && status.state != 'failed'" class="spinner" viewBox="0 0 50 50">
                           <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
                         </svg>
                         {{ status.name }}
@@ -688,7 +694,7 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button class="mt-4 mb-4" mat-raised-button (click)="close(config.id)" [disabled]="config.state != 'created'">
+                    <button class="mt-4 mb-4" color="orange" mat-raised-button (click)="close(config.id)" [disabled]="config.state != 'created' && config.state != 'failed'">
                       Close
                     </button>
                   </div>

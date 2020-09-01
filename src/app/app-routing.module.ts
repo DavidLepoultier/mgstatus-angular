@@ -6,6 +6,7 @@ import { PageNotFoundComponent }    from './page-not-found/page-not-found.compon
 import { LoginComponent } from './auth/login/login.component';
 import { SubscribeComponent } from './auth/subscribe/subscribe.component';
 import { VerifyComponent } from './auth/subscribe/verify/verify.component';
+import { StatusComponent } from './status/status.component';
 
 // import { AuthGuard }                          from './auth/auth.guard';
 // import { SelectivePreloadingStrategyService } from './selective-preloading-strategy.service';
@@ -34,6 +35,10 @@ const appRoutes: Routes = [
     {
       path: 'login',
       component: LoginComponent
+    },
+    {
+      path: 'status',
+      component: StatusComponent
     },
     { 
       path: 'subscribe/verify/:id',  

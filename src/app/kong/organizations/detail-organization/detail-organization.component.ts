@@ -79,7 +79,9 @@ export class DetailOrganizationComponent implements OnInit {
   cluster = [];
   adminUsers = [];
 
-  deployState = {};
+  deployState = {
+    status: []
+  };
   show: boolean = false;
   show_result: boolean = false;
   deleteOrg: boolean = false;
@@ -87,7 +89,8 @@ export class DetailOrganizationComponent implements OnInit {
   isAuthenticated:boolean = false;
   running: boolean = false;
   newOrg = {};
-  status = 0;
+  status = 1;
+  stateStatus = ["created","failed"];
   index = 0;
   deploymentMode = '';
   
@@ -112,21 +115,6 @@ export class DetailOrganizationComponent implements OnInit {
     ADMIN_PASSWORD: '',
     deployState: [],
     environment: {}
-  }
-
-  account_validation_messages = {
-    'orgName': [ 
-      { type: 'required', message: "Organization's name is required" }
-    ],
-    'deployment': [
-      { type: 'required', message: "Deployment profile is required"}
-    ],
-    'ADMIN_PASSWORD': [
-      { type: 'require', message: "Password admin is required"}
-    ],
-    'ADMIN_USER': [
-      { type: 'require', message: "Username admin is required"}
-    ]
   }
 
   constructor(
@@ -287,7 +275,6 @@ export class DetailOrganizationComponent implements OnInit {
             this.getRoles();
           }
           // }
-          this.status = 1;
           this.getKongAdminStatus(this.route.snapshot.params['id']);
         }
       }
@@ -319,7 +306,6 @@ export class DetailOrganizationComponent implements OnInit {
     this.user.getUsersEmails().subscribe(
       data => {
         this.usersEmail = data.users
-        // this.usersEmail = this.usersEmail.filter(item => item !== this.config['created_by'])
       }
     )
   }
@@ -543,8 +529,22 @@ export class DetailOrganizationComponent implements OnInit {
     this.org.getDeployStateOrgId(id).subscribe(
       data => {
         this.history = data.organization.deployState
-        this.setDataSource(this.history);
-        this.show_result = true;
+        if (this.status === 0) {
+          this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
+          this.deployState = this.history[this.index];
+          let checkIndex = this.deployState.status.length - 1;
+          if(this.stateStatus.includes(this.deployState.status[checkIndex].state)) {
+            this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
+              data => {
+                this.config = data.organization;
+              }
+            );
+            this.status = 1;
+          }
+        } else {
+          this.setDataSource(this.history);
+          this.show_result = true;
+        }
       }
     )
   }
@@ -604,11 +604,10 @@ export class DetailOrganizationComponent implements OnInit {
 
   autoRefreshOrg(id) {
     let intervalId = setInterval(() => {
-      this.getOrgById(id);
-      this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
-      this.deployState = this.history[this.index];
-      if (this.status == 1) clearInterval(intervalId);
-    }, 1000);
+      this.menu['_history'] = false;
+      this.getDeployState(this.route.snapshot.params['id']);
+      if (this.status === 1) clearInterval(intervalId);
+    }, 2000);
   }
 
   close(id) {

@@ -19,6 +19,7 @@ export class CreateOrganizationComponent implements OnInit {
   isAuthenticated:boolean = false;
   running: boolean = false;
   history = [];
+  stateStatus = ["created","failed"];
   newOrg = {};
   status = 0;
 
@@ -89,30 +90,30 @@ export class CreateOrganizationComponent implements OnInit {
     );
   }
 
-  getOrgById(id) {
-    this.org.getOrgId(id).subscribe(
-      data => {
-        this.newOrg = data.organization;
-        if(data.organization.state == "created") {
-          this.status = 1;
-        }
-      }
-    );   
-  }
-
   getDeployState(id: any) {
     this.org.getDeployStateOrgId(id).subscribe(
       data => {
         this.history = data.organization.deployState
+        if (this.status === 0) {
+          this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
+          let checkIndex = this.history[0].status.length - 1;
+          if(this.stateStatus.includes(this.history[0].status[checkIndex].state)) {
+            this.org.getOrgId(id).subscribe(
+              data => {
+                this.newOrg = data.organization;
+              }
+            );
+            this.status = 1;
+          }
+        } 
       }
     )
   }
 
-  autoRefreshOrg(id) {
+  autoRefreshOrg(id: any) {
     let intervalId = setInterval(() => {
-      this.getOrgById(id);
-      this.getDeployState(id)
-      if (this.status == 1) clearInterval(intervalId);
+      this.getDeployState(id);
+      if (this.status === 1) clearInterval(intervalId);
     }, 2000);
   }
 
@@ -127,6 +128,7 @@ export class CreateOrganizationComponent implements OnInit {
     );
     this.running = true;
     this.status = 0;
+    this.history = [];
     this.autoRefreshOrg(data.createId);
   }
 

@@ -184,13 +184,26 @@ $color_6: rgb(0, 190, 0);
   position: absolute;
   padding-left: 5px;
 }
-
+.failed {
+  color: $color_5 !important;
+  font-size: 20px;
+  position: absolute;
+  padding-left: 5px;
+}
+.failed-left {
+  color: $color_5 !important;
+  font-size: 18px;
+}
 .succeeded-left {
   color: $color_6 !important;
   font-size: 18px;
 }
 .succeeded-min-left {
   color: $color_6 !important;
+  font-size: 12px;
+}
+.failed-min-left {
+  color: $color_5 !important;
   font-size: 12px;
 }
 .pending-left {

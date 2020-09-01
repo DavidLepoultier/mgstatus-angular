@@ -24,6 +24,7 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { SubscribeComponent } from './auth/subscribe/subscribe.component';
 import { VerifyComponent } from './auth/subscribe/verify/verify.component';
+import { StatusComponent } from './status/status.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { VerifyComponent } from './auth/subscribe/verify/verify.component';
     PageNotFoundComponent,
     LoginComponent,
     SubscribeComponent,
-    VerifyComponent
+    VerifyComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
