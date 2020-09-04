@@ -80,10 +80,12 @@ export class DetailOrganizationComponent implements OnInit {
   adminUsers = [];
 
   deployState = {
-    status: []
+    status: [],
+    state: ''
   };
   show: boolean = false;
   show_result: boolean = false;
+  disabled: boolean = true;
   deleteOrg: boolean = false;
   kongAdminUrl: boolean = false;
   isAuthenticated:boolean = false;
@@ -529,6 +531,7 @@ export class DetailOrganizationComponent implements OnInit {
     this.org.getDeployStateOrgId(id).subscribe(
       data => {
         this.history = data.organization.deployState
+        let state = data.organization.state
         if (this.status === 0) {
           this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
           this.deployState = this.history[this.index];
@@ -540,6 +543,16 @@ export class DetailOrganizationComponent implements OnInit {
               }
             );
             this.status = 1;
+            this.disabled = false;
+          }
+          if(this.stateStatus.includes(state)) {
+            this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
+              data => {
+                this.config = data.organization;
+              }
+            );
+            this.status = 1;
+            this.disabled = false;
           }
         } else {
           this.setDataSource(this.history);
@@ -607,7 +620,7 @@ export class DetailOrganizationComponent implements OnInit {
       this.menu['_history'] = false;
       this.getDeployState(this.route.snapshot.params['id']);
       if (this.status === 1) clearInterval(intervalId);
-    }, 2000);
+    }, 1000);
   }
 
   close(id) {
@@ -764,8 +777,10 @@ export class DetailOrganizationComponent implements OnInit {
         this.config = data.organization;
       }
     );
+    this.disabled = true;
     this.running = true;
     this.status = 0;
+    this.getDeployState(this.route.snapshot.params['id']);
     this.autoRefreshOrg(this.route.snapshot.params['id']);
   }
 

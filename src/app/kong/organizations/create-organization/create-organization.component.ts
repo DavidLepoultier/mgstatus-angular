@@ -22,6 +22,7 @@ export class CreateOrganizationComponent implements OnInit {
   stateStatus = ["created","failed"];
   newOrg = {};
   status = 0;
+  disabled: boolean = true;
 
   config = {
     id: '',
@@ -94,6 +95,7 @@ export class CreateOrganizationComponent implements OnInit {
     this.org.getDeployStateOrgId(id).subscribe(
       data => {
         this.history = data.organization.deployState
+        let state = data.organization.state
         if (this.status === 0) {
           this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
           let checkIndex = this.history[0].status.length - 1;
@@ -104,6 +106,16 @@ export class CreateOrganizationComponent implements OnInit {
               }
             );
             this.status = 1;
+            this.disabled = false;
+          }
+          if(this.stateStatus.includes(state)) {
+            this.org.getOrgId(id).subscribe(
+              data => {
+                this.config = data.organization;
+              }
+            );
+            this.status = 1;
+            this.disabled = false;
           }
         } 
       }
@@ -114,7 +126,7 @@ export class CreateOrganizationComponent implements OnInit {
     let intervalId = setInterval(() => {
       this.getDeployState(id);
       if (this.status === 1) clearInterval(intervalId);
-    }, 2000);
+    }, 1000);
   }
 
   close() {
@@ -129,6 +141,8 @@ export class CreateOrganizationComponent implements OnInit {
     this.running = true;
     this.status = 0;
     this.history = [];
+    this.disabled = true;
+    this.getDeployState(data.createId);
     this.autoRefreshOrg(data.createId);
   }
 
