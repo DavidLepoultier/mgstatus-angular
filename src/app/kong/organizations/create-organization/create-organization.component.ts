@@ -98,24 +98,26 @@ export class CreateOrganizationComponent implements OnInit {
         let state = data.organization.state
         if (this.status === 0) {
           this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
-          let checkIndex = this.history[0].status.length - 1;
-          if(this.stateStatus.includes(this.history[0].status[checkIndex].state)) {
-            this.org.getOrgId(id).subscribe(
-              data => {
-                this.newOrg = data.organization;
-              }
-            );
-            this.status = 1;
-            this.disabled = false;
-          }
-          if(this.stateStatus.includes(state)) {
-            this.org.getOrgId(id).subscribe(
-              data => {
-                this.config = data.organization;
-              }
-            );
-            this.status = 1;
-            this.disabled = false;
+          if (this.history[0].status) {
+            let checkIndex = this.history[0].status.length - 1;
+            if(this.stateStatus.includes(this.history[0].status[checkIndex].state)) {
+              this.org.getOrgId(id).subscribe(
+                data => {
+                  this.newOrg = data.organization;
+                }
+              );
+              this.status = 1;
+              this.disabled = false;
+            }
+            if(this.stateStatus.includes(state)) {
+              this.org.getOrgId(id).subscribe(
+                data => {
+                  this.config = data.organization;
+                }
+              );
+              this.status = 1;
+              this.disabled = false;
+            }
           }
         } 
       }

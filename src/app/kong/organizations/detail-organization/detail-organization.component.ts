@@ -36,7 +36,7 @@ export interface OrgElement {
 })
 export class DetailOrganizationComponent implements OnInit {
 
-  ELEMENT_DATA: OrgElement[];
+  ELEMENT_DATA: OrgElement[] = [];
 
   pageSizeOptions=[5, 10, 25, 50];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
@@ -44,6 +44,7 @@ export class DetailOrganizationComponent implements OnInit {
   columnsToDisplay = ['created_at', 'action'];
   columnsToDisplayPlugins = ['created_at', 'name', 'applied_to', 'workspace'];
   columnsToDisplayKong = ['created_at', 'name'];
+  columnsToDisplayKongDataPlane = ['last_seen', 'hostname'];
   columnsToDisplayConsumer = ['created_at','username'];
   columnsToDisplayUser = ['select','email','firstname','lastname','role'];
   columnsToDisplayKongUser = ['created_at','username','email','status'];
@@ -81,7 +82,8 @@ export class DetailOrganizationComponent implements OnInit {
 
   deployState = {
     status: [],
-    state: ''
+    state: '',
+    created_at: 1
   };
   show: boolean = false;
   show_result: boolean = false;
@@ -95,13 +97,28 @@ export class DetailOrganizationComponent implements OnInit {
   stateStatus = ["created","failed"];
   index = 0;
   deploymentMode = '';
+  dateDeploy: Number;
   
   
   menu = {
     _detail: true
   }
+
+  menu2 = [
+    {name: 'Detail', state: true},
+    {name: 'History', state: false}
+    // {name: 'Members', state: false},
+    // {name: 'DataPlane', state: false},
+    // {name: 'KongAdmins', state: false},
+    // {name: 'Plugins', state: false},
+    // {name: 'Workspaces', state: false},
+    // {name: 'Consumers', state: false},
+    // {name: 'Routes', state: false},
+    // {name: 'Services', state: false}
+  ]
+  
   menuLast = false;
-  showMenu = "_detail";
+  showMenu = "Detail";
 
   kongAdm = {
     status: []
@@ -219,7 +236,10 @@ export class DetailOrganizationComponent implements OnInit {
     }
     this.index = this.history.length
     this.org.changeProfileOrg(updateOrgForm.id, newDeployId).subscribe(
-      data  => this.handlerSuccess(data),
+      data  => {
+        this.dateDeploy = Date.now();
+        this.handlerSuccess(data)
+      },
       error => this.handlerError(error)
     );
   }
@@ -230,7 +250,10 @@ export class DetailOrganizationComponent implements OnInit {
     }
     this.index = this.history.length
     this.org.redeployOrg(updateOrgForm.id, action).subscribe(
-      data  => this.handlerSuccess(data),
+      data  => {
+        this.dateDeploy = Date.now();
+        this.handlerSuccess(data);
+      },
       error => this.handlerError(error.error.error.message)
     );
   }
@@ -262,9 +285,8 @@ export class DetailOrganizationComponent implements OnInit {
       data => {
         this.environment = data.environment
         if(this.config['state'] == "created") {
-          // if (this.environment["envType"] == "opensource") {
           if (this.userRole['members'].GET) {
-            this.menu['_members'] = false;
+            this.menu2.push({name: 'Members', state: false});
             if (this.userRole['members'].DELETE) {
               this.columnsToDisplayUser = ['select','email','firstname','lastname','role'];
             } else {
@@ -276,7 +298,6 @@ export class DetailOrganizationComponent implements OnInit {
           if (this.userRole['roles'].GET) {
             this.getRoles();
           }
-          // }
           this.getKongAdminStatus(this.route.snapshot.params['id']);
         }
       }
@@ -440,6 +461,22 @@ export class DetailOrganizationComponent implements OnInit {
     }
   }
 
+  getDataPlane(id: any) {
+    this.kong.getCLusterStatus(id).subscribe(
+      data => {
+        this.cluster = [];
+        let listDataPlane = Object.keys(data.cluster);
+        listDataPlane.forEach(element => {
+          this.cluster.push({last_seen: data.cluster[element]['last_seen'], hostname: data.cluster[element]['hostname']})
+        });
+        console.log('cluster:', this.cluster)
+        this.setDataSource(this.cluster);
+        this.setDataSourceOrder('last_seen');
+        this.show_result = true;
+      }
+    )
+  }
+
   getConsumers(id: any) {
     if (this.environment["envType"] == "enterprise") {
       this.columnsToDisplayConsumer = ['created_at','username', 'workspace'];
@@ -528,38 +565,43 @@ export class DetailOrganizationComponent implements OnInit {
   getDeployState(id: any) {
     this.history = [];
     this.setDataSource(this.history)
-    this.org.getDeployStateOrgId(id).subscribe(
-      data => {
-        this.history = data.organization.deployState
-        let state = data.organization.state
-        if (this.status === 0) {
-          this.history.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1)
-          this.deployState = this.history[this.index];
-          let checkIndex = this.deployState.status.length - 1;
-          if(this.stateStatus.includes(this.deployState.status[checkIndex].state)) {
-            this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
-              data => {
-                this.config = data.organization;
-              }
-            );
-            this.status = 1;
-            this.disabled = false;
+    if (this.status === 0) { 
+      this.org.getDeployStateOrgIdSlice(id).subscribe(
+        data => {
+          this.deployState = data.organization.deployState[0];
+          if (this.deployState.created_at > this.dateDeploy) {
+            this.history = data.organization.deployState
+            let state = data.organization.state
+            let checkIndex = this.deployState.status.length - 1;
+            if(this.stateStatus.includes(this.deployState.status[checkIndex].state)) {
+              this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
+                data => {
+                  this.config = data.organization;
+                }
+              );
+              this.status = 1;
+              this.disabled = false;
+            }
+            if(this.stateStatus.includes(state)) {
+              this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
+                data => {
+                  this.config = data.organization;
+                }
+              );
+              this.status = 1;
+              this.disabled = false;
+            }
           }
-          if(this.stateStatus.includes(state)) {
-            this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
-              data => {
-                this.config = data.organization;
-              }
-            );
-            this.status = 1;
-            this.disabled = false;
-          }
-        } else {
+        });
+    } else {
+      this.org.getDeployStateOrgId(id).subscribe(
+        data => {
+          this.history = data.organization.deployState
+          let state = data.organization.state
           this.setDataSource(this.history);
           this.show_result = true;
-        }
-      }
-    )
+        });
+    }
   }
 
   setDataSource(data: any) {
@@ -583,16 +625,18 @@ export class DetailOrganizationComponent implements OnInit {
     this.kong.getKongAdminStatus(id).subscribe(
       data => {
         if (data.statusCode == 200 && !this.menu['consumers'] ) {
-          this.menu['consumers'] = false;
-          this.menu['routes'] = false;
-          this.menu['_plugins'] = false;
+          this.menu2.push({name: 'DataPlane', state: false});
+          this.getDataPlane(this.route.snapshot.params['id']);
           if (this.environment["envType"] == "enterprise") {
-            this.menu['_kongadmins'] = false;
-            this.menu['_workspaces'] = false;
+            this.menu2.push({name: 'KongAdmins', state: false});
+            this.menu2.push({name: 'Workspaces', state: false});
             this.getWorkspaces(this.route.snapshot.params['id']);
             this.getAdminUsers(this.route.snapshot.params['id']);
           }
-          this.menu['services'] = false;
+          this.menu2.push({name: 'Plugins', state: false});
+          this.menu2.push({name: 'Consumers', state: false});
+          this.menu2.push({name: 'Routes', state: false});
+          this.menu2.push({name: 'Services', state: false});
           let status = {
             code: data.statusCode,
             state: data.status,
@@ -710,64 +754,69 @@ export class DetailOrganizationComponent implements OnInit {
     )
   }
 
-  changeMenu(key: any) {
+  changeMenu(key: any, index: any) {
     this.show_result = false;
+    this.showMenu = key;
     switch(key){ 
-      case '_history':
+      case 'History':
         this.expandedElement = null;
         this.setDataSource(this.history)
         this.getDeployState(this.route.snapshot.params['id']);
       break;
-      case '_members':
+      case 'Members':
         this.expandedElement = null;
         this.setDataSource(this.members)
         this.getMembers(this.route.snapshot.params['id']);
       break;
-      case 'services':
+      case 'Services':
         this.expandedElement = null;
         this.setDataSource(this.services)
         this.getServices(this.route.snapshot.params['id']);
       break;
-      case 'routes':
+      case 'Routes':
         this.expandedElement = null;
         this.setDataSource(this.routes)
         this.getRoutes(this.route.snapshot.params['id']);
       break;
-      case 'consumers':
+      case 'Consumers':
         this.expandedElement = null;
         this.setDataSource(this.consumers)
         this.getConsumers(this.route.snapshot.params['id']);
       break;
-      case '_plugins':
+      case 'Plugins':
         this.expandedElement = null;
         this.setDataSource(this.plugins)
         this.getPlugins(this.route.snapshot.params['id']);
       break;
-      case '_workspaces':
+      case 'Workspaces':
         this.expandedElement = null;
         this.setDataSource(this.workspaces)
         this.getWorkspaces(this.route.snapshot.params['id']);
       break;
-      case '_kongadmins':
+      case 'KongAdmins':
         this.expandedElement = null;
         this.setDataSource(this.adminUsers)
         this.getAdminUsers(this.route.snapshot.params['id']);
       break;
+      case 'DataPlane':
+        this.expandedElement = null;
+        this.setDataSource(this.cluster)
+        this.getDataPlane(this.route.snapshot.params['id']);
+      break;
     }
-    for(let m in this.menu){
-      if (key == m) {
-        this.menu[m] = true;
+    for(let i = 0; i < this.menu2.length; i++ ){
+      if (index == i) {
+        this.menu2[i].state = true;
       } else {
-        this.menu[m] = false;
+        this.menu2[i].state = false;
       }
     }
-    let last = Object.keys(this.menu)[Object.keys(this.menu).length-1];
-    if ( last == key ) {
-      this.menuLast = true
+    let last = this.menu2[this.menu2.length-1];
+    if ( last.name == key ) {
+      this.menuLast = true;
     } else {
-      this.menuLast = false
+      this.menuLast = false;
     }
-    this.showMenu = key;
   }
 
   handlerSuccess(data: any) {
@@ -780,7 +829,6 @@ export class DetailOrganizationComponent implements OnInit {
     this.disabled = true;
     this.running = true;
     this.status = 0;
-    this.getDeployState(this.route.snapshot.params['id']);
     this.autoRefreshOrg(this.route.snapshot.params['id']);
   }
 

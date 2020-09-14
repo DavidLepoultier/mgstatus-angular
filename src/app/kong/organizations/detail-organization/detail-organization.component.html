@@ -12,30 +12,30 @@
                     <div class="full-width">
                       <mat-list>
                         <div class="row pl-3 pr-3 mat-line-height">
-                          <div *ngFor="let item of menu | keyvalue">
-                            <a *ngIf="!item.value" class="mat-raised-menu-button" (click)="changeMenu(item.key)">
+                          <div *ngFor="let item of menu2; let index = index;">
+                            <a *ngIf="!item.state" class="mat-raised-menu-button" (click)="changeMenu(item.name, index)">
                               <mat-card class="icon icon-enter button-unselect mb-0" >
-                                <i>{{item.key.replace('_', '') | titlecase}}</i>
+                                <i>{{ item.name }}</i>
                               </mat-card>
                             </a>
                             <ng-container *ngIf="menuLast">
-                              <mat-card *ngIf="item.value" class="button-select-last mb-0">
+                              <mat-card *ngIf="item.state" class="button-select-last mb-0">
                                 <mat-card-content>
-                                     <mat-card-subtitle>{{item.key.replace('_', '') | titlecase}}</mat-card-subtitle>
+                                     <mat-card-subtitle>{{ item.name }}</mat-card-subtitle>
                                 </mat-card-content>
                               </mat-card>
                             </ng-container>
                             <ng-container *ngIf="!menuLast">
-                              <mat-card *ngIf="item.value" class="button-select mb-0">
+                              <mat-card *ngIf="item.state" class="button-select mb-0">
                                 <mat-card-content>
-                                     <mat-card-subtitle>{{item.key.replace('_', '') | titlecase}}</mat-card-subtitle>
+                                     <mat-card-subtitle>{{ item.name }}</mat-card-subtitle>
                                 </mat-card-content>
                               </mat-card>
                             </ng-container>
                           </div>
                         </div>
                         <mat-divider class="full-width mb-0"></mat-divider>
-                        <ng-container *ngIf="showMenu == '_detail'">
+                        <ng-container *ngIf="showMenu == 'Detail'">
                           <div class="full-width pl-3 pr-3 mt-4">
                             <table class="table-detail">           
                               <thead>
@@ -170,7 +170,7 @@
                             <!-- <mat-list-item *ngFor="let adm of kongAdm.status"><a [href]="adm.endpoint" _blank>{{ adm.endpoint }}</a> -- {{ adm.state }}</mat-list-item> -->
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == 'services'">
+                        <ng-container *ngIf="showMenu == 'Services'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Services</mat-list-item>        
@@ -233,7 +233,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == '_workspaces'">
+                        <ng-container *ngIf="showMenu == 'Workspaces'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Workspaces</mat-list-item>        
@@ -264,7 +264,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == '_kongadmins'">
+                        <ng-container *ngIf="showMenu == 'KongAdmins'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Kong Admins</mat-list-item>        
@@ -312,7 +312,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == '_members'">
+                        <ng-container *ngIf="showMenu == 'Members'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Members</mat-list-item>        
@@ -426,7 +426,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == '_history'">
+                        <ng-container *ngIf="showMenu == 'History'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Deployment history</mat-list-item>        
@@ -484,7 +484,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>    
                         </ng-container>
-                        <ng-container *ngIf="showMenu == 'routes'">
+                        <ng-container *ngIf="showMenu == 'Routes'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Routes</mat-list-item>        
@@ -549,7 +549,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == 'consumers'">
+                        <ng-container *ngIf="showMenu == 'Consumers'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Consumers</mat-list-item>  
@@ -608,7 +608,7 @@
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="showMenu == '_plugins'">
+                        <ng-container *ngIf="showMenu == 'Plugins'">
                           <div class="pr-3 pl-3">
                             <mat-list class="mb-0">
                               <mat-list-item class="text-muted font-weight-bold">Plugins</mat-list-item>        
@@ -658,6 +658,39 @@
                               <tr mat-row *matRowDef="let element; columns: columnsToDisplayPlugins;">
                               </tr>
                             </table>
+                            <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="showMenu == 'DataPlane'">
+                          <div class="pr-3 pl-3">
+                            <mat-list class="mb-0">
+                              <mat-list-item class="text-muted font-weight-bold">Data Plane</mat-list-item>        
+                            </mat-list>
+                            <div class="mid-left-width">
+                              <mat-form-field class="full-width">
+                                <input matInput placeholder="Filter" (keyup)="applyFilter($event)">
+                              </mat-form-field>
+                            </div>
+                            <div class="mid-rigth-width">
+                              <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+                            </div>
+                            
+                            <table mat-table
+                                  [dataSource]="dataSource" matSort matSortActive="last_seen" matSortDirection="desc" multiTemplateDataRows 
+                                  class="mat-elevation-z8 mb-5">
+                              <ng-container matColumnDef="last_seen">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Last seen</th>
+                                <td mat-cell *matCellDef="let row"> {{row.last_seen*1000 | dateFormat}} </td>
+                              </ng-container>
+                              <ng-container matColumnDef="hostname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Hostname</th>
+                                <td mat-cell *matCellDef="let row"> {{row.hostname}} </td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="columnsToDisplayKongDataPlane"></tr>
+                              <tr mat-row *matRowDef="let element; columns: columnsToDisplayKongDataPlane;">
+                              </tr>
+                            </table>
+
                             <span *ngIf="!show_result" class="loader mt-5 mb-5"></span>     
                           </div>
                         </ng-container>

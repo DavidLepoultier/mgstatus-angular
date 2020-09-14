@@ -66,6 +66,11 @@ export class OrganizationService {
       map(this.extractData));
   }
 
+  getDeployStateOrgIdSlice(id: any): Observable<any> {
+    return this.http.get(endpoint.api + `orgs/${id}/deploystate/slice`, this.getHeaders()).pipe(
+      map(this.extractData));
+  }
+
   getMembers(id: any): Observable<any> {
     return this.http.get(endpoint.api + `orgs/${id}/members`, this.getHeaders()).pipe(
       map(this.extractData));
