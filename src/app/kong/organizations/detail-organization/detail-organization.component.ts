@@ -311,8 +311,8 @@ export class DetailOrganizationComponent implements OnInit {
         this.userRole = data.userRole;
         this.getDeployments();
         if (data.userRole.history.GET) {
-          this.menu['_history'] = false;
-          this.getDeployState(this.route.snapshot.params['id']);
+          // this.menu['_history'] = false;
+          // this.getDeployState(this.route.snapshot.params['id']);
         }
         this.createForms();
         if (data.userRole.organizations.DELETE) {
@@ -462,14 +462,14 @@ export class DetailOrganizationComponent implements OnInit {
   }
 
   getDataPlane(id: any) {
+    this.cluster = [];
+    this.setDataSource(this.cluster);
     this.kong.getCLusterStatus(id).subscribe(
       data => {
-        this.cluster = [];
         let listDataPlane = Object.keys(data.cluster);
         listDataPlane.forEach(element => {
-          this.cluster.push({last_seen: data.cluster[element]['last_seen'], hostname: data.cluster[element]['hostname']})
+          this.cluster.push({last_seen: data.cluster[element]['last_seen'], hostname: data.cluster[element]['hostname'], config_hash: data.cluster[element]['config_hash'], id: element})
         });
-        console.log('cluster:', this.cluster)
         this.setDataSource(this.cluster);
         this.setDataSourceOrder('last_seen');
         this.show_result = true;
@@ -624,14 +624,14 @@ export class DetailOrganizationComponent implements OnInit {
   getKongAdminStatus(id: any) {
     this.kong.getKongAdminStatus(id).subscribe(
       data => {
-        if (data.statusCode == 200 && !this.menu['consumers'] ) {
-          this.menu2.push({name: 'DataPlane', state: false});
-          this.getDataPlane(this.route.snapshot.params['id']);
+        if (data.statusCode == 200) {
+          if (this.deploymentMode === "hybrid") {
+            this.menu2.push({name: 'DataPlane', state: false});
+          }
           if (this.environment["envType"] == "enterprise") {
             this.menu2.push({name: 'KongAdmins', state: false});
             this.menu2.push({name: 'Workspaces', state: false});
             this.getWorkspaces(this.route.snapshot.params['id']);
-            this.getAdminUsers(this.route.snapshot.params['id']);
           }
           this.menu2.push({name: 'Plugins', state: false});
           this.menu2.push({name: 'Consumers', state: false});
@@ -642,10 +642,6 @@ export class DetailOrganizationComponent implements OnInit {
             state: data.status,
           };
           this.kongAdm.status.push(status);
-          this.getServices(this.route.snapshot.params['id']);
-          this.getRoutes(this.route.snapshot.params['id']);
-          this.getConsumers(this.route.snapshot.params['id']);
-          this.getPlugins(this.route.snapshot.params['id']);
         }
       }
     )
