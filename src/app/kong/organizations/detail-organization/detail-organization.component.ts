@@ -98,23 +98,10 @@ export class DetailOrganizationComponent implements OnInit {
   index = 0;
   deploymentMode = '';
   dateDeploy: Number;
-  
-  
-  menu = {
-    _detail: true
-  }
 
   menu2 = [
     {name: 'Detail', state: true},
     {name: 'History', state: false}
-    // {name: 'Members', state: false},
-    // {name: 'DataPlane', state: false},
-    // {name: 'KongAdmins', state: false},
-    // {name: 'Plugins', state: false},
-    // {name: 'Workspaces', state: false},
-    // {name: 'Consumers', state: false},
-    // {name: 'Routes', state: false},
-    // {name: 'Services', state: false}
   ]
   
   menuLast = false;
@@ -281,6 +268,10 @@ export class DetailOrganizationComponent implements OnInit {
   }
 
   getEnvironment(id: any){
+    this.menu2 = [
+      {name: 'Detail', state: true},
+      {name: 'History', state: false}
+    ]
     this.envKong.getEnvironment(id).subscribe(
       data => {
         this.environment = data.environment
@@ -310,10 +301,6 @@ export class DetailOrganizationComponent implements OnInit {
         this.config = data.organization;
         this.userRole = data.userRole;
         this.getDeployments();
-        if (data.userRole.history.GET) {
-          // this.menu['_history'] = false;
-          // this.getDeployState(this.route.snapshot.params['id']);
-        }
         this.createForms();
         if (data.userRole.organizations.DELETE) {
           this.deleteOrg = true;
@@ -569,7 +556,9 @@ export class DetailOrganizationComponent implements OnInit {
       this.org.getDeployStateOrgIdSlice(id).subscribe(
         data => {
           this.deployState = data.organization.deployState[0];
-          if (this.deployState.created_at > this.dateDeploy) {
+          let created_at: Number = this.deployState.created_at;
+          let dateDeployed: Number = this.dateDeploy;
+          if (created_at > dateDeployed) {
             this.history = data.organization.deployState
             let state = data.organization.state
             let checkIndex = this.deployState.status.length - 1;
@@ -657,7 +646,6 @@ export class DetailOrganizationComponent implements OnInit {
 
   autoRefreshOrg(id) {
     let intervalId = setInterval(() => {
-      this.menu['_history'] = false;
       this.getDeployState(this.route.snapshot.params['id']);
       if (this.status === 1) clearInterval(intervalId);
     }, 1000);
