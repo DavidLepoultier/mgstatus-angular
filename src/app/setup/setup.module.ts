@@ -28,6 +28,8 @@ import { OffersComponent } from './kong/offers/offers.component';
 import { AddOfferComponent } from './kong/offers/add-offer/add-offer.component';
 import { DetailOfferComponent } from './kong/offers/detail-offer/detail-offer.component';
 import { SmtpComponent } from './flexible/smtp/smtp.component';
+import { ElasticsearchComponent } from './flexible/elasticsearch/elasticsearch.component';
+import { RedisComponent } from './flexible/redis/redis.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { SmtpComponent } from './flexible/smtp/smtp.component';
     OffersComponent,
     AddOfferComponent,
     DetailOfferComponent,
-    SmtpComponent
+    SmtpComponent,
+    ElasticsearchComponent,
+    RedisComponent
   ],
   imports: [
     CommonModule,

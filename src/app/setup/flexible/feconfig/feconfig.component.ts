@@ -19,35 +19,11 @@ export class FeconfigComponent implements OnInit {
 
   config = {
     id: '',
-    cpElbId: '',
-    cpElbIp: '',
     INTERNET_ELB_ID: '',
     INTERNET_ELB_IP: '',
-    KONG_PG_HOST: '',
-    KONG_PG_PORT: '',
-    PGUSER: '',
-    PGPASSWORD: ''
   }
 
   account_validation_messages = {
-    'KONG_PG_HOST': [ 
-      { type: 'required', message: "PostgreSQL's IP is required" }
-    ],
-    'KONG_PG_PORT': [
-      { type: 'required', message: "PostgreSQL's Port is required" }
-    ],
-    'PGUSER': [
-      { type: 'required', message: "PostgreSQL's User is required" }
-    ],
-    'PGPASSWORD': [
-      { type: 'required', message: "PostgreSQL's Password is required" }
-    ],
-    'cpElbId': [
-      { type: 'required', message: 'Control plane ELB ID is required' },
-    ],
-    'cpElbIp': [
-      { type: 'required', message: 'Control plane ELB IP is required' },
-    ],
     'INTERNET_ELB_ID': [
       { type: 'required', message: 'Internet ELB ID is required' },
     ],
@@ -72,28 +48,10 @@ export class FeconfigComponent implements OnInit {
     // user links form validations
     this.flexibleForm = this.fb.group({
       id: new FormControl(this.config.id),
-      cpElbId: new FormControl(this.config.cpElbId, Validators.compose([
-        Validators.required,
-      ])),
-      cpElbIp: new FormControl(this.config.cpElbIp, Validators.compose([
-        Validators.required,
-      ])),
       INTERNET_ELB_ID: new FormControl(this.config.INTERNET_ELB_ID, Validators.compose([
         Validators.required,
       ])),
       INTERNET_ELB_IP: new FormControl(this.config.INTERNET_ELB_IP, Validators.compose([
-        Validators.required,
-      ])),
-      KONG_PG_HOST: new FormControl(this.config.KONG_PG_HOST, Validators.compose([
-        Validators.required,
-      ])),
-      KONG_PG_PORT: new FormControl(this.config.KONG_PG_PORT, Validators.compose([
-        Validators.required,
-      ])),
-      PGUSER: new FormControl(this.config.PGUSER, Validators.compose([
-        Validators.required,
-      ])),
-      PGPASSWORD: new FormControl(this.config.PGPASSWORD, Validators.compose([
         Validators.required,
       ]))
     })

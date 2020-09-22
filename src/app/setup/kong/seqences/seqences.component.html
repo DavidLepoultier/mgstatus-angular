@@ -8,7 +8,7 @@
             <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
           </mat-form-field>
         </div>
-        <div class="col-md-10 col-xl-8">
+        <div class="col-md-11 col-xl-10">
           <div *ngFor="let p of sequences | filter: searchText; let i=index;">
             <div class="triple-column mb-3">
               <div class="card">
@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-1 col-xl-2"></div>
+        <!-- <div class="col-md-1 col-xl-1"></div> -->
       </div>
     </div>
   </div>

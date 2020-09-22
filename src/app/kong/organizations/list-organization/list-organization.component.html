@@ -8,7 +8,7 @@
             <input matInput [(ngModel)]="searchText" type="text" placeholder="Search" id="search">
           </mat-form-field>
         </div>
-        <div class="col-md-10 col-xl-8">
+        <div class="col-md-11 col-xl-10">
           <div *ngFor="let p of organizations | filter: searchText | uniqueProject; let i=index;">
             <div class="triple-column mb-3">
               <div class="card">
@@ -18,7 +18,12 @@
                       {{ p.orgName }}
                     </div>
                     <div class="second-content align-self-center ml-auto mr-4">
-                      <i class="fa fa-project-diagram"> </i>
+                      <!-- <i class="fa fa-project-diagram"> </i> -->
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20pt" height="20pt" viewBox="0 0 20 20" version="1.1">
+                        <g id="surface1">
+                        <path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,100%,100%);fill-opacity:1;" d="M 6.519531 16.535156 L 10.167969 16.535156 L 12.054688 19.207031 L 11.734375 20.121094 L 7.019531 20.121094 L 7.140625 19.207031 L 6.03125 17.238281 Z M 9.125 4.78125 L 11.082031 4.78125 L 19.859375 16.542969 L 19.179688 20.121094 L 15.414062 20.121094 L 15.648438 19.109375 L 7.445312 8.117188 Z M 12.582031 0 L 16.660156 3.605469 L 16.136719 4.214844 L 16.847656 5.316406 L 16.847656 6.5 L 14.808594 8.367188 L 11.390625 3.824219 L 9.398438 3.824219 L 10.199219 2.171875 L 12.578125 0 Z M 4.015625 11.542969 L 6.859375 8.761719 L 10.640625 13.875 L 9.566406 15.75 L 6.082031 15.75 L 3.671875 19.300781 L 3.121094 20.121094 L 0 20.121094 L 0 15.757812 L 2.90625 11.542969 Z M 4.015625 11.542969 "/>
+                        </g>
+                      </svg>
                     </div>
                   </div>
                   <div class="card-body">
@@ -39,7 +44,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-1 col-xl-2"></div>
+        <!-- <div class="col-md-1 col-xl-2"></div> -->
       </div>
     </div>
   </div>

@@ -1,0 +1,76 @@
+<wrapper [class]='myClass'>
+  <div class="header"></div>
+  <div class="page">
+    <div class="container-fluid w-responsive">
+      <div class="row">
+        <div class="col-md-12 min-heigth">
+          <div class="card">
+            <p class="text-center h3 pt-5 mb-4">Elasticsearch Setup</p>
+            <form class="text-center" [formGroup]="esForm" novalidate>
+              <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                  <mat-expansion-panel class="mb-3">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Elasticsearch
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Elasticsearch host" formControlName="esHost" required>
+                      <mat-error *ngFor="let validation of elastic_validation_messages.esHost">
+                        <mat-error *ngIf="esForm.get('esHost').hasError(validation.type) && (esForm.get('esHost').dirty || esForm.get('esHost').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Elasticsearch scheme" formControlName="esScheme" required>
+                      <mat-error *ngFor="let validation of elastic_validation_messages.esScheme">
+                        <mat-error *ngIf="esForm.get('esScheme').hasError(validation.type) && (esForm.get('esScheme').dirty || esForm.get('esScheme').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Elasticsearch port" formControlName="esPort" required>
+                      <mat-error *ngFor="let validation of elastic_validation_messages.esPort">
+                        <mat-error *ngIf="esForm.get('esPort').hasError(validation.type) && (esForm.get('esPort').dirty || esForm.get('esPort').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Elasticsearch user" formControlName="esUser" required>
+                      <mat-error *ngFor="let validation of elastic_validation_messages.esUser">
+                        <mat-error *ngIf="esForm.get('esUser').hasError(validation.type) && (esForm.get('esUser').dirty || esForm.get('esUser').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput [type]="show ? 'text' : 'password'" placeholder="Elasticsearch password" formControlName="esPassword" required>
+                      <mat-error *ngFor="let validation of elastic_validation_messages.esPassword">
+                        <mat-error *ngIf="esForm.get('esPassword').hasError(validation.type) && (esForm.get('esPassword').dirty || esForm.get('esPassword').touched)">
+                          {{validation.message}}
+                        </mat-error>
+                      </mat-error>
+                      <mat-icon matSuffix (click)="show = !show">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                  <button class="mr-2"  mat-raised-button [disabled]="!esForm.valid" (click)="testConfig(esForm.value)">
+                    Check config
+                  </button>
+                  <button class="mb-4" color="orange" mat-raised-button (click)="saveConfig(esForm.value)" [disabled]="!configChecked">
+                    Save config
+                  </button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</wrapper>

@@ -5,39 +5,37 @@
       <div class="row">
         <div class="col-md-12 min-heigth">
           <div class="card">
-            <p class="text-center h3 pt-5 mb-4">Flexible Setup</p>
-            <form class="text-center" [formGroup]="flexibleForm" novalidate (ngSubmit)="saveConfig(flexibleForm.value)">
+            <p class="text-center h3 pt-5 mb-4">Redis Setup</p>
+            <form class="text-center" [formGroup]="redisForm" novalidate>
               <div class="row">
                 <div class="col-1"></div>
                 <div class="col-10">
                   <mat-expansion-panel class="mb-3">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        Internet ELB
+                        Redis
                       </mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-form-field class="full-width">
-                      <input matInput placeholder="Internet ELB ID" formControlName="INTERNET_ELB_ID" required>
-                      <mat-error *ngFor="let validation of account_validation_messages.INTERNET_ELB_ID">
-                        <mat-error *ngIf="flexibleForm.get('INTERNET_ELB_ID').hasError(validation.type) && (flexibleForm.get('INTERNET_ELB_ID').dirty || flexibleForm.get('INTERNET_ELB_ID').touched)">
+                      <input matInput placeholder="Redis host" formControlName="redisHost" required>
+                      <mat-error *ngFor="let validation of redis_validation_messages.redisHost">
+                        <mat-error *ngIf="redisForm.get('redisHost').hasError(validation.type) && (redisForm.get('redisHost').dirty || redisForm.get('redisHost').touched)">
                           {{validation.message}}
                         </mat-error>
                       </mat-error>
                     </mat-form-field>
                     <mat-form-field class="full-width">
-                      <input matInput placeholder="Internet ELB IP" formControlName="INTERNET_ELB_IP" required>
-                      <mat-error *ngFor="let validation of account_validation_messages.cpElbIp">
-                        <mat-error *ngIf="flexibleForm.get('INTERNET_ELB_IP').hasError(validation.type) && (flexibleForm.get('INTERNET_ELB_IP').dirty || flexibleForm.get('INTERNET_ELB_IP').touched)">
+                      <input matInput placeholder="Redis port" formControlName="redisPort" required>
+                      <mat-error *ngFor="let validation of redis_validation_messages.redisPort">
+                        <mat-error *ngIf="redisForm.get('redisPort').hasError(validation.type) && (redisForm.get('redisPort').dirty || redisForm.get('redisPort').touched)">
                           {{validation.message}}
                         </mat-error>
                       </mat-error>
                     </mat-form-field>
                   </mat-expansion-panel>
-
-                  <button class="mb-4" color="orange" mat-raised-button type="submit" [disabled]="!flexibleForm.valid">
+                  <button class="mb-4" color="orange" mat-raised-button [disabled]="!redisForm.valid" (click)="saveConfig(redisForm.value)">
                     Save config
                   </button>
-
                 </div>
                 <div class="col-1"></div>
               </div>

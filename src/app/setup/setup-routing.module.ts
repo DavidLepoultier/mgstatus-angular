@@ -18,6 +18,8 @@ import { DetailDeploymentComponent } from './kong/deployment/detail-deployment/d
 import { AddDeploymentComponent } from './kong/deployment/add-deployment/add-deployment.component';
 import { DeploymentComponent } from './kong/deployment/deployment.component';
 import { SmtpComponent } from './flexible/smtp/smtp.component';
+import { ElasticsearchComponent } from './flexible/elasticsearch/elasticsearch.component';
+import { RedisComponent } from './flexible/redis/redis.component';
 
 
 const routes: Routes = [
@@ -30,6 +32,8 @@ const routes: Routes = [
         children: [
           { path: 'kubeconfig', component: KubeconfigComponent },
           { path: 'mailer', component: SmtpComponent },
+          { path: 'es', component: ElasticsearchComponent },
+          { path: 'redis', component: RedisComponent },
           { path: '', component: FeconfigComponent }
         ]
       }
