@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FlexibleComponent } from './flexible/flexible.component';
-import { KubeconfigComponent } from './flexible/kubeconfig/kubeconfig.component';
 import { KubetemplatesComponent } from './kubetemplates/kubetemplates.component';
 import { FeconfigComponent } from './flexible/feconfig/feconfig.component';
 import { ListComponent } from './kubetemplates/list/list.component';
@@ -30,7 +29,6 @@ const routes: Routes = [
       {
         path: '',
         children: [
-          { path: 'kubeconfig', component: KubeconfigComponent },
           { path: 'mailer', component: SmtpComponent },
           { path: 'es', component: ElasticsearchComponent },
           { path: 'redis', component: RedisComponent },

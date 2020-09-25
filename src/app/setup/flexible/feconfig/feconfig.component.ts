@@ -23,7 +23,7 @@ export class FeconfigComponent implements OnInit {
     INTERNET_ELB_IP: '',
   }
 
-  account_validation_messages = {
+  validation_messages = {
     'INTERNET_ELB_ID': [
       { type: 'required', message: 'Internet ELB ID is required' },
     ],

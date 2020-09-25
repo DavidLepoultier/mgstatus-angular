@@ -18,7 +18,7 @@
                     </mat-expansion-panel-header>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Internet ELB ID" formControlName="INTERNET_ELB_ID" required>
-                      <mat-error *ngFor="let validation of account_validation_messages.INTERNET_ELB_ID">
+                      <mat-error *ngFor="let validation of validation_messages.INTERNET_ELB_ID">
                         <mat-error *ngIf="flexibleForm.get('INTERNET_ELB_ID').hasError(validation.type) && (flexibleForm.get('INTERNET_ELB_ID').dirty || flexibleForm.get('INTERNET_ELB_ID').touched)">
                           {{validation.message}}
                         </mat-error>
@@ -26,7 +26,7 @@
                     </mat-form-field>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Internet ELB IP" formControlName="INTERNET_ELB_IP" required>
-                      <mat-error *ngFor="let validation of account_validation_messages.cpElbIp">
+                      <mat-error *ngFor="let validation of validation_messages.INTERNET_ELB_IP">
                         <mat-error *ngIf="flexibleForm.get('INTERNET_ELB_IP').hasError(validation.type) && (flexibleForm.get('INTERNET_ELB_IP').dirty || flexibleForm.get('INTERNET_ELB_IP').touched)">
                           {{validation.message}}
                         </mat-error>
