@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { KongEnvironmentService } from 'src/app/services/kong-environment.service';
 
 @Component({
@@ -52,7 +52,7 @@ export class AddEnvironmentComponent implements OnInit {
     ]
   }
 
-  constructor( private cdref: ChangeDetectorRef, private router:Router, private fb: FormBuilder, private env: KongEnvironmentService, private snackBar: SnackBarComponent) { 
+  constructor( private cdref: ChangeDetectorRef, private router:Router, private fb: FormBuilder, private env: KongEnvironmentService, private toastr: ToastrService) { 
   }
 
   myClass = '';
@@ -116,7 +116,7 @@ export class AddEnvironmentComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.router.navigate(['/kong/environments']);
   }
 

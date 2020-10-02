@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ElasticsearchService } from 'src/app/services/elasticsearch.service';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-elasticsearch',
@@ -45,7 +45,7 @@ export class ElasticsearchComponent implements OnInit {
     ]
   }
 
-  constructor( private fb: FormBuilder, private auth:AuthService, private es:ElasticsearchService, private snackBar: SnackBarComponent) { }
+  constructor( private fb: FormBuilder, private auth:AuthService, private es:ElasticsearchService, private toastr: ToastrService) { }
 
   myClass = '';
 
@@ -115,11 +115,11 @@ export class ElasticsearchComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error.message,'Close','failed');
+    this.toastr.error(error.message);
   }
 
 }

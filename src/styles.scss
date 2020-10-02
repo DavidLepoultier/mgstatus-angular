@@ -9,69 +9,6 @@ $color_4: #89be50;
 $color_5: red;
 $color_6: rgb(0, 190, 0);
 
-// .loader,
-// .loader:before,
-// .loader:after {
-//   background: $color_1;
-//   -webkit-animation: load1 1s infinite ease-in-out;
-//   animation: load1 1s infinite ease-in-out;
-//   width: 1em;
-//   height: 4em;
-// }
-// .loader {
-//   color: $color_1;
-//   text-indent: -9999em;
-//   margin: 88px auto;
-//   position: absolute;
-//   font-size: 11px;
-//   -webkit-transform: translateZ(0);
-//   -ms-transform: translateZ(0);
-//   transform: translateZ(0);
-//   -webkit-animation-delay: -0.16s;
-//   animation-delay: -0.16s;
-// }
-// .loader:before,
-// .loader:after {
-//   position: absolute;
-//   top: 0;
-//   content: '';
-// }
-// .loader:before {
-//   left: -1.5em;
-//   -webkit-animation-delay: -0.32s;
-//   animation-delay: -0.32s;
-// }
-// .loader:after {
-//   left: 1.5em;
-// }
-// .loader:after:after {
-//   left: 3em;
-// }
-// @-webkit-keyframes load1 {
-//   0%,
-//   80%,
-//   100% {
-//     box-shadow: 0 0;
-//     height: 4em;
-//   }
-//   40% {
-//     box-shadow: 0 -2em;
-//     height: 5em;
-//   }
-// }
-// @keyframes load1 {
-//   0%,
-//   80%,
-//   100% {
-//     box-shadow: 0 0;
-//     height: 4em;
-//   }
-//   40% {
-//     box-shadow: 0 -2em;
-//     height: 5em;
-//   }
-// }
-
 .loader {
   width: 8px;
   height: 48px;
@@ -83,6 +20,32 @@ $color_6: rgb(0, 190, 0);
   box-sizing: border-box;
   animation: animloader 1s linear infinite alternate;
 }
+
+.toast-top-right {
+  top: 100px;
+  margin: 0 auto;
+}
+
+// .toast-success {
+//   background-color: #51A351;
+//   background: transparent\9;
+//   background:rgba(0, 255, 0, 0.7)
+// }
+// .toast-error {
+//   background:#BD362F;
+//   background: transparent\9;
+//   background:rgba(255, 0, 0, 0.7)
+// }
+// .toast-info {
+//   background-color: #2F96B4;
+//   background: transparent\9;
+//   background:rgba(0, 0, 255, 0.7)
+// }
+// .toast-warning {
+//   background-color: #F89406;
+//   background: transparent\9;
+//   background:rgba(255, 94, 0, 0.7)
+// }
 
 @keyframes animloader {
   0% {
@@ -490,7 +453,7 @@ footer .sub-footer a {
   height: 30px;
   margin-top: 40px;
   .navbar {
-    padding: 0rem!important;
+    padding: 0.2rem 0rem 0rem 0rem!important;
   }
   .container {
     padding: 0.1rem 0rem!important;

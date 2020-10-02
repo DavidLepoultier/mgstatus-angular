@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KubeTemplatesService } from 'src/app/services/kube-templates.service';
 import { KongSequenceService } from 'src/app/services/kong-sequence.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-detail-sequence',
@@ -32,7 +32,7 @@ export class DetailSequenceComponent implements OnInit {
     ]
   }
 
-  constructor( private router:Router, private fb: FormBuilder, private seq: KongSequenceService, private snackBar: SnackBarComponent, private tpl: KubeTemplatesService, private route: ActivatedRoute) { 
+  constructor( private router:Router, private fb: FormBuilder, private seq: KongSequenceService, private toastr: ToastrService, private tpl: KubeTemplatesService, private route: ActivatedRoute) { 
   }
 
   myClass = '';
@@ -103,7 +103,7 @@ export class DetailSequenceComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.router.navigate(['/kong/sequences']);
   }
 

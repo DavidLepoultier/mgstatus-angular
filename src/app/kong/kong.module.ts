@@ -1,8 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DemoMaterialModule } from '../material-module';
-import { MatNativeDateModule } from '@angular/material';
+import { MaterialModule } from '../material-module';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { KongRoutingModule } from './kong-routing.module';
@@ -19,7 +19,7 @@ import { AddUserOrganizationComponent } from './modals/add-user-organization/add
   imports: [
     CommonModule,
     CommonModule,
-    DemoMaterialModule,
+    MaterialModule,
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,

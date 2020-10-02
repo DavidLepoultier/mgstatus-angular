@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
@@ -48,7 +48,7 @@ export class CreateRoleComponent implements OnInit {
     ]
   }
 
-  constructor( private router:Router, private fb: FormBuilder, private roles: RolesService, private snackBar: SnackBarComponent) { 
+  constructor( private router:Router, private fb: FormBuilder, private roles: RolesService, private toastr: ToastrService) { 
   }
 
   myClass = '';
@@ -114,13 +114,13 @@ export class CreateRoleComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.close();
   }
 
   handlerError(error: any) {
     console.log(error)
-    this.snackBar.openSnackBar(error.message.message,'Close','failed');
+    this.toastr.error(error.message.message);
   }
 
 }

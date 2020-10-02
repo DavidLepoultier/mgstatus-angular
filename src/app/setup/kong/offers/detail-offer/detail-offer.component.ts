@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { KongOffersService } from 'src/app/services/kong-offers.service';
 
 @Component({
@@ -46,7 +46,7 @@ export class DetailOfferComponent implements OnInit {
     ],
   }
 
-  constructor(private cdref: ChangeDetectorRef, private fb: FormBuilder, private offer: KongOffersService, private route: ActivatedRoute, private router: Router, private snackBar: SnackBarComponent) { }
+  constructor(private cdref: ChangeDetectorRef, private fb: FormBuilder, private offer: KongOffersService, private route: ActivatedRoute, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -130,7 +130,7 @@ export class DetailOfferComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.router.navigate(['/kong/offers']);
   }
 

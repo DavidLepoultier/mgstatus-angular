@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {Observable} from 'rxjs';
-import { MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
-import {SelectionModel} from '@angular/cdk/collections';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog'; 
+import { MatDialogConfig } from '@angular/material/dialog'; 
+import { MatPaginator } from '@angular/material/paginator'; 
+import { MatSort } from '@angular/material/sort'; 
+import { MatTableDataSource } from '@angular/material/table'; 
+
+import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { DeploymentProfileService } from 'src/app/services/deployment-profile.service';
@@ -15,6 +19,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AddUserOrganizationComponent } from '../../modals/add-user-organization/add-user-organization.component';
 import { RolesService } from 'src/app/services/roles.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface OrgElement {
   created_at: string;
@@ -131,7 +136,7 @@ export class DetailOrganizationComponent implements OnInit {
     private org: OrganizationService, 
     private dep: DeploymentProfileService, 
     private envKong: KongEnvironmentService, 
-    private snackBar: SnackBarComponent, 
+    private toastr: ToastrService, 
     private kong: KongService, 
     private user: UserService,
     private roles: RolesService,
@@ -168,7 +173,7 @@ export class DetailOrganizationComponent implements OnInit {
       }
     }
     if (emailList.length == 0){
-      this.snackBar.openSnackBar('All accounts are already member to this organization','Close','');
+      this.toastr.info('All accounts are already member to this organization');
     } else {
       const dialogConfig = new MatDialogConfig();
   
@@ -190,7 +195,7 @@ export class DetailOrganizationComponent implements OnInit {
   deleteOrgId() {
     this.org.deleteOrgId(this.config.id).subscribe(
       data => {
-        this.snackBar.openSnackBar(data.message,'Close','');
+        this.toastr.success(data.message);
         this.router.navigate(['/orgs']);
       },
       error => {
@@ -706,7 +711,7 @@ export class DetailOrganizationComponent implements OnInit {
     emails.envType = this.environment["envType"];
     this.org.addMembers(this.route.snapshot.params['id'], emails).subscribe(
       data => {
-        this.snackBar.openSnackBar(data.message,'Close','');
+        this.toastr.success(data.message);
         this.getMembers(this.route.snapshot.params['id']);
         this.getUsersEmails();
         this.selection.clear();
@@ -724,7 +729,7 @@ export class DetailOrganizationComponent implements OnInit {
     member.envType = this.environment["envType"];
     this.org.updateMembers(this.route.snapshot.params['id'], member.email,  member).subscribe(
       data => {
-        this.snackBar.openSnackBar(data.message,'Close','');
+        this.toastr.success(data.message);
         this.getMembers(this.route.snapshot.params['id']);
         this.getUsersEmails();
         this.selection.clear();
@@ -804,7 +809,7 @@ export class DetailOrganizationComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.org.getOrgId(this.route.snapshot.params['id']).subscribe(
       data => {
         this.config = data.organization;
@@ -817,6 +822,6 @@ export class DetailOrganizationComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error,'Close','failed');
+    this.toastr.error(error);
   }
 }

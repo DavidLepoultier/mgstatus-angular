@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     ]
   }
 
-  constructor(private auth:AuthService, private router:Router, private fb: FormBuilder, private snackBar: SnackBarComponent) { }
+  constructor(private auth:AuthService, private router:Router, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -70,7 +70,8 @@ export class LoginComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error.message,'Close','failed');
+    // this.snackBar.openSnackBar(error.message,'Close','failed');
+    this.toastr.error(error.message, 'Login')
   }
 
   handlerLoginSuccess(data: any) {

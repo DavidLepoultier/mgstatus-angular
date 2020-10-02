@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { KubeTemplatesService } from 'src/app/services/kube-templates.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add',
@@ -37,7 +37,7 @@ export class AddComponent implements OnInit {
     ]
   }
 
-  constructor( private router:Router, private fb: FormBuilder, private tpl: KubeTemplatesService, private snackBar: SnackBarComponent) { 
+  constructor( private router:Router, private fb: FormBuilder, private tpl: KubeTemplatesService, private toastr: ToastrService) { 
   }
 
   templateTypes = [
@@ -94,7 +94,7 @@ export class AddComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.router.navigate(['/templates']);
   }
 

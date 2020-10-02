@@ -1,8 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DemoMaterialModule } from '../material-module';
-import { MatNativeDateModule } from '@angular/material';
+import { MaterialModule } from '../material-module';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UsersRoutingModule } from './users-routing.module';
 import { SharingModule } from '../sharing-module';
@@ -17,7 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
   declarations: [CreateUserComponent, DetailUserComponent, UsersComponent, ListUsersComponent, ProfileComponent],
   imports: [
     CommonModule,
-    DemoMaterialModule,
+    MaterialModule,
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,

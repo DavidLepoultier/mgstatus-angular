@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RedisService } from 'src/app/services/redis.service';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-redis',
@@ -31,7 +31,7 @@ export class RedisComponent implements OnInit {
     ]
   }
 
-  constructor( private fb: FormBuilder, private auth:AuthService, private redis:RedisService, private snackBar: SnackBarComponent) { }
+  constructor( private fb: FormBuilder, private auth:AuthService, private redis:RedisService, private toastr: ToastrService) { }
 
   myClass = '';
 
@@ -78,10 +78,10 @@ export class RedisComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error.message,'Close','failed');
+    this.toastr.error(error.message);
   }
 }

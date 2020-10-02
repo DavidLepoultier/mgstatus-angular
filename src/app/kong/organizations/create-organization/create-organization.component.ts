@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { Router } from '@angular/router';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { DeploymentProfileService } from 'src/app/services/deployment-profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-organization',
@@ -47,7 +47,7 @@ export class CreateOrganizationComponent implements OnInit {
     ]
   }
 
-  constructor( private router:Router, private fb: FormBuilder, private org: OrganizationService, private dep: DeploymentProfileService, private snackBar: SnackBarComponent) { 
+  constructor( private router:Router, private fb: FormBuilder, private org: OrganizationService, private dep: DeploymentProfileService, private toastr: ToastrService) { 
   }
 
   myClass = '';
@@ -136,7 +136,7 @@ export class CreateOrganizationComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message)
     this.org.getOrgId(data.createId).subscribe(
       data => this.newOrg = data.organization
     );
@@ -150,6 +150,6 @@ export class CreateOrganizationComponent implements OnInit {
 
   handlerError(error: any) {
     console.log(error)
-    this.snackBar.openSnackBar(error.message,'Close','failed');
+    this.toastr.error(error.message)
   }
 }

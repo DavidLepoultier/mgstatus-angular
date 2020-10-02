@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../auth/auth.service';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
     ]
   }
 
-  constructor(private snackBar: SnackBarComponent, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private auth: AuthService) { }
+  constructor(private toastr: ToastrService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -80,13 +80,13 @@ export class ProfileComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error.message,'Close','failed');
+    this.toastr.error(error.message);
   }
 
   handlerLoginSuccess(data: any) {
     this.jbbData = data;
     sessionStorage.setItem('jbb-data', JSON.stringify(this.jbbData))
-    this.snackBar.openSnackBar('Password updated','Close','');
+    this.toastr.success('Password updated');
     this.createForms();
     // this.router.navigate(['/']);
   }

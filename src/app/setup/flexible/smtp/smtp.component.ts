@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
+import { ToastrService } from 'ngx-toastr';
 import { SmtpService } from 'src/app/services/smtp.service';
 
 @Component({
@@ -58,7 +58,7 @@ export class SmtpComponent implements OnInit {
     ]
   }
 
-  constructor(private snackBar: SnackBarComponent, private fb: FormBuilder, private mailer: SmtpService) { }
+  constructor(private toastr: ToastrService, private fb: FormBuilder, private mailer: SmtpService) { }
   
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -124,7 +124,7 @@ export class SmtpComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
   }
 
   handlerError(error: any) {

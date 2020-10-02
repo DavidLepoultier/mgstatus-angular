@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RolesService } from 'src/app/services/roles.service'
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 
 export interface RoleElement {
   id: string;
@@ -47,7 +47,7 @@ export class ListRolesComponent implements OnInit {
   searchText: string;
   myClass = '';
 
-  constructor(private roles: RolesService, private snackBar: SnackBarComponent) { }
+  constructor(private roles: RolesService, private toastr: ToastrService) { }
   
   ngOnInit() {
       window.scrollTo(0, 0);
@@ -95,12 +95,12 @@ export class ListRolesComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
   }
 
   handlerError(error: any) {
     console.log(error)
-    this.snackBar.openSnackBar(error.message.message,'Close','failed');
+    this.toastr.error(error.message.message);
   }
 
 }

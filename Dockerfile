@@ -1,7 +1,7 @@
 FROM node:alpine as builder
 
 # create user and group for microgateway
-RUN npm install -g @angular/cli@8.3.26
+RUN npm install -g @angular/cli@10.1.3
 
 RUN mkdir /apps
 

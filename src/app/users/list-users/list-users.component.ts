@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service'
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 
 
 export interface UserElement {
@@ -41,7 +43,7 @@ export class ListUsersComponent implements OnInit {
   searchText: string;
   myClass = '';
 
-  constructor(private user: UserService, private snackBar: SnackBarComponent) { }
+  constructor(private user: UserService, private toastr: ToastrService) { }
   
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -89,12 +91,12 @@ export class ListUsersComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
   }
 
   handlerError(error: any) {
     console.log(error)
-    this.snackBar.openSnackBar(error.message.message,'Close','failed');
+    this.toastr.success(error.message.message);
   }
 
 }

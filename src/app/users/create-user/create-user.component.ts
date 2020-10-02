@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { UserService } from 'src/app/services/user.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-user',
@@ -14,7 +14,7 @@ export class CreateUserComponent implements OnInit {
   createUserForm: FormGroup;
   show_result: boolean = true;
 
-  constructor(private snackBar: SnackBarComponent, private user: UserService, private fb: FormBuilder, private router: Router) { }
+  constructor(private toastr: ToastrService, private user: UserService, private fb: FormBuilder, private router: Router) { }
 
   validation_messages = {
     'firstname': [ 
@@ -74,13 +74,13 @@ export class CreateUserComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.user,'Close','');
+    this.toastr.success(data.user);
     this.show_result = true
     this.close();
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error.message.message,'Close','failed');
+    this.toastr.error(error.message.message);
     this.show_result = true
     this.close();
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { FlexibleService } from 'src/app/services/flexible.service';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-feconfig',
@@ -32,7 +32,7 @@ export class FeconfigComponent implements OnInit {
     ]
   }
 
-  constructor( private fb: FormBuilder, private fe: FlexibleService, private snackBar: SnackBarComponent) { 
+  constructor( private fb: FormBuilder, private fe: FlexibleService, private toastr: ToastrService) { 
   }
 
   myClass = '';
@@ -77,7 +77,7 @@ export class FeconfigComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
   }
 
   handlerError(error: any) {

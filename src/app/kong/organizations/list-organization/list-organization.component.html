@@ -26,20 +26,20 @@
                       </svg>
                     </div>
                   </div>
-                  <div class="card-body">
-                    <p *ngIf="p.state == 'created'" class="mb-4 mt-0 text-muted font-weight-bold">
-                      <i class="fa fa-check-circle succeeded"></i>
-                    </p>
-                    <p *ngIf="p.state == 'failed'" class="mb-4 mt-0 text-muted font-weight-bold">
-                      <i class="fa fa-exclamation-circle failed"></i>
-                    </p>
-                    <p *ngIf="p.state != 'created' && p.state != 'failed'" class="mb-0 mt-0 text-muted font-weight-bold">
-                      <svg class="spinner" viewBox="0 0 50 50">
-                        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-                      </svg>
-                    </p>
-                  </div>
                 </a>
+                <div class="card-body">
+                  <p *ngIf="p.state == 'created'" class="mb-4 mt-0 text-muted font-weight-bold">
+                    <i class="fa fa-check-circle succeeded"></i>
+                  </p>
+                  <p *ngIf="p.state == 'failed'" class="mb-4 mt-0 text-muted font-weight-bold">
+                    <i class="fa fa-exclamation-circle failed"></i>
+                  </p>
+                  <p *ngIf="p.state != 'created' && p.state != 'failed'" class="mb-0 mt-0 text-muted font-weight-bold">
+                    <svg class="spinner" viewBox="0 0 50 50">
+                      <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                    </svg>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

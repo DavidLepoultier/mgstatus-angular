@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 import { Router } from '@angular/router';
 import { KongEnvironmentService } from 'src/app/services/kong-environment.service';
 import { KongSequenceService } from 'src/app/services/kong-sequence.service';
 import { DeploymentProfileService } from 'src/app/services/deployment-profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-deployment',
@@ -36,7 +36,7 @@ export class AddDeploymentComponent implements OnInit {
     ]
   }
 
-  constructor( private dep: DeploymentProfileService , private router:Router, private fb: FormBuilder, private seq: KongSequenceService, private env: KongEnvironmentService, private snackBar: SnackBarComponent) { 
+  constructor( private dep: DeploymentProfileService , private router:Router, private fb: FormBuilder, private seq: KongSequenceService, private env: KongEnvironmentService, private toastr: ToastrService) { 
   }
 
   myClass = '';
@@ -88,7 +88,7 @@ export class AddDeploymentComponent implements OnInit {
   }
 
   handlerSuccess(data: any) {
-    this.snackBar.openSnackBar(data.message,'Close','');
+    this.toastr.success(data.message);
     this.router.navigate(['/kong']);
   }
 

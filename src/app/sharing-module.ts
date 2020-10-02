@@ -6,7 +6,6 @@ import { PipesPipe } from './pipes/pipes.pipe';
 import { DowntimePipe } from './pipes/downtime.pipe';
 import { UniquePipe } from './pipes/unique.pipe';
 import { ProxyNamePipe } from './pipes/proxy-name.pipe';
-import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { SortTemplateNamePipe } from './pipes/sort-template-name.pipe';
 
@@ -20,8 +19,7 @@ import { SortTemplateNamePipe } from './pipes/sort-template-name.pipe';
     UniquePipe,
     SortPipe,
     SortTemplateNamePipe,
-    ProxyNamePipe,
-    SnackBarComponent
+    ProxyNamePipe
   ],
   exports: [
     FilterPipe,
@@ -33,10 +31,9 @@ import { SortTemplateNamePipe } from './pipes/sort-template-name.pipe';
     SortTemplateNamePipe,
     UniquePipe,
     ProxyNamePipe,
-    SnackBarComponent
   ],
   imports: [],
-  providers: [SnackBarComponent, FilterPipe, UniquePipe, SortPipe, SortTemplateNamePipe],
+  providers: [FilterPipe, UniquePipe, SortPipe, SortTemplateNamePipe],
   bootstrap: [],
   schemas: []
 })

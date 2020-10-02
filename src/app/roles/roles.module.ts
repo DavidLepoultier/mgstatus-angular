@@ -1,8 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DemoMaterialModule } from '../material-module';
-import { MatNativeDateModule } from '@angular/material';
+import { MaterialModule } from '../material-module';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharingModule } from '../sharing-module';
 
@@ -17,7 +17,7 @@ import { DetailRoleComponent } from './detail-role/detail-role.component';
   declarations: [RolesComponent, ListRolesComponent, CreateRoleComponent, DetailRoleComponent],
   imports: [
     CommonModule,
-    DemoMaterialModule,
+    MaterialModule,
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,

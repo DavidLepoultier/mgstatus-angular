@@ -1,10 +1,10 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "defaultProject": "f-reGate",
+  "defaultProject": "rgfrontend-kong",
   "projects": {
-    "f-reGate": {
+    "rgfrontend-kong": {
       "root": "",
       "projectType": "application",
       "prefix": "app",
@@ -17,6 +17,9 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "jwt-decode"
+            ],
             "assets": [
               {
                 "glob": "favicon.ico",
@@ -37,6 +40,7 @@
                 "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
                 "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
                 "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
+                "node_modules/ngx-toastr/toastr.css",
                 "src/styles.scss"
             ],
             "scripts": [
@@ -69,19 +73,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "f-reGate:build",
+            "browserTarget": "rgfrontend-kong:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "f-reGate:build:production"
+              "browserTarget": "rgfrontend-kong:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "f-reGate:build"
+            "browserTarget": "rgfrontend-kong:build"
           }
         },
         "test": {
@@ -126,7 +130,7 @@
         }
       }
     },
-    "f-reGate-e2e": {
+    "rgfrontend-kong-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -134,7 +138,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "f-reGate:serve"
+            "devServerTarget": "rgfrontend-kong:serve"
           }
         },
         "lint": {

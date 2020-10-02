@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr'
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -11,8 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
-import { DemoMaterialModule } from './material-module';
-import { MatNativeDateModule } from '@angular/material';
+import { MaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { PageNotFoundComponent }    from './page-not-found/page-not-found.component';
@@ -44,13 +44,19 @@ import { StatusComponent } from './status/status.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
-    DemoMaterialModule,
-    MatNativeDateModule,
+    MaterialModule,
     KongModule,
     SetupModule,
     UsersModule,
     RolesModule,
     SharingModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      positionClass: "toast-top-right",
+      timeOut: 2000,
+      extendedTimeOut: 1000,
+      tapToDismiss: true,
+    }),
     AppRoutingModule
   ],
   providers: [],

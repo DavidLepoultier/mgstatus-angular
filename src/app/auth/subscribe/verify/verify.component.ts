@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../auth.service';
-import { SnackBarComponent } from 'src/app/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-verify',
@@ -18,7 +18,7 @@ export class VerifyComponent implements OnInit {
   isAuthenticated:boolean = false;
   welcomeMessage:String = '';
 
-  constructor(private snackBar: SnackBarComponent, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private auth: AuthService, private toastr: ToastrService) { }
 
   myClass = '';
 
@@ -89,7 +89,8 @@ export class VerifyComponent implements OnInit {
   }
 
   handlerError(error: any) {
-    this.snackBar.openSnackBar(error.message,'Close','failed');
+    // this.snackBar.openSnackBar(error.message,'Close','failed');
+    this.toastr.error(error.message)
   }
 
   handlerLoginSuccess(data: any) {

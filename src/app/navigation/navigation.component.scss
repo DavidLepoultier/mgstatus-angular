@@ -33,7 +33,7 @@ header {
     }
   }
   .dropdown-menu {
-    margin-top: -6px;
+    margin-top: -10px;
   }
   .dropdown-item {
     font-size: 12px!important;
@@ -53,6 +53,9 @@ header {
   }
 }
 
+.navbar-nav {
+  padding-top: 0.2rem;
+}
 
 // .navbar .navbar-brand h2 {
 // 	color: white;
